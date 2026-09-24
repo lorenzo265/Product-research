@@ -84,11 +84,17 @@ preciso algo como 100 ou mais para medir habilidade. Os modelos atuais são
 - o Brier passa a ser acumulado, com intervalo de confiança e comparação contra a
   taxa-base;
 - as réguas só são ajustadas por calibração depois de ~100 previsões resolvidas;
-- o veredito pede P(sucesso) e P(fracasso) separadamente, para detectar viés
-  otimista;
-- a probabilidade parte da taxa-base, com ajustes nomeados.
+- o veredito pede P(sucesso) e P(fracasso) em chamadas separadas. A direção do viés
+  é desconhecida: um estudo de 2026 achou os modelos da Anthropic **pessimistas**, ao
+  contrário dos demais;
+- a probabilidade parte da taxa-base, gravada como campo, com ajustes nomeados. A
+  probabilidade do juiz é puxada em direção à taxa-base, e não se "extremiza" a média
+  de amostras.
 
-Isso muda a Fase 6 do `analista-imparcial`.
+**Mudança no seu método (inferência do relatório):** tirar "o ônus da prova é do GO"
+da Fase 0.4, porque a taxa-base já carrega o ceticismo e a frase o conta duas vezes.
+
+Isso muda as Fases 0.4, 4 e 6 do `analista-imparcial`.
 
 ### R-07 · Evals: casos famosos estão "contaminados"
 **Descoberta:** testar o harness com empresas famosas que morreram ou deram certo não
@@ -269,10 +275,13 @@ viés é simétrico (advogado e cético são ambos Claude).
   pelo nível de esforço); CLAUDE.md com menos de 200 linhas; documentos longos
   primeiro e a pergunta no fim.
 
-- **Advogado + cético isolados + juiz:** debate com argumentos opostos subiu a
-  acurácia de juízes não especialistas de 48% para 76% (Khan et al., 2024). Mas debate
-  em **várias rodadas** não supera votação simples. **Padrão:** uma rodada só, sem
-  réplica.
+- **Advogado + cético isolados + juiz, com ressalva:** o ganho de debate (juízes de 48%
+  para 76%, Khan et al., 2024) foi medido com juízes que **não viam a fonte**. O nosso
+  juiz lê o dossiê, e nessa condição Kenton et al. (2024) não acharam vantagem do
+  debate. Debate em várias rodadas também não supera votação simples.
+  **Padrão:** mantenho uma rodada só, sem réplica, e o primeiro eval compara "juiz
+  sozinho com o dossiê" contra "juiz com dossiê e memorandos". Se os memorandos não
+  ajudarem, saem do pipeline e o custo cai.
 - **Escrita centralizada na sessão principal:** a Cognition revisou a posição dela em
   2026 para "escritas num fio só; agentes extras contribuem inteligência, não ações".
   É exatamente o nosso desenho.
