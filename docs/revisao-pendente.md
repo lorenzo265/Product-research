@@ -153,7 +153,67 @@ ruim mais cedo. Os **números**, porém, são regras de bolso:
 - todo teste registra limiar, canal, tamanho da amostra e resultado, para o harness
   construir as próprias taxas-base brasileiras (não existe benchmark BR publicado).
 
+### R-16 · Trilha S: o óbvio (bot de WhatsApp para PME) está sendo comoditizado
+**Descoberta (via resumos e notas de terceiros):**
+- os termos da API do WhatsApp Business proíbem chatbots de IA de uso geral desde
+  15/01/2026 (bots específicos do negócio continuam permitidos);
+- a Meta lançou em fev–mar/2026 um agente de IA próprio dentro do WhatsApp Business
+  para PMEs brasileiras;
+- empresas de serviço com IA em escala reportam ~60–65% de margem bruta; agências
+  pequenas cobram setup de US$2–8k mais mensalidade;
+- no Brasil há serviço de automação de WhatsApp publicando R$397–2.497/mês, o que dá
+  12–22 clientes para chegar a R$15k/mês.
+
+**Meu padrão no pacote S:**
+- trava nova: "a IA nativa da plataforma (Meta, ChatGPT) replica a oferta?";
+- checagem dos termos da plataforma;
+- margem bruta ≥ 60% **depois das suas horas**;
+- limite de receita concentrada num único cliente;
+- preço por resultado só quando um sistema externo registra o resultado;
+- setup pago + mensalidade, para ter caixa em 30 dias.
+
+Compradores melhores que "PME genérica", por inferência a validar: escritórios de
+contabilidade, corretoras de seguro, faturamento de clínicas, documentação jurídica.
+
 ## Médio impacto
+
+### R-14 · Busca: ficar só na nativa ou adicionar MCPs de busca e de dados BR?
+**Descoberta:**
+- A busca nativa do Claude Code devolve só título e URL, não tem configuração de país
+  ou idioma e tem limite de 200 buscas por sessão, compartilhado com os subagentes.
+- A leitura nativa de páginas é "com perdas por desenho": um modelo pequeno resume a
+  página.
+- APIs especializadas custam ~US$1–7 por 1.000 buscas. Parallel, Exa, Firecrawl e Jina
+  têm servidor MCP oficial utilizável sem chave.
+- No benchmark independente mais próximo do nosso caso de arbitragem (achar empresas
+  que casam várias restrições, inclusive país), Parallel e Exa fazem ~46 de F1, contra
+  ~30 da Brave. O resultado só foi visto via texto de um vendor.
+- `mcp-brasil` (código aberto, 1.786 estrelas, atualizado 23/09/2026) cobre ~70 fontes
+  do governo num servidor MCP só (Querido Diário, DOU, PNCP, Transparência, IBGE, BCB,
+  ANVISA), com um arquivo de risco de licença e LGPD por fonte.
+
+**Meu padrão:** não instalo nada sem você. Instalar um MCP de busca manda suas
+consultas para um terceiro, e instalar o `mcp-brasil` roda código de terceiros.
+Deixo a configuração pronta e desligada no repo.
+**Decisão sua:** (a) ligar um MCP de busca sem chave (Parallel ou Exa) para o radar e
+a arbitragem; (b) ligar o `mcp-brasil` fixado num commit específico; (c) nenhum dos
+dois por enquanto.
+
+### R-15 · Fontes a evitar
+**Descoberta:**
+- Mercado Livre bloqueia apps externos na busca (403).
+- LinkedIn e Vagas.com.br bloqueiam crawlers de IA no robots.txt.
+- Reclame Aqui não tem API e fica atrás de Cloudflare.
+- Google Places custa ~US$25 por 1.000 chamadas e devolve no máximo 5 reviews por
+  lugar.
+- Reddit exige aprovação para qualquer cliente de API desde o fim de 2025.
+
+**Meu padrão:** essas fontes entram só via busca web, sem coletor automático.
+Substitutos legais:
+- `consumidor.gov.br` (reclamações abertas) no lugar do Reclame Aqui;
+- 99Freelas no lugar de Workana e GetNinjas;
+- PNCP (compras públicas com preço vencedor) como fonte prioritária de "demanda com
+  dinheiro".
 
 ### R-08 · Tom das suas skills existentes
 **Descoberta:** nos modelos atuais, ênfase agressiva ("SEMPRE", "NÃO", "CRÍTICO") faz
