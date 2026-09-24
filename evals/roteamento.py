@@ -28,8 +28,16 @@ SKILLS_SINCRONIZADAS = ("pesquisador-de-mercado", "analista-imparcial")
 ORCAMENTO_USD = "1"
 
 
+ERRO_DE_EXECUCAO = "ERRO"
+FIM_ESPERADO = ("success", "error_max_turns")
+
+
 def skill_chamada(pedido: str) -> tuple[str | None, float | None]:
-    """Primeira skill que a sessão principal chama para o pedido, e o custo."""
+    """Primeira skill que a sessão principal chama para o pedido, e o custo.
+
+    Devolve `ERRO_DE_EXECUCAO` quando a chamada falhou antes de decidir (limite de uso,
+    erro de API): isso não pode contar como "nenhuma skill chamada".
+    """
     comando = [
         "claude",
         "-p",
@@ -52,11 +60,15 @@ def skill_chamada(pedido: str) -> tuple[str | None, float | None]:
             continue
         if evento.get("type") == "result":
             custo = evento.get("total_cost_usd")
+            if evento.get("subtype") not in FIM_ESPERADO and skill is None:
+                return ERRO_DE_EXECUCAO, custo
         if skill is None and evento.get("type") == "assistant":
             for bloco in evento.get("message", {}).get("content", []):
                 if bloco.get("type") == "tool_use" and bloco.get("name") == "Skill":
                     skill = bloco.get("input", {}).get("skill")
                     break
+    if not processo.stdout.strip():
+        return ERRO_DE_EXECUCAO, custo
     return skill, custo
 
 
@@ -73,9 +85,10 @@ def main(argv: list[str] | None = None) -> int:
             skill, custo = skill_chamada(caso["pedido"])
             chamadas.append(skill)
             custo_total += custo or 0
-        acertos = sum(1 for s in chamadas if (s or None) == caso["esperado"])
-        sincronizadas = [s for s in chamadas if s and any(n in s for n in SKILLS_SINCRONIZADAS)]
-        ok = acertos * 3 >= 2 * args.repeticoes and not sincronizadas
+        validas = [s for s in chamadas if s != ERRO_DE_EXECUCAO]
+        acertos = sum(1 for s in validas if (s or None) == caso["esperado"])
+        sincronizadas = [s for s in validas if s and any(n in s for n in SKILLS_SINCRONIZADAS)]
+        ok = bool(validas) and acertos * 3 >= 2 * len(validas) and not sincronizadas
         aprovado &= ok
         resultados.append({**caso, "chamadas": chamadas, "acertos": acertos, "ok": ok})
         marca = "OK " if ok else "ERR"

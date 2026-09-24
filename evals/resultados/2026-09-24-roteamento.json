@@ -1,0 +1,168 @@
+{
+  "aprovado": false,
+  "custo_total_usd": 0.13,
+  "casos": [
+    {
+      "pedido": "Quais oportunidades de micro-SaaS existem para clínicas odontológicas?",
+      "esperado": "radar",
+      "chamadas": [
+        "radar"
+      ],
+      "acertos": 1,
+      "ok": true
+    },
+    {
+      "pedido": "Roda o radar na lente 4 para o setor de transporte rodoviário.",
+      "esperado": "radar",
+      "chamadas": [
+        "radar"
+      ],
+      "acertos": 1,
+      "ok": true
+    },
+    {
+      "pedido": "Tive uma ideia: um serviço com IA que organiza os documentos que os clientes mandam para o contador.",
+      "esperado": "oportunidade",
+      "chamadas": [
+        null
+      ],
+      "acertos": 0,
+      "ok": false
+    },
+    {
+      "pedido": "Abre uma oportunidade juntando os sinais s-2026-0003 e s-2026-0007.",
+      "esperado": "oportunidade",
+      "chamadas": [
+        null
+      ],
+      "acertos": 0,
+      "ok": false
+    },
+    {
+      "pedido": "Testa rápido se a OP-0002 para em pé.",
+      "esperado": "kill",
+      "chamadas": [
+        null
+      ],
+      "acertos": 0,
+      "ok": false
+    },
+    {
+      "pedido": "Roda o kill barato da OP-0001.",
+      "esperado": "kill",
+      "chamadas": [
+        null
+      ],
+      "acertos": 0,
+      "ok": false
+    },
+    {
+      "pedido": "Aprofunda a OP-0003 e me dá o veredito.",
+      "esperado": "validar",
+      "chamadas": [
+        null
+      ],
+      "acertos": 0,
+      "ok": false
+    },
+    {
+      "pedido": "Como eu testo a OP-0001 com clientes de verdade?",
+      "esperado": "teste",
+      "chamadas": [
+        null
+      ],
+      "acertos": 0,
+      "ok": false
+    },
+    {
+      "pedido": "Fiz o teste t-2026-0001: 3 de 20 sócios pagaram o depósito.",
+      "esperado": "resultado",
+      "chamadas": [
+        null
+      ],
+      "acertos": 0,
+      "ok": false
+    },
+    {
+      "pedido": "O que eu faço essa semana?",
+      "esperado": "portfolio",
+      "chamadas": [
+        null
+      ],
+      "acertos": 0,
+      "ok": false
+    },
+    {
+      "pedido": "O harness está acertando as previsões dele?",
+      "esperado": "calibrar",
+      "chamadas": [
+        null
+      ],
+      "acertos": 0,
+      "ok": false
+    },
+    {
+      "pedido": "Quanto custa o plano básico da Contabilizei hoje?",
+      "esperado": null,
+      "chamadas": [
+        null
+      ],
+      "acertos": 1,
+      "ok": true
+    },
+    {
+      "pedido": "Explica o que é o Fator R do Simples Nacional.",
+      "esperado": null,
+      "chamadas": [
+        null
+      ],
+      "acertos": 1,
+      "ok": true
+    },
+    {
+      "pedido": "Corrige o teste que está falhando em tests/unit.",
+      "esperado": null,
+      "chamadas": [
+        null
+      ],
+      "acertos": 1,
+      "ok": true
+    },
+    {
+      "pedido": "Qual a diferença entre a trilha M e a trilha S?",
+      "esperado": null,
+      "chamadas": [
+        null
+      ],
+      "acertos": 1,
+      "ok": true
+    },
+    {
+      "pedido": "Atualiza o README com a seção de instalação.",
+      "esperado": null,
+      "chamadas": [
+        null
+      ],
+      "acertos": 1,
+      "ok": true
+    },
+    {
+      "pedido": "Me explica o que o juiz faz no /validar.",
+      "esperado": null,
+      "chamadas": [
+        null
+      ],
+      "acertos": 1,
+      "ok": true
+    },
+    {
+      "pedido": "Quantos fatos já temos registrados?",
+      "esperado": null,
+      "chamadas": [
+        null
+      ],
+      "acertos": 1,
+      "ok": true
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "oportunidade": "OP-0001",
+  "criado_em": "2026-09-24",
+  "trilha": "S",
+  "pacote": "pacote-servico-ia",
+  "pergunta_neutralizada": "Prestadores de serviço optantes pelo Simples Nacional pagam por um serviço que emite a NFS-e no padrão nacional em seu nome ou os ajuda a se adequar a ele, dada a obrigatoriedade a partir de 2026 e relatos de instabilidade do sistema?",
+  "tese_de_terceiro": "Um terceiro propõe que existe demanda paga entre prestadores de serviço optantes do Simples Nacional por um serviço que emita ou garanta a emissão da NFS-e no padrão nacional em seu nome, aproveitando a obrigatoriedade a partir de 2026 e relatos de instabilidade do sistema nacional de NFS-e.",
+  "premissas_criticas": [
+    "A emissão da NFS-e no padrão nacional é de fato obrigatória para prestadores de serviço optantes do Simples Nacional a partir de 2026, e não apenas para outros regimes ou grandes empresas.",
+    "O sistema nacional de NFS-e (ou a migração municipal a ele) está de fato instável a ponto de gerar fricção suficiente para o prestador pagar por ajuda externa.",
+    "Os prestadores afetados não têm já embutida no que pagam hoje (contador, ERP, emissor gratuito do governo) uma solução que resolva o problema sem custo adicional relevante.",
+    "Existe canal alcançável e barato para vender a um público pulverizado de pequenos prestadores de serviço com ticket historicamente baixo.",
+    "A complexidade e a instabilidade da transição justificam um componente humano de suporte (trilha S) que o cliente pagaria além de uma ferramenta de autoatendimento."
+  ],
+  "condicoes_barreira": [
+    "Prestadores do Simples, que em geral já pagam um contador, aceitam pagar separadamente por algo que poderiam esperar que o contador ou o ERP já resolva dentro da mensalidade existente.",
+    "O ticket que um prestador pequeno do Simples pagaria por isso (historicamente baixo em emissores de nota) sustenta margem de 60% ou mais depois das horas de um operador humano tratando exceções de uma norma instável.",
+    "Não existem já dezenas de emissores de NFS-e, ERPs ou plataformas contábeis (ex.: emissor nacional gratuito da Receita, Focus NFe, eNotas, Bling, Conta Azul, Omie e afins) anunciando suporte ao padrão nacional, o que tornaria a oferta uma commodity.",
+    "A obrigatoriedade a partir de 2026 e a instabilidade do sistema citadas pelo usuário são fatos verificáveis em norma ou notícia, e não uma impressão isolada.",
+    "Existe uma população relevante de prestadores de serviço do Simples que hoje emite NFS-e e seria afetada pela mudança de padrão."
+  ],
+  "alegacoes_kill": [
+    {
+      "alegacao": "A emissão da NFS-e no padrão nacional é obrigatória para prestadores de serviço optantes do Simples Nacional a partir de 2026.",
+      "dano_se_falsa": "Sem obrigatoriedade real ou com prazo distante/incerto, some o gatilho regulatório que sustenta toda a urgência da tese.",
+      "como_verificar": "Buscar a norma oficial (Comitê Gestor da NFS-e / Receita Federal / Confederação Nacional de Municípios) e notícias especializadas sobre o cronograma de adesão obrigatória do Simples Nacional ao padrão nacional da NFS-e."
+    },
+    {
+      "alegacao": "Já existem ferramentas gratuitas ou de baixo custo (emissor nacional gratuito do governo, ou SaaS como Focus NFe, eNotas, Nota Certa, Bling, Conta Azul, Omie, entre outros) que emitem a NFS-e no padrão nacional por menos de R$50-100 por mês.",
+      "dano_se_falsa": "Se essa alternativa barata e amplamente disponível existir, o diferencial de um novo serviço cai; se não existir, reforça a lacuna que sustenta a tese.",
+      "como_verificar": "Buscar preços e recursos de emissores de NFS-e e ERPs para pequenas empresas quanto a suporte ao padrão nacional, incluindo a existência e as condições do emissor gratuito oficial."
+    },
+    {
+      "alegacao": "Há relatos correntes (2025-2026) de instabilidade ou problemas técnicos no sistema nacional de NFS-e, reportados por contadores, prestadores ou imprensa especializada.",
+      "dano_se_falsa": "Sem instabilidade real e reportada, cai a premissa de dor aguda que levaria alguém a pagar por ajuda extra em vez de esperar o sistema normalizar.",
+      "como_verificar": "Buscar notícias, fóruns de contabilidade e canais oficiais sobre falhas, indisponibilidade ou reclamações recentes sobre o sistema nacional de NFS-e."
+    }
+  ],
+  "taxa_base": {
+    "p": 0.1,
+    "classe_referencia": "serviços de compliance fiscal por assinatura para pequenos negócios no Brasil (emissores de nota fiscal, obrigações acessórias) que chegam a R$15k/mês de receita com margem líquida de 60% ou mais operados por uma pessoa",
+    "justificativa": "O mercado de emissão de notas fiscais no Brasil já tem múltiplos players SaaS estabelecidos e baratos, o que historicamente comoditiza rápido qualquer nova entrada de compliance fiscal para pequenas empresas; prior largo e declarado por falta de taxa publicada específica para trilha S (metodo-julgamento, pacote-servico-ia)."
+  },
+  "teto": "S: clientes alcancaveis x ticket x margem apos horas. Com ticket baixo tipico de emissor de nota (~R$50/mes), R$15.000/mes exige ~300 clientes pagantes, incompativel com suporte humano dentro de 80h/mes (0,27h/cliente/mes). Com ticket maior (~R$300/mes) vendido a escritorios de contabilidade que atendem varios clientes (B2B2B), exige ~50 contas, mais plausivel mas ainda alto para validar cedo."
+}

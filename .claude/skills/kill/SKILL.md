@@ -12,7 +12,9 @@ Siga as etapas 0 e 1 do `metodo-julgamento`.
 ## Passos
 
 1. **Leia o cartão** (`python3 -m harness obter cartao OP-xxxx`) e o pacote da trilha em
-   `.claude/skills/metodo-julgamento/references/`.
+   `.claude/skills/metodo-julgamento/references/`. Se a pasta da oportunidade já tem
+   `contrato.json` (execução anterior interrompida), não regrave: leia o contrato e siga
+   do passo 5.
 2. **Enquadre** (etapa 0): tese de terceiro, premissas críticas, condições-barreira da
    menos para a mais crível, taxa-base com classe de referência, conta do teto da
    trilha.
