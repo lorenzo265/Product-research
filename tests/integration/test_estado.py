@@ -126,3 +126,32 @@ def test_cartao_sem_frontmatter_e_corrompido(repo):
 
     with pytest.raises(ArquivoCorrompido, match="frontmatter"):
         repo.ler_cartoes()
+
+
+def test_atualizar_cartao_muda_frontmatter_e_anota_historico(repo):
+    repo.criar_cartao(_sem_id(CARTAO), "\n## Dor\n", HOJE)
+
+    campos = repo.atualizar_cartao("OP-0001", {"estagio": "veredito"}, "kill barato passou", HOJE)
+
+    assert campos["estagio"] == "veredito"
+    cartao = repo.ler_cartoes()[0]
+    assert cartao.campos["estagio"] == "veredito"
+    assert "- 2026-09-24: kill barato passou" in cartao.corpo
+
+
+def test_atualizar_cartao_rejeita_estagio_invalido(repo):
+    repo.criar_cartao(_sem_id(CARTAO), "", HOJE)
+
+    with pytest.raises(RegistroInvalido):
+        repo.atualizar_cartao("OP-0001", {"estagio": "sonho"}, "x", HOJE)
+
+
+def test_escritas_em_paralelo_nao_repetem_id(repo):
+    from concurrent.futures import ThreadPoolExecutor
+
+    with ThreadPoolExecutor(max_workers=8) as executor:
+        ids = list(
+            executor.map(lambda _: repo.adicionar("fato", _sem_id(FATO), HOJE)["id"], range(16))
+        )
+
+    assert len(set(ids)) == 16

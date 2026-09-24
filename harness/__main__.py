@@ -90,7 +90,10 @@ def _cmd_adicionar(args: argparse.Namespace, repositorio: Repositorio, hoje: dat
 
 def _cmd_atualizar(args: argparse.Namespace, repositorio: Repositorio, hoje: date) -> int:
     mudancas = _json_do_argumento(args.json)
-    atualizado = repositorio.atualizar(args.tipo, args.id, mudancas, args.motivo, hoje)
+    if args.tipo == "cartao":
+        atualizado = repositorio.atualizar_cartao(args.id, mudancas, args.motivo, hoje)
+    else:
+        atualizado = repositorio.atualizar(args.tipo, args.id, mudancas, args.motivo, hoje)
     print(json.dumps(atualizado, ensure_ascii=False, indent=2))
     return SAIDA_OK
 

@@ -96,3 +96,30 @@ def test_novo_cartao_cria_pasta(raiz, capsys):
 
     assert codigo == SAIDA_OK
     assert capsys.readouterr().out.strip() == "oportunidades/OP-0001-teste-de-cartao/cartao.md"
+
+
+def test_atualizar_cartao_pela_cli(raiz, capsys):
+    campos = {
+        "titulo": "Cartão",
+        "trilha": "M",
+        "estagio": "oportunidade",
+        "status": "ativa",
+        "pergunta_neutralizada": "Existe demanda paga por X no segmento Y?",
+        "quem_sofre": "a",
+        "quem_paga": "b",
+        "workaround": "c",
+        "lentes": [1],
+        "sinais": [],
+        "travas": [],
+        "proximo_passo": "kill barato",
+        "revisar_em": "2026-10-24",
+    }
+    _rodar(raiz, "novo-cartao", json.dumps(campos))
+    capsys.readouterr()
+
+    codigo = _rodar(
+        raiz, "atualizar", "cartao", "OP-0001", '{"estagio": "kill_barato"}', "--motivo", "início"
+    )
+
+    assert codigo == SAIDA_OK
+    assert '"estagio": "kill_barato"' in capsys.readouterr().out
