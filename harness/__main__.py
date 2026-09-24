@@ -11,6 +11,7 @@ Comandos:
     pacote-juiz   monta a entrada cega do juiz e imprime a mensagem a entregar a ele
     registrar-veredito  grava o JSON do juiz (encolhe p, liga ao cartão)
     conferir-trecho  baixa a fonte e confere se o trecho literal está nela
+    regra-teste   tabela de GO/KILL de um teste com comprador (SPRT ou Beta-Binomial)
     portfolio     painel de todas as oportunidades e pendências
     proteger-estado  hook PreToolUse: bloqueia edição direta de arquivos de estado
     calibracao    Brier, intervalo e calibração por faixa das previsões resolvidas
@@ -30,6 +31,7 @@ from harness.estado import DIR_OPORTUNIDADES, Repositorio
 from harness.exceptions import HarnessError
 from harness.julgamento import montar_pacote_juiz
 from harness.portfolio import montar_painel
+from harness.regras_teste import fronteiras_bayes, fronteiras_sprt
 from harness.validacao import ERRO, validar
 from harness.verificacao import conferir_trecho
 
@@ -195,6 +197,26 @@ def _cmd_proteger_estado(args: argparse.Namespace, repositorio: Repositorio, hoj
     return SAIDA_BLOQUEIO_HOOK
 
 
+def _cmd_regra_teste(args: argparse.Namespace, repositorio: Repositorio, hoje: date) -> int:
+    if args.tipo == "sequencial":
+        if args.p0 is None or args.p1 is None:
+            raise HarnessError("sequencial precisa de --p0 e --p1")
+        tamanhos = args.tamanhos or [100, 200, 300, 500, 750, 1000]
+        fronteiras = fronteiras_sprt(args.p0, args.p1, tamanhos)
+        print(f"SPRT p0={args.p0} p1={args.p1} (alfa 5%, beta 20%)")
+    else:
+        if args.alvo is None or args.n_max is None:
+            raise HarnessError("bayes precisa de --alvo e --n-max")
+        fronteiras = fronteiras_bayes(args.alvo, args.n_max)
+        print(f"Beta-Binomial: GO se P(taxa > {args.alvo}) >= 0.8; KILL se <= 0.2")
+    print("n\tGO com sucessos >=\tKILL com sucessos <=")
+    for fronteira in fronteiras:
+        go = "—" if fronteira.go_a_partir_de is None else fronteira.go_a_partir_de
+        kill = "—" if fronteira.kill_ate is None else fronteira.kill_ate
+        print(f"{fronteira.n}\t{go}\t{kill}")
+    return SAIDA_OK
+
+
 def _cmd_portfolio(args: argparse.Namespace, repositorio: Repositorio, hoje: date) -> int:
     print(montar_painel(repositorio.snapshot(), hoje))
     return SAIDA_OK
@@ -313,6 +335,15 @@ def _parser() -> argparse.ArgumentParser:
 
     proteger = sub.add_parser("proteger-estado", help="hook PreToolUse de proteção do estado")
     proteger.set_defaults(executar=_cmd_proteger_estado)
+
+    regra = sub.add_parser("regra-teste", help="tabela de GO/KILL de um teste com comprador")
+    regra.add_argument("tipo", choices=["sequencial", "bayes"])
+    regra.add_argument("--p0", type=float, help="sequencial: taxa que significa 'não funciona'")
+    regra.add_argument("--p1", type=float, help="sequencial: taxa que significa 'funciona'")
+    regra.add_argument("--tamanhos", type=int, nargs="*", help="sequencial: amostras a listar")
+    regra.add_argument("--alvo", type=float, help="bayes: taxa mínima de interesse")
+    regra.add_argument("--n-max", type=int, help="bayes: contatos máximos")
+    regra.set_defaults(executar=_cmd_regra_teste)
 
     portfolio = sub.add_parser("portfolio", help="painel do portfólio")
     portfolio.set_defaults(executar=_cmd_portfolio)
