@@ -1,6 +1,6 @@
 ---
 name: validar
-description: Roda a validação de mesa completa de uma oportunidade do harness que passou no kill barato. Sequência dossiê → memorandos a favor e contra → verificação de citações → juiz isolado → veredito registrado com probabilidades e previsões. Use quando o usuário pedir para aprofundar, validar, analisar ou dar veredito sobre uma OP.
+description: Roda a validação de mesa completa de uma oportunidade do harness que passou no kill barato. Sequência dossiê → verificação de citações → memorandos a favor e contra → juiz isolado → veredito registrado com probabilidades e previsões. Use quando o usuário pedir para aprofundar, validar, analisar ou dar veredito sobre uma OP.
 argument-hint: "OP-NNNN"
 ---
 

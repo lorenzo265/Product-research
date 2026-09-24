@@ -1,6 +1,6 @@
 ---
 name: metodo-julgamento
-description: Método de julgamento calibrado do harness de oportunidades, organizado por papel. Cobre o enquadramento (pergunta neutralizada, premissas críticas, condições-barreira, taxa-base), o contrato de validação, o kill barato e a sequência dossiê → memorandos → verificação → juiz isolado → veredito com probabilidades e registro para calibração. Use quando for validar uma tese ou oportunidade, rodar o kill barato, preparar o juiz ou registrar um veredito neste repositório. Os critérios de cada trilha estão em references/ (pacote-mercado para G, pacote-micro-saas para M, pacote-servico-ia para S).
+description: Método de julgamento calibrado do harness de oportunidades, organizado por papel. Cobre o enquadramento (pergunta neutralizada, premissas críticas, condições-barreira, taxa-base), o contrato de validação, o kill barato e a sequência dossiê → verificação → memorandos → juiz isolado → veredito com probabilidades e registro para calibração. Use quando for validar uma tese ou oportunidade, rodar o kill barato, preparar o juiz ou registrar um veredito neste repositório. Os critérios de cada trilha estão em references/ (pacote-mercado para G, pacote-micro-saas para M, pacote-servico-ia para S).
 user-invocable: false
 ---
 
