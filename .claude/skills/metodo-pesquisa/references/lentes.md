@@ -144,6 +144,9 @@ O mesmo pedido recorrente em marketplaces de freelance: a demanda e o preço já
 ## Lente 11 · Dor declarada com cifra
 
 "Alguém conhece ferramenta que…", "pago R$X e ainda…", "gasto N horas por semana com…".
+- **Coletor:** `python3 -m harness coletar-pncp --de <data> --ate <data> --termos <palavras>`
+  lista compras públicas cujo objeto menciona os termos, com valor estimado, órgão e UF
+  (janelas de 1–3 dias; a API às vezes falha no meio, e a coleta parcial é declarada).
 - **Fontes com cifra por construção (preferir):** PNCP (valor estimado obrigatório);
   consumidor.gov.br (contagem por empresa); 99Freelas (orçamento).
 - **Fontes de hipótese (sem cifra por construção):** comentários do YouTube em tutoriais

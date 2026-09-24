@@ -13,6 +13,7 @@ Comandos:
     conferir-trecho  baixa a fonte e confere se o trecho literal está nela
     regra-teste   tabela de GO/KILL de um teste com comprador (SPRT ou Beta-Binomial)
     coletar-yc    lente 7: empresas da YC ativas sem presença no Brasil (candidatos)
+    coletar-pncp  lentes 11/4/6: compras públicas cujo objeto menciona os termos
     portfolio     painel de todas as oportunidades e pendências
     proteger-estado  hook PreToolUse: bloqueia edição direta de arquivos de estado
     calibracao    Brier, intervalo e calibração por faixa das previsões resolvidas
@@ -28,6 +29,7 @@ from datetime import date
 from pathlib import Path
 
 from harness.calibracao import calibrar, encolher, extrair_previsoes, vencidas_sem_resultado
+from harness.coletores.pncp import ConsultaPncp, coletar_compras, resumir
 from harness.coletores.yc import baixar_empresas, filtrar_candidatos
 from harness.estado import DIR_OPORTUNIDADES, Repositorio
 from harness.exceptions import HarnessError
@@ -243,6 +245,37 @@ def _cmd_coletar_yc(args: argparse.Namespace, repositorio: Repositorio, hoje: da
     return SAIDA_OK
 
 
+def _cmd_coletar_pncp(args: argparse.Namespace, repositorio: Repositorio, hoje: date) -> int:
+    consulta = ConsultaPncp(
+        inicio=date.fromisoformat(args.de),
+        fim=date.fromisoformat(args.ate),
+        termos=tuple(args.termos),
+        modalidades=tuple(args.modalidades),
+        max_paginas=args.max_paginas,
+    )
+    resultado = coletar_compras(consulta)
+    compras, lidos = resultado.compras, resultado.lidos
+    destino = repositorio.raiz / DIR_COLETAS / f"pncp-{hoje.isoformat()}-{args.de}-{args.ate}.json"
+    destino.parent.mkdir(parents=True, exist_ok=True)
+    resumo = resumir(compras)
+    conteudo = {
+        "consulta": vars(args) | {"executar": None},
+        "resumo": resumo,
+        "compras": [c.como_dict() for c in compras],
+    }
+    destino.write_text(
+        json.dumps(conteudo, ensure_ascii=False, indent=2, default=str) + "\n", encoding="utf-8"
+    )
+    for compra in compras[: args.limite]:
+        valor = f"R${compra.valor_estimado:,.2f}" if compra.valor_estimado is not None else "—"
+        print(f"{compra.publicada_em}\t{compra.uf}\t{valor}\t{compra.objeto[:110]}")
+    for falha in resultado.falhas:
+        print(f"coleta parcial: {falha}")
+    print(f"{lidos} compras lidas · {json.dumps(resumo, ensure_ascii=False)}")
+    print(f"lista completa em {destino.relative_to(repositorio.raiz)}")
+    return SAIDA_OK
+
+
 def _cmd_portfolio(args: argparse.Namespace, repositorio: Repositorio, hoje: date) -> int:
     print(montar_painel(repositorio.snapshot(), hoje))
     return SAIDA_OK
@@ -378,6 +411,23 @@ def _parser() -> argparse.ArgumentParser:
     yc.add_argument("--incluir-latam", action="store_true", help="manter quem já está na LatAm")
     yc.add_argument("--limite", type=int, default=30, help="quantos mostrar no terminal")
     yc.set_defaults(executar=_cmd_coletar_yc)
+
+    pncp = sub.add_parser("coletar-pncp", help="compras públicas por tema (PNCP)")
+    pncp.add_argument("--de", required=True, help="data inicial ISO")
+    pncp.add_argument("--ate", required=True, help="data final ISO (janelas curtas)")
+    pncp.add_argument("--termos", nargs="+", required=True, help="palavras no objeto da compra")
+    pncp.add_argument(
+        "--modalidades",
+        nargs="*",
+        type=int,
+        default=[6, 8],
+        help="6 = pregão eletrônico, 8 = dispensa",
+    )
+    pncp.add_argument(
+        "--max-paginas", type=int, default=20, help="teto por modalidade (50 por página)"
+    )
+    pncp.add_argument("--limite", type=int, default=20, help="quantas mostrar no terminal")
+    pncp.set_defaults(executar=_cmd_coletar_pncp)
 
     portfolio = sub.add_parser("portfolio", help="painel do portfólio")
     portfolio.set_defaults(executar=_cmd_portfolio)
