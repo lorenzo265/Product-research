@@ -29,6 +29,7 @@ convention = "google"
 [tool.ruff.lint.per-file-ignores]
 "tests/**" = ["D1", "S", "PLR2004", "PLR0913"]
 "harness/__main__.py" = ["T201"]
+"evals/**" = ["T201"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

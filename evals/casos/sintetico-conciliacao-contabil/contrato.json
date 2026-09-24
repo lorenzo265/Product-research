@@ -1,0 +1,41 @@
+{
+  "oportunidade": "OP-9001",
+  "criado_em": "2026-09-01",
+  "trilha": "M",
+  "pacote": "pacote-micro-saas",
+  "pergunta_neutralizada": "Escritórios contábeis de até 10 pessoas pagam R$150+/mês por conciliação bancária automatizada que acerte pagamentos agrupados?",
+  "tese_de_terceiro": "Um terceiro propõe um micro-SaaS de conciliação bancária para escritórios contábeis de até 10 pessoas, a R$199/mês, focado nos casos em que o ERP erra (boletos agrupados).",
+  "premissas_criticas": [
+    "a conciliação do ERP falha em casos frequentes",
+    "o escritório paga à parte do ERP",
+    "há canal para alcançar escritórios pequenos"
+  ],
+  "condicoes_barreira": [
+    "o sócio paga R$199/mês além do ERP",
+    "o canal alcança ~60–130 escritórios qualificados por mês",
+    "o ERP não corrige o erro em 12 meses"
+  ],
+  "alegacoes_kill": [
+    {
+      "alegacao": "Os ERPs contábeis líderes não resolvem conciliação de pagamentos agrupados",
+      "dano_se_falsa": "fatal",
+      "como_verificar": "páginas de produto e fóruns"
+    },
+    {
+      "alegacao": "Escritórios pequenos ainda conciliam à mão",
+      "dano_se_falsa": "alto",
+      "como_verificar": "pesquisa setorial e vagas"
+    },
+    {
+      "alegacao": "Não existe ferramenta brasileira focada nisso",
+      "dano_se_falsa": "médio",
+      "como_verificar": "busca por concorrentes"
+    }
+  ],
+  "taxa_base": {
+    "p": 0.1,
+    "classe_referencia": "micro-SaaS B2B brasileiro que já fatura, R$30k MRR em 18 meses",
+    "justificativa": "R-03: 15–25% algum dia, <10% em 18 meses"
+  },
+  "teto": "R$199 × 4% de churn: ~151 pagantes; ~6–13 novos/mês; 60–130 ofertas qualificadas/mês a p1=10%"
+}
