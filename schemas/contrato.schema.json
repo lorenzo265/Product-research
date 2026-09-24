@@ -4,44 +4,110 @@
   "title": "Contrato de validação (oportunidades/<pasta>/contrato.json)",
   "description": "Gravado uma vez, antes da coleta: pergunta neutra, taxa-base, condições-barreira e as alegações do kill barato. Depois disso não muda; mudar a régua depois de ver o dado é o que o contrato impede.",
   "type": "object",
-  "required": ["oportunidade", "criado_em", "trilha", "pacote", "pergunta_neutralizada", "tese_de_terceiro",
-               "premissas_criticas", "condicoes_barreira", "alegacoes_kill", "taxa_base"],
+  "required": [
+    "oportunidade",
+    "criado_em",
+    "trilha",
+    "pacote",
+    "pergunta_neutralizada",
+    "tese_de_terceiro",
+    "premissas_criticas",
+    "condicoes_barreira",
+    "alegacoes_kill",
+    "taxa_base"
+  ],
   "additionalProperties": false,
   "properties": {
-    "oportunidade": {"type": "string", "pattern": "^OP-\\d{4}$"},
-    "criado_em": {"type": "string", "format": "date"},
-    "trilha": {"enum": ["G", "M", "S"]},
-    "pacote": {"enum": ["pacote-mercado", "pacote-micro-saas", "pacote-servico-ia"]},
-    "pergunta_neutralizada": {"type": "string", "minLength": 10},
+    "oportunidade": {
+      "type": "string",
+      "pattern": "^OP-\\d{4}$"
+    },
+    "criado_em": {
+      "type": "string",
+      "format": "date"
+    },
+    "trilha": {
+      "enum": [
+        "G",
+        "M",
+        "S"
+      ]
+    },
+    "pacote": {
+      "enum": [
+        "pacote-mercado",
+        "pacote-micro-saas",
+        "pacote-servico-ia"
+      ]
+    },
+    "pergunta_neutralizada": {
+      "type": "string",
+      "minLength": 10
+    },
     "tese_de_terceiro": {
       "description": "A tese escrita como 'submetida por um terceiro', sem marcadores de convicção.",
-      "type": "string", "minLength": 10
+      "type": "string",
+      "minLength": 10
     },
-    "premissas_criticas": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "premissas_criticas": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
     "condicoes_barreira": {
       "description": "O que teria de ser verdade (cliente, mercado, competição, capacidades, economia), começando pelas menos críveis.",
-      "type": "array", "minItems": 1, "items": {"type": "string"}
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
     },
     "alegacoes_kill": {
-      "description": "As 3 alegações mais baratas de falsificar com maior dano à tese se falsas.",
-      "type": "array", "minItems": 1, "maxItems": 5,
+      "description": "As 3 alegações mais baratas de falsificar com maior dano à tese se falsas. Cada uma é escrita como condição que a tese precisa que seja verdadeira, para que 'caiu' sempre signifique dano à tese.",
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 5,
       "items": {
         "type": "object",
-        "required": ["alegacao", "dano_se_falsa", "como_verificar"],
+        "required": [
+          "alegacao",
+          "dano_se_falsa",
+          "como_verificar"
+        ],
         "properties": {
-          "alegacao": {"type": "string"},
-          "dano_se_falsa": {"type": "string"},
-          "como_verificar": {"type": "string"}
+          "alegacao": {
+            "type": "string"
+          },
+          "dano_se_falsa": {
+            "type": "string"
+          },
+          "como_verificar": {
+            "type": "string"
+          }
         }
       }
     },
     "taxa_base": {
       "type": "object",
-      "required": ["p", "classe_referencia", "justificativa"],
+      "required": [
+        "p",
+        "classe_referencia",
+        "justificativa"
+      ],
       "properties": {
-        "p": {"type": "number", "exclusiveMinimum": 0, "exclusiveMaximum": 1},
-        "classe_referencia": {"type": "string"},
-        "justificativa": {"type": "string"}
+        "p": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "exclusiveMaximum": 1
+        },
+        "classe_referencia": {
+          "type": "string"
+        },
+        "justificativa": {
+          "type": "string"
+        }
       }
     },
     "teto": {

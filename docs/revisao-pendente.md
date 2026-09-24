@@ -14,7 +14,9 @@
 4. **R-03**, **R-04**, **R-17** e **R-18**: réguas das trilhas M e S. São as que mais
    mudam o que o harness aprova ou mata.
 5. **R-14**: ligar ou não MCPs de busca e de dados do governo.
-6. **A-02** e **A-07** em `decisoes.md`: suas horas e caixa para testes, e suas teses
+6. **R-25**: a primeira oportunidade real (OP-0001, NFS-e) passou no kill barato; a
+   decisão de validar é sua.
+7. **A-02** e **A-07** em `decisoes.md`: suas horas e caixa para testes, e suas teses
    antigas para servir de casos de eval.
 
 O restante confirma ou refina o desenho que você já aprovou.
@@ -310,6 +312,30 @@ cartão e gravou o contrato, e parou antes da verificação. Retomei depois do r
 
 **Implicação:** em uso normal (um comando pesado por sessão) isso não deve acontecer.
 Rodadas grandes de eval ou radar amplo devem ser espaçadas ou agendadas.
+
+### R-25 · Primeira oportunidade real: OP-0001, NFS-e nacional
+**O que rodou:** `/oportunidade` + `/kill` sobre a sua frase "tenho quase certeza que dá
+dinheiro ajudar prestadores do Simples a emitir NFS-e no padrão nacional". Rodou sem você
+(headless), com as suposições anotadas no cartão.
+
+**Resultado do kill barato:**
+- sustentada: a obrigatoriedade para o Simples (Resolução CGSN 191/2026, adiada para
+  1/11/2026);
+- sustentada: a instabilidade do sistema (a própria Receita reconheceu em jan/2026);
+- **caiu**: "não existe alternativa gratuita ou barata". O Emissor Nacional é gratuito,
+  e Conta Azul e Omie já emitem no padrão.
+
+Com 1 de 3 caindo, a regra dá GO para `/validar`, mas a comoditização (KS4) entra
+pressionada. Trilha escolhida: S. Custo total: ~US$1,70.
+
+**Erro encontrado e corrigido:** o contrato escreveu a alegação 2 invertida, e a
+primeira contagem deu "0 de 3 caíram". Registro em `evals/analise-de-erros.md`.
+
+**Ressalva:** os 9 fatos vieram só de resumos de busca, porque a rede da nuvem bloqueia a
+leitura das páginas (R-02).
+
+**Decisão sua:** rodar `/validar OP-0001`, reformular (ex.: vender a escritórios
+contábeis que atendem muitos prestadores), ou matar.
 
 ## Médio impacto
 

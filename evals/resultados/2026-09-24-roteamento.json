@@ -1,6 +1,6 @@
 {
-  "aprovado": false,
-  "custo_total_usd": 0.13,
+  "aprovado": true,
+  "custo_total_usd": 1.28,
   "casos": [
     {
       "pedido": "Quais oportunidades de micro-SaaS existem para clínicas odontológicas?",
@@ -24,82 +24,82 @@
       "pedido": "Tive uma ideia: um serviço com IA que organiza os documentos que os clientes mandam para o contador.",
       "esperado": "oportunidade",
       "chamadas": [
-        null
+        "oportunidade"
       ],
-      "acertos": 0,
-      "ok": false
+      "acertos": 1,
+      "ok": true
     },
     {
       "pedido": "Abre uma oportunidade juntando os sinais s-2026-0003 e s-2026-0007.",
       "esperado": "oportunidade",
       "chamadas": [
-        null
+        "oportunidade"
       ],
-      "acertos": 0,
-      "ok": false
+      "acertos": 1,
+      "ok": true
     },
     {
       "pedido": "Testa rápido se a OP-0002 para em pé.",
       "esperado": "kill",
       "chamadas": [
-        null
+        "kill"
       ],
-      "acertos": 0,
-      "ok": false
+      "acertos": 1,
+      "ok": true
     },
     {
       "pedido": "Roda o kill barato da OP-0001.",
       "esperado": "kill",
       "chamadas": [
-        null
+        "kill"
       ],
-      "acertos": 0,
-      "ok": false
+      "acertos": 1,
+      "ok": true
     },
     {
       "pedido": "Aprofunda a OP-0003 e me dá o veredito.",
       "esperado": "validar",
       "chamadas": [
-        null
+        "validar"
       ],
-      "acertos": 0,
-      "ok": false
+      "acertos": 1,
+      "ok": true
     },
     {
       "pedido": "Como eu testo a OP-0001 com clientes de verdade?",
       "esperado": "teste",
       "chamadas": [
-        null
+        "teste"
       ],
-      "acertos": 0,
-      "ok": false
+      "acertos": 1,
+      "ok": true
     },
     {
       "pedido": "Fiz o teste t-2026-0001: 3 de 20 sócios pagaram o depósito.",
       "esperado": "resultado",
       "chamadas": [
-        null
+        "resultado"
       ],
-      "acertos": 0,
-      "ok": false
+      "acertos": 1,
+      "ok": true
     },
     {
       "pedido": "O que eu faço essa semana?",
       "esperado": "portfolio",
       "chamadas": [
-        null
+        "portfolio"
       ],
-      "acertos": 0,
-      "ok": false
+      "acertos": 1,
+      "ok": true
     },
     {
       "pedido": "O harness está acertando as previsões dele?",
       "esperado": "calibrar",
       "chamadas": [
-        null
+        "calibrar"
       ],
-      "acertos": 0,
-      "ok": false
+      "acertos": 1,
+      "ok": true
     },
     {
       "pedido": "Quanto custa o plano básico da Contabilizei hoje?",

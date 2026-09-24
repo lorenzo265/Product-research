@@ -1,7 +1,7 @@
 ---
 titulo: Emissão de NFS-e no padrão nacional para prestadores do Simples Nacional
 trilha: S
-estagio: kill_barato
+estagio: veredito
 status: ativa
 origem: ideia do usuário
 pergunta_neutralizada: Prestadores de serviço optantes pelo Simples Nacional pagam
@@ -19,11 +19,13 @@ custo_workaround: null
 lentes: []
 sinais: []
 travas: []
-proximo_passo: kill barato
+proximo_passo: validar (validação de mesa completa)
 revisar_em: '2026-10-08'
 id: OP-0001
 criado_em: '2026-09-24'
 atualizado_em: '2026-09-24'
+vereditos:
+- v-2026-0001
 ---
 
 ## Dor
@@ -35,3 +37,6 @@ atualizado_em: '2026-09-24'
 ## Histórico
 - 2026-09-24: Rodado sem interação do usuário (ausente). Suposições registradas: (1) trilha escolhida automaticamente como S (serviço com IA) em vez de M, porque a obrigatoriedade da NFS-e nacional é recente/instável em 2026 e o valor inicial provavelmente vem de suporte humano a exceções e mudanças de regra, não de um software pronto - pode subir para M se o padrão estabilizar e um canal ficar claro; (2) quem_paga e workaround marcados como 'a verificar', não confirmados com fonte; (3) revisar_em fixado em 14 dias (2026-10-08) por padrão da skill oportunidade, sem confirmação do usuário. Próximo passo: /kill.
 - 2026-09-24: contrato gravado; rodando sem interação do usuário (ausente) - premissas, condições-barreira, taxa-base (p=0.1, prior largo trilha S) e teto decididos por mim, ver contrato.json
+- 2026-09-24: veredito v-2026-0001 (kill_barato): GO
+- 2026-09-24: kill barato: 0 de 3 alegações caíram (todas sustentadas) -> GO, segue para /validar
+- 2026-09-24: Análise de erros (Claude, 24/09): a alegação 2 do contrato foi escrita invertida (sua confirmação enfraquece a tese). Relida como 'não existe alternativa gratuita ou barata', ela caiu: Emissor Nacional gratuito (f-2026-0003) e ERPs com suporte nativo (f-2026-0008). Contagem correta: 1 de 3 caiu; a regra continua GO para /validar, mas a dimensão 'comoditização e plataforma' (KS4) entra na validação já pressionada. Os 9 fatos têm leitura só por resumo de busca (rede bloqueada na nuvem).

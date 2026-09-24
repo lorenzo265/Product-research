@@ -14,7 +14,7 @@ acerta.
 | E0 | Integridade do estado | JSONL fora do schema, referência quebrada, fato sem trecho, p fora da faixa | `python3 -m pytest` + hooks | zero | ✅ |
 | E1 | Invariantes do protocolo | Juiz ou memorando com CLAUDE.md, juiz com ferramenta além de leitura, agente que cria agentes, entrada do juiz com arquivo fora da lista | `tests/unit/test_invariantes.py`, `tests/integration/test_julgamento.py` | zero | ✅ parcial (falta checar transcrições reais) |
 | E2 | Citação, camada de código | Trecho literal que não está na página | `python3 -m harness conferir-trecho` | zero | ✅ (precisa de rede) |
-| E3 | Roteamento | Pedido do usuário indo para o comando errado; disparo em dobro com as skills sincronizadas | a construir: 10 pedidos que devem disparar + 10 quase-acertos, 3 execuções cada | baixo | ⏳ |
+| E3 | Roteamento | Pedido do usuário indo para o comando errado; disparo em dobro com as skills sincronizadas | `python3 -m evals.roteamento` (11 pedidos + 7 quase-acertos) | ~US$1,30 por rodada | ✅ 18/18 na 1ª rodada |
 | E4 | Bajulação | Veredito que muda com a convicção do fundador | `python3 -m evals.bajulacao` | ~US$0,70 por execução do juiz | ✅ 1 caso sintético |
 | E5 | Consistência sem gabarito | P(A)+P(não A) longe de 1; paráfrase que muda P | a construir | médio | ⏳ |
 | E6 | Citação, juiz | Fonte que não sustenta a alegação | a construir; o juiz binário precisa de ~100 rótulos seus | baixo em tokens, alto em rótulos | ⏳ |
@@ -51,4 +51,4 @@ congelados das primeiras execuções reais do harness.
   CLAUDE.md.
 - A suíte completa quando mudar o juiz, o modelo ou a versão do Claude Code.
 - A análise de erros (ler 5 execuções reais e anotar o primeiro erro de cada) todo mês,
-  junto com `/calibrar`.
+  junto com `/calibrar`. Registro em `evals/analise-de-erros.md`.

@@ -18,10 +18,17 @@ Siga as etapas 0 e 1 do `metodo-julgamento`.
 2. **Enquadre** (etapa 0): tese de terceiro, premissas críticas, condições-barreira da
    menos para a mais crível, taxa-base com classe de referência, conta do teto da
    trilha.
-3. **Escolha as 3 alegações** mais baratas de falsificar com maior dano se falsas. Boas
-   alegações são factuais e checáveis por busca: "existe ferramenta X que já faz Y por
-   menos de R$Z", "o comprador W tem orçamento para isso", "a norma N obriga até a data
-   D".
+3. **Escolha as 3 alegações** mais baratas de falsificar com maior dano se falsas. Cada
+   alegação é uma **condição que a tese precisa que seja verdadeira**, para que "caiu"
+   sempre signifique "ruim para a tese". Boas alegações são factuais e checáveis por
+   busca: "não existe ferramenta que já faça Y por menos de R$Z", "o comprador W tem
+   orçamento para isso", "a norma N obriga até a data D".
+
+   Antes de gravar, releia cada uma e pergunte: "se a busca confirmar isto, a tese fica
+   mais forte?". Se a resposta for não, a alegação está invertida: reescreva negando.
+   Exemplo real de erro (OP-0001): "já existem ferramentas gratuitas que emitem NFS-e"
+   foi confirmada e contada como "se sustentou", quando na verdade derrubava a
+   premissa de que falta solução barata.
 4. **Grave o contrato** (`python3 -m harness contrato '{...}'`). Mostre ao usuário as 3
    alegações e a taxa-base. O contrato não muda depois.
 5. **Atualize o estágio:**

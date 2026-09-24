@@ -70,8 +70,11 @@ exatamente o que ele impede.
 ## Etapa 1 · Kill barato
 
 Das condições-barreira, extraia as **3 alegações mais baratas de falsificar** (maior dano
-à tese se falsas × menor custo de verificar). Elas entram no contrato. Mande o
-`pesquisador` verificá-las em modo `verificacao`.
+à tese se falsas × menor custo de verificar). Escreva cada uma como condição que a tese
+precisa que seja verdadeira ("não existe alternativa gratuita que…", e não "já existe
+alternativa gratuita que…"): assim "caiu" sempre significa dano à tese e a regra abaixo
+conta certo. Elas entram no contrato. Mande o `pesquisador` verificá-las em modo
+`verificacao`.
 
 - **2 ou mais caem:** a tese volta para reformulação com o que caiu. Não rode a análise
   completa. O cartão registra o motivo; se não houver reformulação plausível, vira
