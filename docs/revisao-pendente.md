@@ -32,9 +32,18 @@ deixá-los prontos para rodar onde a rede permitir.
 **Decisão sua:** (a) liberar os domínios no ambiente de nuvem (lista abaixo); ou (b)
 rodar a coleta no Claude Code da sua máquina e usar a nuvem só para desenvolvimento e
 evals.
-Domínios mínimos para (a): `servicodados.ibge.gov.br`, `queridodiario.ok.org.br`,
-`dadosabertos.rfb.gov.br`, `hn.algolia.com`, `www.reddit.com`, `api.mercadolibre.com`,
-`export.arxiv.org`, `arxiv.org`.
+Domínios para (a), revisados pelo relatório de fontes, que recomenda (a) para as APIs
+oficiais porque as rotinas agendadas rodam com lista de permissão:
+- **coletores da Fase 3:** `pncp.gov.br`, `www.99freelas.com.br`, `consumidor.gov.br`
+  (o yc-oss já funciona via `raw.githubusercontent.com`);
+- **consultas pontuais e Fase 4:** `servicodados.ibge.gov.br`,
+  `api.queridodiario.ok.org.br`, `arquivos.receitafederal.gov.br`,
+  `hacker-news.firebaseio.com`, `hn.algolia.com`, `inlabs.in.gov.br`;
+- **busca e extração via MCP (se aprovar R-14):** `mcp.exa.ai`, `search.parallel.ai`,
+  `r.jina.ai`;
+- **pesquisa:** `arxiv.org`, `export.arxiv.org`.
+
+Liberar Reddit e Mercado Livre não adianta: o bloqueio é da própria plataforma (R-15).
 
 ### R-03 · O que o piso da trilha M significa
 **Descoberta:** as taxas-base são duras. Dos produtos que já faturam, só ~15–25%

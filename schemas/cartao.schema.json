@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cartao.schema.json",
+  "title": "Cartão de oportunidade (frontmatter de oportunidades/OP-NNNN-slug/cartao.md)",
+  "type": "object",
+  "required": ["id", "titulo", "trilha", "estagio", "status", "criado_em", "atualizado_em",
+               "pergunta_neutralizada", "quem_sofre", "quem_paga", "workaround", "lentes", "sinais",
+               "travas", "proximo_passo", "revisar_em"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {"type": "string", "pattern": "^OP-\\d{4}$"},
+    "titulo": {"type": "string", "minLength": 3},
+    "trilha": {"enum": ["G", "M", "S"]},
+    "estagio": {
+      "enum": ["oportunidade", "kill_barato", "veredito", "oferta", "teste", "construir", "lancar", "aprender"]
+    },
+    "status": {"enum": ["ativa", "pausada", "cadaver", "lancada"]},
+    "criado_em": {"type": "string", "format": "date"},
+    "atualizado_em": {"type": "string", "format": "date"},
+    "origem": {
+      "description": "De onde a oportunidade veio: radar, ideia do usuário, arbitragem etc.",
+      "type": "string"
+    },
+    "pergunta_neutralizada": {"type": "string", "minLength": 10},
+    "quem_sofre": {"type": "string"},
+    "quem_paga": {"type": "string"},
+    "workaround": {"type": "string"},
+    "custo_workaround": {"type": ["string", "null"]},
+    "lentes": {"type": "array", "items": {"type": "integer", "minimum": 1, "maximum": 11}},
+    "sinais": {"type": "array", "items": {"type": "string", "pattern": "^s-\\d{4}-\\d{4}$"}},
+    "travas": {"type": "array", "items": {"type": "string"}},
+    "vereditos": {"type": "array", "items": {"type": "string", "pattern": "^v-\\d{4}-\\d{4}$"}},
+    "testes": {"type": "array", "items": {"type": "string", "pattern": "^t-\\d{4}-\\d{4}$"}},
+    "proximo_passo": {"type": "string", "minLength": 3},
+    "revisar_em": {"type": "string", "format": "date"},
+    "motivo_morte": {"type": ["string", "null"]}
+  }
+}

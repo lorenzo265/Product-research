@@ -1,0 +1,35 @@
+[project]
+name = "harness-oportunidades"
+version = "0.1.0"
+description = "Estado, validação e métricas do harness de oportunidades"
+requires-python = ">=3.11"
+dependencies = ["jsonschema>=4.20", "pyyaml>=6"]
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.8"]
+
+# Layout plano (harness/ na raiz) de propósito: o pacote é executado por agentes a partir
+# da raiz do repo, inclusive em clones novos de rotinas agendadas, com `python3 -m harness`
+# e sem passo de instalação do próprio pacote.
+
+[tool.ruff]
+line-length = 100
+src = [".", "tests"]
+extend-exclude = ["research"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "C901", "S110", "S112", "T201",
+          "PLR2004", "PLR0913", "D1"]
+# N818: exceções têm nomes em português que já dizem o erro (RegistroInvalido, IdDuplicado).
+ignore = ["D104", "D100", "N818"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["D1", "S", "PLR2004", "PLR0913"]
+"harness/__main__.py" = ["T201"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

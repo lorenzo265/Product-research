@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "teste.schema.json",
+  "title": "Teste com comprador (Test Card)",
+  "description": "Hipótese, experimento, métrica e regra de decisão escritos ANTES dos dados. Resultado preenchido depois.",
+  "type": "object",
+  "required": ["id", "oportunidade", "degrau", "hipotese", "experimento", "metrica", "regra_decisao",
+               "canal", "amostra_planejada", "criado_em", "resultado", "decisao"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {"type": "string", "pattern": "^t-\\d{4}-\\d{4}$"},
+    "oportunidade": {"type": "string", "pattern": "^OP-\\d{4}$"},
+    "degrau": {
+      "description": "Degrau da escada de evidência que o teste pode alcançar.",
+      "enum": ["opiniao", "email", "telefone", "reuniao", "reputacao", "deposito", "pedido_pago"]
+    },
+    "hipotese": {"type": "string", "minLength": 10},
+    "experimento": {"type": "string", "minLength": 10},
+    "metrica": {"type": "string"},
+    "regra_decisao": {
+      "type": "object",
+      "required": ["tipo", "go", "kill"],
+      "properties": {
+        "tipo": {"enum": ["limiar_fixo", "sequencial", "bayes_amostra_pequena"]},
+        "go": {"type": "string"},
+        "kill": {"type": "string"},
+        "parametros": {"type": "object"}
+      }
+    },
+    "canal": {"type": "string"},
+    "publico": {"type": "string"},
+    "amostra_planejada": {"type": "integer", "minimum": 1},
+    "criado_em": {"type": "string", "format": "date"},
+    "inicio": {"type": ["string", "null"], "format": "date"},
+    "fim": {"type": ["string", "null"], "format": "date"},
+    "resultado": {
+      "type": ["object", "null"],
+      "required": ["amostra", "sucessos"],
+      "properties": {
+        "amostra": {"type": "integer", "minimum": 0},
+        "sucessos": {"type": "integer", "minimum": 0},
+        "observacoes": {"type": "string"}
+      }
+    },
+    "decisao": {"enum": ["GO", "ITERAR", "KILL", null]},
+    "decidido_em": {"type": ["string", "null"], "format": "date"}
+  }
+}
