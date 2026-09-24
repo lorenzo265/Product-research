@@ -4,6 +4,21 @@
 > Ordem: urgência primeiro, depois impacto. Cada item diz o que eu decidi por padrão,
 > por quê, e o que muda se você discordar. Responda só nos que quiser mudar.
 
+## Por onde começar (15 minutos)
+
+1. **R-01**: tem prazo (30/09) e não é do harness, é da sua empresa, se houver.
+2. **R-02**: rede do ambiente. Sem ela os coletores e a verificação de fontes não
+   rodam na nuvem.
+3. **R-11** e **R-19**: o juiz virou subagente isolado, e o trio advogado + cético +
+   juiz ficou provisório até um eval compará-lo.
+4. **R-03**, **R-04**, **R-17** e **R-18**: réguas das trilhas M e S. São as que mais
+   mudam o que o harness aprova ou mata.
+5. **R-14**: ligar ou não MCPs de busca e de dados do governo.
+6. **A-02** e **A-07** em `decisoes.md`: suas horas e caixa para testes, e suas teses
+   antigas para servir de casos de eval.
+
+O restante confirma ou refina o desenho que você já aprovou.
+
 ## ⏰ Com prazo
 
 ### R-01 · Janela do Simples Nacional / IBS-CBS termina em 30/09/2026
@@ -60,9 +75,11 @@ probabilidade de chegar é estimada à parte, contra a taxa-base.
 **Descoberta (dados de faturamento da ChartMogul, via resumo):** com ARPA abaixo de
 US$10/mês o churn fica em 6–7% ao mês. Produtos de IA abaixo de US$50/mês retêm 23%
 da receita em 12 meses; acima de US$250/mês, 70%.
-**Meu padrão:** o pacote M marca ticket abaixo de ~R$150/mês como risco alto de churn.
-Para produto centrado em IA, pede ticket de ~R$250/mês ou mais, ou dependência real
-do fluxo de trabalho do cliente. Na prática isso empurra a trilha M para B2B.
+**Meu padrão (corrigido pelo relatório D):** o pacote M marca ticket abaixo de
+~R$150/mês como risco alto de churn. Para produto centrado em IA, pede dependência real
+do fluxo de trabalho do cliente **e** ticket alto. R$250/mês só tira o produto da pior
+faixa de retenção (de 23% para 45% da receita retida em 12 meses); retenção típica de
+B2B só aparece perto de ~R$1.250/mês. Na prática isso empurra a trilha M para B2B.
 **Se discordar:** diga se quer manter aberto um espaço para B2C barato.
 
 ### R-05 · Checar citações custa mais do que o previsto
@@ -190,6 +207,77 @@ ruim mais cedo. Os **números**, porém, são regras de bolso:
 Compradores melhores que "PME genérica", por inferência a validar: escritórios de
 contabilidade, corretoras de seguro, faturamento de clínicas, documentação jurídica.
 
+### R-17 · Validação mínima da trilha M muda
+**Descoberta:** lista de e-mail acima de um limiar não tem vínculo demonstrado com
+sucesso. Em M o MVP custa no máximo 4 semanas, então o erro caro não é construir cedo:
+é escalar um resultado que foi sorte.
+**Meu padrão (diverge da v1 da arquitetura e do seu `pacote-mercado`):**
+- construir o MVP depois de **1 degrau com dinheiro** (pré-venda com reembolso ou
+  depósito);
+- replicar o resultado (novo lote de contas ou outro canal) **antes de gastar com
+  escala**;
+- lista sozinha nunca abre GO.
+
+A trilha G continua exigindo 2 degraus com dinheiro antes de construir.
+**Se discordar:** voltamos a exigir 2 degraus também em M.
+
+### R-18 · Trilha S: margem depois das suas horas, e 3 contratos antes de automatizar
+**Descoberta:** margem de serviço com IA se mede em horas do operador, não em tokens. A
+R$1.500/mês com margem de 60% cabem até ~4 h por cliente por mês; a R$700, menos de 1 h.
+Um contrato prova que existe comprador, não que o escopo se repete.
+**Meu padrão:**
+- a margem de S passa a ser medida depois de IA, plataforma **e** suas horas;
+- 1 contrato pago libera começar a entregar, ainda à mão;
+- **3 contratos do mesmo ICP** liberam investir em automação;
+- capacidade de referência: 80 h/mês de entrega.
+
+### R-19 · O trio advogado + cético + juiz é provisório
+**Descoberta:** nenhuma fonte compara o trio com um único juiz cético e calibrado, com o
+mesmo orçamento. A evidência a favor de debate vem de juízes que não viam a fonte.
+**Meu padrão:** mantenho o trio, porque os memorandos também servem de lista de
+verificação para o verificador. Mas o próximo eval de capacidade compara três variantes
+nos mesmos casos, com orçamento igual: trio; juiz sozinho com o dossiê; juiz com um só
+memorando contra. O trio só fica se ganhar em acerto ou em consistência entre
+execuções.
+
+### R-20 · Como os comandos são orquestrados
+**Descoberta:** o relatório A recomenda que cada comando seja um roteiro em código
+(script Python chamando `claude -p` por etapa), com o CLAUDE.md só roteando.
+**Meu padrão, por ora:**
+- os comandos são skills que a sessão principal segue, lançando subagentes;
+- tudo que é determinístico já é código: validar, ids, contrato, entrada cega do juiz,
+  registrar veredito com encolhimento, conferir trecho, regra de teste;
+- o juiz dos evals já roda via `claude -p` num diretório neutro.
+
+Motivo: é mais simples de usar e de mudar enquanto o método ainda muda toda semana.
+**Teste pendente:** comparar as duas formas em isolamento, custo, retomada e testes
+offline. Se a forma em código ganhar, migramos comando por comando.
+
+### R-21 · Estágio e status continuam no frontmatter do cartão
+**Descoberta:** o relatório A sugere tirar status do frontmatter e usar um log
+append-only `data/eventos.jsonl`.
+**Meu padrão:** mantive estágio e status no frontmatter, mas:
+- só a CLI edita (hook bloqueia edição direta);
+- o schema valida cada mudança;
+- cada mudança é anotada com data no histórico do cartão.
+
+O ganho que falta em relação ao log é a consulta agregada ("quanto tempo cada
+oportunidade ficou em cada estágio"). Se isso fizer falta no `/portfolio`, adicionamos o
+log.
+
+### R-22 · Quanto custa operar
+**Medido:**
+- juiz (Opus, esforço alto): ~US$0,33–0,70 por execução;
+- chamada headless trivial: ~US$0,05.
+
+**Estimado, a medir na primeira execução real:**
+- `/kill`: ~US$1–3;
+- `/validar` (dossiê, memorandos, verificador e juiz): ~US$5–15;
+- `/radar` com 4 batedores: ~US$3–8;
+- eval de bajulação completo (1 caso × 3 braços × 3 repetições): ~US$4–6.
+
+Nada disso usa API paga de terceiros.
+
 ## Médio impacto
 
 ### R-14 · Busca: ficar só na nativa ou adicionar MCPs de busca e de dados BR?
@@ -250,8 +338,8 @@ o conteúdo. As originais no claude.ai continuam intactas.
   3.1).
 
 **Meu padrão:**
-- o juiz recebe os dois memorandos **no mesmo turno**, sem rótulos e com tamanho
-  igualado;
+- o juiz recebe os dois memorandos **no mesmo turno**, com rótulos neutros A e B em
+  ordem sorteada (a direção de cada um é declarada) e tamanho igualado;
 - toda objeção ou mérito precisa de evidência e gravidade;
 - antes de pontuar, o juiz marca cada alegação como verificada, não verificada ou
   contradita.
@@ -282,9 +370,11 @@ viés é simétrico (advogado e cético são ambos Claude).
   **Padrão:** mantenho uma rodada só, sem réplica, e o primeiro eval compara "juiz
   sozinho com o dossiê" contra "juiz com dossiê e memorandos". Se os memorandos não
   ajudarem, saem do pipeline e o custo cai.
-- **Escrita centralizada na sessão principal:** a Cognition revisou a posição dela em
-  2026 para "escritas num fio só; agentes extras contribuem inteligência, não ações".
-  É exatamente o nosso desenho.
+- **Escrita centralizada:** a Cognition revisou a posição dela em 2026 para "escritas
+  num fio só; agentes extras contribuem inteligência, não ações". Ajuste do relatório
+  A: o escritor único é a CLI (`python3 -m harness`), que valida e trava o arquivo. Os
+  subagentes gravam fatos por ela, e nenhum edita o estado diretamente (um hook
+  bloqueia).
 - **Multiagente só onde a tarefa é paralelizável:** +81% em tarefas paralelizáveis e
   −39% a −70% em sequenciais (Google, preprint de dez/2025). Radar e coleta ficam em
   paralelo; validação fica sequencial num fio só.
