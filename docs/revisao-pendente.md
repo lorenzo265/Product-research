@@ -7,8 +7,7 @@
 ## Por onde começar (15 minutos)
 
 1. **R-01**: tem prazo (30/09) e não é do harness, é da sua empresa, se houver.
-2. **R-02**: rede do ambiente. Sem ela os coletores e a verificação de fontes não
-   rodam na nuvem.
+2. **R-02**: rede do ambiente (resolvido; ficam só Querido Diário e Receita).
 3. **R-11** e **R-19**: o juiz virou subagente isolado, e o trio advogado + cético +
    juiz ficou provisório até um eval compará-lo.
 4. **R-03**, **R-04**, **R-17** e **R-18**: réguas das trilhas M e S. São as que mais
@@ -34,7 +33,16 @@ fim do mês.
 
 ## Alto impacto
 
-### R-02 · O ambiente em nuvem não alcança as fontes de dados
+### R-02 · O ambiente em nuvem não alcança as fontes de dados · ✅ resolvido em 24/09
+**Atualização:** você ampliou o acesso de rede. Testado em 24/09 de manhã:
+- **respondem:** API do PNCP, IBGE, 99Freelas, consumidor.gov.br, HN (Firebase e
+  Algolia), `r.jina.ai`, arXiv, gov.br e sites de empresas;
+- **ainda falham, pelo lado do site:** Querido Diário (recusa a conexão segura) e
+  arquivos da Receita (fecha a conexão, provável bloqueio de IP de datacenter).
+
+Para CNPJ, a alternativa é a Base dos Dados (BigQuery) ou o `mcp-brasil`.
+
+**Registro original:**
 **Descoberta:** a política de rede desta sessão bloqueia quase todas as fontes que o
 harness precisa: arxiv, gov.br, IBGE, Querido Diário, Receita (CNPJ), Reddit, HN
 Algolia, Reclame Aqui, Mercado Livre, sites de preço de vendors. Também existe um
