@@ -1,0 +1,52 @@
+---
+name: validar
+description: Roda a validação de mesa completa de uma oportunidade do harness que passou no kill barato. Sequência dossiê → memorandos a favor e contra → verificação de citações → juiz isolado → veredito registrado com probabilidades e previsões. Use quando o usuário pedir para aprofundar, validar, analisar ou dar veredito sobre uma OP.
+argument-hint: "OP-NNNN"
+---
+
+# /validar
+
+Objetivo: um veredito calibrado, por dimensão, feito por um juiz que não viu a convicção
+de ninguém. Siga as etapas 2 a 6 do `metodo-julgamento`. Você orquestra; não julga.
+
+## Pré-requisitos
+
+- `contrato.json` gravado (senão, rode `/kill` antes).
+- Kill barato com `GO`, ou pedido explícito do usuário para validar mesmo assim
+  (registre isso no histórico do cartão).
+
+## Passos e orçamento
+
+| Passo | Quem | Orçamento |
+|---|---|---|
+| 1. Dossiê | `pesquisador`, modo `dossie` | até ~40 buscas |
+| 2. Memorandos | `memorando` ×2, na mesma mensagem | sem busca |
+| 3. Verificação | `verificador` | só leitura de fontes |
+| 4. Juiz | `juiz` | sem busca |
+
+1. **Dossiê.** Lance o `pesquisador` em modo `dossie` com a oportunidade. Ao voltar, rode
+   `python3 -m harness validar` e corrija erros.
+2. **Memorandos.** Lance dois subagentes `memorando` na mesma mensagem. A tarefa de cada
+   um é só: "Pasta: oportunidades/<pasta>. Direção: a favor." e "Pasta:
+   oportunidades/<pasta>. Direção: contra.". Nada além disso.
+3. **Verificação.** Lance o `verificador` com a oportunidade.
+4. **Juiz.** Rode `python3 -m harness pacote-juiz OP-xxxx`. Passe ao subagente `juiz`
+   exatamente a mensagem impressa, sem acrescentar nada.
+5. **Registro.** Salve a resposta do juiz num arquivo
+   (`oportunidades/<pasta>/juiz/<rodada>/resposta.json`) e rode
+   `python3 -m harness registrar-veredito OP-xxxx - < <arquivo>`. Se o schema recusar,
+   devolva o erro ao juiz na mesma conversa e peça o JSON corrigido.
+6. **Cartão.** Atualize `estagio` para `veredito` e `proximo_passo`: se a recomendação for
+   GO, o próximo passo é `/teste`; se ITERAR, o que precisa ser resolvido; se KILL, a
+   decisão do usuário.
+7. **Apresente**, nesta ordem:
+   - recomendação e, ao lado, a objeção mais forte que sobreviveu;
+   - perfil por dimensão (nível, faixa e p), com as travas;
+   - p_sucesso (e a bruta do juiz) contra a taxa-base;
+   - hipóteses rivais com probabilidades;
+   - o que mudaria o veredito;
+   - próximo teste com comprador.
+
+   Termine perguntando GO / ITERAR / KILL: a decisão é do usuário.
+
+Rode este comando sozinho na sessão: ele consome boa parte do teto de buscas.
