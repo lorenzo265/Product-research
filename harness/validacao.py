@@ -69,11 +69,13 @@ class Snapshot:
         registros: Registros de cada tipo JSONL (fato, sinal, veredito, teste).
         cartoes: Cartões de oportunidade.
         dossies: Texto de cada dossiê do pesquisador, por caminho relativo.
+        contratos: Contrato de validação de cada pasta de oportunidade que já tem um.
     """
 
     registros: dict[str, list[dict]] = field(default_factory=dict)
     cartoes: list[Cartao] = field(default_factory=list)
     dossies: dict[str, str] = field(default_factory=dict)
+    contratos: dict[str, dict] = field(default_factory=dict)
 
     def de(self, tipo: str) -> list[dict]:
         """Registros de um tipo (lista vazia se não houver)."""
@@ -122,6 +124,7 @@ def validar(
                 problemas.append(Problema(ERRO, onde, referencia))
         problemas.extend(_ids_duplicados(tipo, snapshot.de(tipo)))
     problemas.extend(_validar_cartoes(snapshot, hoje, dir_schemas))
+    problemas.extend(_validar_contratos(snapshot, dir_schemas))
     problemas.extend(_regras_de_veredito(snapshot))
     problemas.extend(_regras_de_teste(snapshot.de("teste")))
     problemas.extend(_avisos_de_fato(snapshot.de("fato"), hoje))
@@ -159,7 +162,7 @@ def _referencias(tipo: str, registro: dict) -> Iterator[tuple[str, str]]:
     elif tipo == "veredito":
         yield "cartao", registro.get("oportunidade")
         yield from (("fato", fato) for fato in _fatos_do_veredito(registro))
-    elif tipo == "teste":
+    elif tipo in ("teste", "contrato"):
         yield "cartao", registro.get("oportunidade")
     elif tipo == "cartao":
         yield from (("sinal", sinal) for sinal in registro.get("sinais", []))
@@ -202,6 +205,17 @@ def _validar_cartoes(snapshot: Snapshot, hoje: date, dir_schemas: Path) -> Itera
         revisar_em = _data(cartao.campos.get("revisar_em"))
         if cartao.campos.get("status") == "ativa" and revisar_em and revisar_em < hoje:
             yield Problema(AVISO, onde, f"revisão vencida desde {revisar_em.isoformat()}")
+
+
+def _validar_contratos(snapshot: Snapshot, dir_schemas: Path) -> Iterator[Problema]:
+    for pasta, contrato in snapshot.contratos.items():
+        onde = f"{pasta}/contrato.json"
+        for erro in erros_de_schema("contrato", contrato, dir_schemas):
+            yield Problema(ERRO, onde, erro)
+        for referencia in referencias_quebradas(snapshot, "contrato", contrato):
+            yield Problema(ERRO, onde, referencia)
+        if not pasta.startswith(f"{contrato.get('oportunidade')}-"):
+            yield Problema(ERRO, onde, "contrato de outra oportunidade nesta pasta")
 
 
 def _regras_de_veredito(snapshot: Snapshot) -> Iterator[Problema]:

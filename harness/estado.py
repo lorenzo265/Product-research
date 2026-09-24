@@ -32,6 +32,7 @@ RAIZ_PADRAO = Path(__file__).resolve().parent.parent
 DIR_OPORTUNIDADES = "oportunidades"
 ARQUIVO_CARTAO = "cartao.md"
 PADRAO_DOSSIE = "dossie-*.md"
+ARQUIVO_CONTRATO = "contrato.json"
 DELIMITADOR_FRONTMATTER = "---"
 PARTES_DO_CARTAO = 3  # texto antes do frontmatter (vazio), frontmatter, corpo
 TAMANHO_MAXIMO_SLUG = 40
@@ -107,12 +108,38 @@ class Repositorio:
             for caminho in sorted(pasta_raiz.glob(f"*/{PADRAO_DOSSIE}"))
         }
 
+    def ler_contratos(self) -> dict[str, dict]:
+        """Lê os contratos de validação, indexados pelo nome da pasta da oportunidade.
+
+        Raises:
+            ArquivoCorrompido: se algum contrato não for JSON de objeto.
+        """
+        contratos = {}
+        for caminho in sorted((self.raiz / DIR_OPORTUNIDADES).glob(f"*/{ARQUIVO_CONTRATO}")):
+            try:
+                contrato = json.loads(caminho.read_text(encoding="utf-8"))
+            except json.JSONDecodeError as erro:
+                raise ArquivoCorrompido(f"{caminho}: JSON inválido ({erro})") from erro
+            if not isinstance(contrato, dict):
+                raise ArquivoCorrompido(f"{caminho}: contrato não é um objeto JSON")
+            contratos[caminho.parent.name] = contrato
+        return contratos
+
+    def pasta_da_oportunidade(self, id_cartao: str) -> Path:
+        """Caminho absoluto da pasta de uma oportunidade.
+
+        Raises:
+            RegistroNaoEncontrado: se o cartão não existir.
+        """
+        return self.raiz / DIR_OPORTUNIDADES / self._cartao_por_id(id_cartao).pasta
+
     def snapshot(self) -> Snapshot:
         """Carrega todo o estado em memória para validação ou relatórios."""
         return Snapshot(
             registros={tipo: self.ler(tipo) for tipo in TIPOS_JSONL},
             cartoes=self.ler_cartoes(),
             dossies=self.ler_dossies(),
+            contratos=self.ler_contratos(),
         )
 
     def proximo_id(self, tipo: str, hoje: date) -> str:
@@ -232,6 +259,29 @@ class Repositorio:
             pasta.mkdir(parents=True)
             caminho = pasta / ARQUIVO_CARTAO
             caminho.write_text(_montar_cartao(novo, corpo), encoding="utf-8")
+            return caminho
+
+    def gravar_contrato(self, contrato: dict) -> Path:
+        """Grava o contrato de validação de uma oportunidade. Só pode ser gravado uma vez.
+
+        O contrato registra a régua antes de a evidência chegar; reescrevê-lo depois
+        permitiria mover a régua para caber no resultado.
+
+        Raises:
+            RegistroNaoEncontrado: se a oportunidade não existir.
+            IdDuplicado: se a oportunidade já tiver contrato.
+            RegistroInvalido: se o contrato falhar no schema.
+        """
+        with self._trava():
+            caminho = (
+                self.pasta_da_oportunidade(contrato.get("oportunidade", "")) / ARQUIVO_CONTRATO
+            )
+            if caminho.exists():
+                raise IdDuplicado(f"{contrato['oportunidade']} já tem contrato; ele não muda")
+            self._exigir_valido("contrato", contrato)
+            caminho.write_text(
+                json.dumps(contrato, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+            )
             return caminho
 
     def atualizar_cartao(self, id_cartao: str, mudancas: dict, nota: str, hoje: date) -> dict:

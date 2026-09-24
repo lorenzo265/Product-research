@@ -123,3 +123,30 @@ def test_atualizar_cartao_pela_cli(raiz, capsys):
 
     assert codigo == SAIDA_OK
     assert '"estagio": "kill_barato"' in capsys.readouterr().out
+
+
+@pytest.mark.parametrize(
+    "caminho",
+    [
+        "/repo/data/fatos.jsonl",
+        "/repo/oportunidades/OP-0001-x/cartao.md",
+        "/repo/oportunidades/OP-0001-x/contrato.json",
+    ],
+)
+def test_proteger_estado_bloqueia_edicao_direta(raiz, caminho, capsys):
+    evento = {"tool_name": "Edit", "tool_input": {"file_path": caminho}}
+
+    codigo = _rodar(raiz, "proteger-estado", stdin=json.dumps(evento))
+
+    assert codigo == SAIDA_BLOQUEIO_HOOK
+    assert "python3 -m harness" in capsys.readouterr().err
+
+
+@pytest.mark.parametrize(
+    "caminho",
+    ["/repo/oportunidades/OP-0001-x/dossie-mercado.md", "/repo/docs/decisoes.md"],
+)
+def test_proteger_estado_libera_arquivos_de_trabalho(raiz, caminho):
+    evento = {"tool_name": "Write", "tool_input": {"file_path": caminho}}
+
+    assert _rodar(raiz, "proteger-estado", stdin=json.dumps(evento)) == SAIDA_OK

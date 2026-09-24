@@ -7,7 +7,11 @@ Comandos:
     atualizar     altera campos de um registro, guardando histórico
     obter         mostra um registro pelo id
     novo-cartao   cria a pasta e o cartão de uma oportunidade
+    contrato      grava (uma vez) o contrato de validação de uma oportunidade
+    pacote-juiz   monta a entrada cega do juiz e imprime a mensagem a entregar a ele
+    conferir-trecho  baixa a fonte e confere se o trecho literal está nela
     portfolio     painel de todas as oportunidades e pendências
+    proteger-estado  hook PreToolUse: bloqueia edição direta de arquivos de estado
     calibracao    Brier, intervalo e calibração por faixa das previsões resolvidas
 """
 
@@ -15,6 +19,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from datetime import date
 from pathlib import Path
@@ -22,13 +27,21 @@ from pathlib import Path
 from harness.calibracao import calibrar, extrair_previsoes, vencidas_sem_resultado
 from harness.estado import DIR_OPORTUNIDADES, Repositorio
 from harness.exceptions import HarnessError
+from harness.julgamento import montar_pacote_juiz
 from harness.portfolio import montar_painel
 from harness.validacao import ERRO, validar
+from harness.verificacao import conferir_trecho
 
+PADRAO_ID_FATO = re.compile(r"\bf-\d{4}-\d{4}\b")
 SAIDA_OK = 0
 SAIDA_ERRO = 1
 SAIDA_BLOQUEIO_HOOK = 2  # só exit 2 bloqueia e devolve a mensagem ao Claude Code
 PASTAS_DE_ESTADO = ("data/", f"{DIR_OPORTUNIDADES}/")
+# Arquivos que só mudam pela CLI, que valida schema, ids e referências antes de gravar.
+PADRAO_ARQUIVO_PROTEGIDO = re.compile(
+    r"(^|/)data/[^/]+\.jsonl$|(^|/)oportunidades/[^/]+/(cartao\.md|contrato\.json)$"
+)
+FERRAMENTAS_DE_EDICAO = ("Write", "Edit", "MultiEdit", "NotebookEdit")
 
 CORPO_CARTAO_PADRAO = """
 ## Dor
@@ -108,6 +121,54 @@ def _cmd_novo_cartao(args: argparse.Namespace, repositorio: Repositorio, hoje: d
     caminho = repositorio.criar_cartao(_json_do_argumento(args.json), corpo, hoje)
     print(caminho.relative_to(repositorio.raiz))
     return SAIDA_OK
+
+
+def _cmd_contrato(args: argparse.Namespace, repositorio: Repositorio, hoje: date) -> int:
+    contrato = _json_do_argumento(args.json)
+    contrato.setdefault("criado_em", hoje.isoformat())
+    caminho = repositorio.gravar_contrato(contrato)
+    print(caminho.relative_to(repositorio.raiz))
+    return SAIDA_OK
+
+
+def _cmd_pacote_juiz(args: argparse.Namespace, repositorio: Repositorio, hoje: date) -> int:
+    pasta = repositorio.pasta_da_oportunidade(args.id)
+    pacote = montar_pacote_juiz(repositorio.raiz, pasta, hoje, semente=args.semente)
+    print(pacote.mensagem)
+    return SAIDA_OK
+
+
+def _cmd_conferir_trecho(args: argparse.Namespace, repositorio: Repositorio, hoje: date) -> int:
+    fatos = {fato["id"]: fato for fato in repositorio.ler("fato")}
+    ids = list(args.ids)
+    if args.oportunidade:
+        pasta = repositorio.pasta_da_oportunidade(args.oportunidade)
+        textos = " ".join(arquivo.read_text(encoding="utf-8") for arquivo in pasta.rglob("*.md"))
+        ids += sorted(set(PADRAO_ID_FATO.findall(textos)))
+    desconhecidos = [id_fato for id_fato in ids if id_fato not in fatos]
+    if desconhecidos:
+        raise HarnessError(f"fatos inexistentes: {', '.join(desconhecidos)}")
+    for id_fato in dict.fromkeys(ids):
+        resultado = conferir_trecho(fatos[id_fato])
+        marca = {True: "OK", False: "FALHOU", None: "?"}[resultado.trecho_encontrado]
+        print(f"{marca}\t{resultado.fato}\t{resultado.detalhe}\t{resultado.url}")
+    return SAIDA_OK
+
+
+def _cmd_proteger_estado(args: argparse.Namespace, repositorio: Repositorio, hoje: date) -> int:
+    evento = _ler_evento_de_hook()
+    caminho = (evento.get("tool_input") or {}).get("file_path", "")
+    if evento.get("tool_name") not in FERRAMENTAS_DE_EDICAO:
+        return SAIDA_OK
+    if not PADRAO_ARQUIVO_PROTEGIDO.search(caminho):
+        return SAIDA_OK
+    print(
+        f"{caminho} é estado do harness e só muda pela CLI, que valida antes de gravar. "
+        "Use python3 -m harness adicionar/atualizar/novo-cartao/contrato "
+        "(veja python3 -m harness --help).",
+        file=sys.stderr,
+    )
+    return SAIDA_BLOQUEIO_HOOK
 
 
 def _cmd_portfolio(args: argparse.Namespace, repositorio: Repositorio, hoje: date) -> int:
@@ -206,6 +267,23 @@ def _parser() -> argparse.ArgumentParser:
     novo_cartao.add_argument("json", nargs="?", help="frontmatter em JSON; omita para stdin")
     novo_cartao.add_argument("--corpo", help="arquivo markdown com o corpo do cartão")
     novo_cartao.set_defaults(executar=_cmd_novo_cartao)
+
+    contrato = sub.add_parser("contrato", help="grava o contrato de validação (uma vez)")
+    contrato.add_argument("json", nargs="?", help="contrato em JSON; omita para stdin")
+    contrato.set_defaults(executar=_cmd_contrato)
+
+    pacote = sub.add_parser("pacote-juiz", help="monta a entrada cega do juiz")
+    pacote.add_argument("id", help="id da oportunidade (OP-0001)")
+    pacote.add_argument("--semente", type=int, help="semente do sorteio A/B")
+    pacote.set_defaults(executar=_cmd_pacote_juiz)
+
+    conferir = sub.add_parser("conferir-trecho", help="confere trechos literais na fonte")
+    conferir.add_argument("ids", nargs="*", help="ids de fatos")
+    conferir.add_argument("--oportunidade", help="confere todos os fatos citados nos .md da OP")
+    conferir.set_defaults(executar=_cmd_conferir_trecho)
+
+    proteger = sub.add_parser("proteger-estado", help="hook PreToolUse de proteção do estado")
+    proteger.set_defaults(executar=_cmd_proteger_estado)
 
     portfolio = sub.add_parser("portfolio", help="painel do portfólio")
     portfolio.set_defaults(executar=_cmd_portfolio)

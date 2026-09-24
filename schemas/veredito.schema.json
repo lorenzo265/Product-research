@@ -4,98 +4,364 @@
   "title": "Veredito",
   "description": "Registro de julgamento com probabilidades pontuais e previsões datadas, para calibração.",
   "type": "object",
-  "required": ["id", "oportunidade", "data", "trilha", "modo", "pergunta_neutralizada", "base_rate",
-               "dimensoes", "travas", "hipoteses_rivais", "recomendacao", "previsoes"],
+  "required": [
+    "id",
+    "oportunidade",
+    "data",
+    "trilha",
+    "modo",
+    "pergunta_neutralizada",
+    "base_rate",
+    "dimensoes",
+    "travas",
+    "hipoteses_rivais",
+    "recomendacao",
+    "previsoes"
+  ],
   "additionalProperties": false,
   "$defs": {
-    "nivel": {"enum": ["REFUTADO", "IMPROVAVEL", "INCERTO", "PROVAVEL", "CONFIRMADO"]},
-    "fatoId": {"type": "string", "pattern": "^f-\\d{4}-\\d{4}$"},
+    "nivel": {
+      "enum": [
+        "REFUTADO",
+        "IMPROVAVEL",
+        "INCERTO",
+        "PROVAVEL",
+        "CONFIRMADO"
+      ]
+    },
+    "fatoId": {
+      "type": "string",
+      "pattern": "^f-\\d{4}-\\d{4}$"
+    },
     "dimensao": {
       "type": "object",
-      "required": ["nivel", "p", "confianca", "fatos_favor", "fatos_contra", "mudaria"],
+      "required": [
+        "nivel",
+        "p",
+        "confianca",
+        "fatos_favor",
+        "fatos_contra",
+        "mudaria"
+      ],
       "additionalProperties": false,
       "properties": {
-        "nivel": {"$ref": "#/$defs/nivel"},
-        "p": {"type": "number", "exclusiveMinimum": 0, "exclusiveMaximum": 1},
-        "confianca": {"enum": ["ALTA", "MEDIA", "BAIXA"]},
-        "incerto_por": {"enum": ["evidencia_conflitante", "ausencia_de_evidencia"]},
-        "fatos_favor": {"type": "array", "items": {"$ref": "#/$defs/fatoId"}},
-        "fatos_contra": {"type": "array", "items": {"$ref": "#/$defs/fatoId"}},
-        "mudaria": {"type": "string", "minLength": 5}
+        "nivel": {
+          "$ref": "#/$defs/nivel"
+        },
+        "p": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "exclusiveMaximum": 1
+        },
+        "confianca": {
+          "enum": [
+            "ALTA",
+            "MEDIA",
+            "BAIXA"
+          ]
+        },
+        "incerto_por": {
+          "enum": [
+            "evidencia_conflitante",
+            "ausencia_de_evidencia"
+          ]
+        },
+        "fatos_favor": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/fatoId"
+          }
+        },
+        "fatos_contra": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/fatoId"
+          }
+        },
+        "mudaria": {
+          "type": "string",
+          "minLength": 5
+        }
       }
     }
   },
   "properties": {
-    "id": {"type": "string", "pattern": "^v-\\d{4}-\\d{4}$"},
-    "oportunidade": {"type": "string", "pattern": "^OP-\\d{4}$"},
-    "data": {"type": "string", "format": "date"},
-    "trilha": {"enum": ["G", "M", "S"]},
-    "modo": {"enum": ["kill_barato", "completo"]},
-    "pergunta_neutralizada": {"type": "string", "minLength": 10},
+    "id": {
+      "type": "string",
+      "pattern": "^v-\\d{4}-\\d{4}$"
+    },
+    "oportunidade": {
+      "type": "string",
+      "pattern": "^OP-\\d{4}$"
+    },
+    "data": {
+      "type": "string",
+      "format": "date"
+    },
+    "trilha": {
+      "enum": [
+        "G",
+        "M",
+        "S"
+      ]
+    },
+    "modo": {
+      "enum": [
+        "kill_barato",
+        "completo"
+      ]
+    },
+    "pergunta_neutralizada": {
+      "type": "string",
+      "minLength": 10
+    },
     "base_rate": {
       "type": "object",
-      "required": ["p", "classe_referencia"],
+      "required": [
+        "p",
+        "classe_referencia"
+      ],
       "properties": {
-        "p": {"type": "number", "exclusiveMinimum": 0, "exclusiveMaximum": 1},
-        "classe_referencia": {"type": "string"},
-        "fatos": {"type": "array", "items": {"$ref": "#/$defs/fatoId"}}
+        "p": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "exclusiveMaximum": 1
+        },
+        "classe_referencia": {
+          "type": "string"
+        },
+        "fatos": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/fatoId"
+          }
+        },
+        "ajustes": {
+          "description": "Ajustes nomeados em log-odds sobre a taxa-base, cada um ligado a dimensão e fatos.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "nome",
+              "log_odds"
+            ],
+            "properties": {
+              "nome": {
+                "type": "string"
+              },
+              "log_odds": {
+                "type": "number"
+              },
+              "dimensao": {
+                "type": "string"
+              },
+              "fatos": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/fatoId"
+                }
+              }
+            }
+          }
+        }
       }
     },
-    "p_sucesso": {"type": "number", "exclusiveMinimum": 0, "exclusiveMaximum": 1},
+    "p_sucesso": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "exclusiveMaximum": 1
+    },
     "p_fracasso": {
       "description": "Perguntada separadamente de p_sucesso. Soma muito acima de 1 indica viés otimista.",
-      "type": "number", "exclusiveMinimum": 0, "exclusiveMaximum": 1
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "exclusiveMaximum": 1
     },
     "alegacoes_kill_barato": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["alegacao", "resultado"],
+        "required": [
+          "alegacao",
+          "resultado"
+        ],
         "properties": {
-          "alegacao": {"type": "string"},
-          "resultado": {"enum": ["sustentada", "caiu", "nao_encontrada"]},
-          "fatos": {"type": "array", "items": {"$ref": "#/$defs/fatoId"}}
+          "alegacao": {
+            "type": "string"
+          },
+          "resultado": {
+            "enum": [
+              "sustentada",
+              "caiu",
+              "nao_encontrada"
+            ]
+          },
+          "fatos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/fatoId"
+            }
+          }
         }
       }
     },
-    "dimensoes": {"type": "object", "additionalProperties": {"$ref": "#/$defs/dimensao"}},
-    "travas": {"type": "array", "items": {"type": "string"}},
+    "dimensoes": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/dimensao"
+      }
+    },
+    "travas": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
     "hipoteses_rivais": {
       "type": "object",
-      "additionalProperties": {"type": "number", "minimum": 0, "maximum": 1}
+      "additionalProperties": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1
+      }
     },
-    "recomendacao": {"enum": ["GO", "ITERAR", "KILL", "REFORMULAR", "NAO_JULGO"]},
-    "sensibilidade": {"type": "string"},
+    "recomendacao": {
+      "enum": [
+        "GO",
+        "ITERAR",
+        "KILL",
+        "REFORMULAR",
+        "NAO_JULGO"
+      ]
+    },
+    "sensibilidade": {
+      "type": "string"
+    },
     "previsoes": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["previsao", "criterio_resolucao", "prazo", "p", "resultado"],
+        "required": [
+          "previsao",
+          "criterio_resolucao",
+          "prazo",
+          "p",
+          "resultado"
+        ],
         "additionalProperties": false,
         "properties": {
-          "previsao": {"type": "string"},
-          "criterio_resolucao": {"type": "string"},
-          "prazo": {"type": "string", "format": "date"},
-          "p": {"type": "number", "exclusiveMinimum": 0, "exclusiveMaximum": 1},
-          "resultado": {"type": ["boolean", "null"]},
-          "resolvido_em": {"type": ["string", "null"], "format": "date"}
+          "previsao": {
+            "type": "string"
+          },
+          "criterio_resolucao": {
+            "type": "string"
+          },
+          "prazo": {
+            "type": "string",
+            "format": "date"
+          },
+          "p": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "exclusiveMaximum": 1
+          },
+          "resultado": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "resolvido_em": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          }
         }
       }
     },
     "decisao_humana": {
-      "type": ["object", "null"],
+      "type": [
+        "object",
+        "null"
+      ],
       "properties": {
-        "decisao": {"enum": ["GO", "ITERAR", "KILL"]},
-        "data": {"type": "string", "format": "date"},
-        "nota": {"type": "string"}
+        "decisao": {
+          "enum": [
+            "GO",
+            "ITERAR",
+            "KILL"
+          ]
+        },
+        "data": {
+          "type": "string",
+          "format": "date"
+        },
+        "nota": {
+          "type": "string"
+        }
       }
     },
     "revisao": {
       "type": "object",
       "properties": {
-        "data": {"type": ["string", "null"]},
-        "brier": {"type": ["number", "null"]},
-        "licao": {"type": ["string", "null"]}
+        "data": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "brier": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "licao": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "p_sucesso_bruta": {
+      "description": "Probabilidade do juiz antes do encolhimento em direção à taxa-base.",
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "exclusiveMaximum": 1
+    },
+    "objecao_mais_forte": {
+      "description": "A objeção mais forte que sobreviveu à verificação, mostrada ao lado da recomendação.",
+      "type": "string"
+    },
+    "execucao": {
+      "description": "Como o veredito foi produzido: modelo e esforço por papel, fontes lidas.",
+      "type": "object",
+      "properties": {
+        "modelos": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "effort": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "fontes_lidas": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "ordem_memorandos": {
+          "type": "string"
+        },
+        "instavel_na_ordem": {
+          "type": "boolean"
+        }
       }
     }
   }

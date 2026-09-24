@@ -41,6 +41,8 @@ TIPOS: dict[str, TipoRegistro] = {
     ),
     "teste": TipoRegistro("teste", "data/testes.jsonl", "teste.schema.json", "t", anual=True),
     "cartao": TipoRegistro("cartao", None, "cartao.schema.json", "OP", anual=False),
+    # Um contrato.json por pasta de oportunidade; não tem id próprio (usa o da oportunidade).
+    "contrato": TipoRegistro("contrato", None, "contrato.schema.json", "", anual=False),
 }
 
 TIPOS_JSONL = tuple(nome for nome, tipo in TIPOS.items() if tipo.arquivo is not None)
