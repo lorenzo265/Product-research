@@ -7,6 +7,8 @@ Comandos:
     atualizar     altera campos de um registro, guardando histórico
     obter         mostra um registro pelo id
     novo-cartao   cria a pasta e o cartão de uma oportunidade
+    portfolio     painel de todas as oportunidades e pendências
+    calibracao    Brier, intervalo e calibração por faixa das previsões resolvidas
 """
 
 from __future__ import annotations
@@ -17,8 +19,10 @@ import sys
 from datetime import date
 from pathlib import Path
 
+from harness.calibracao import calibrar, extrair_previsoes, vencidas_sem_resultado
 from harness.estado import DIR_OPORTUNIDADES, Repositorio
 from harness.exceptions import HarnessError
+from harness.portfolio import montar_painel
 from harness.validacao import ERRO, validar
 
 SAIDA_OK = 0
@@ -103,6 +107,35 @@ def _cmd_novo_cartao(args: argparse.Namespace, repositorio: Repositorio, hoje: d
     return SAIDA_OK
 
 
+def _cmd_portfolio(args: argparse.Namespace, repositorio: Repositorio, hoje: date) -> int:
+    print(montar_painel(repositorio.snapshot(), hoje))
+    return SAIDA_OK
+
+
+def _cmd_calibracao(args: argparse.Namespace, repositorio: Repositorio, hoje: date) -> int:
+    previsoes = extrair_previsoes(repositorio.snapshot())
+    if args.trilha:
+        previsoes = [previsao for previsao in previsoes if previsao.trilha == args.trilha]
+    relatorio = calibrar(previsoes)
+    print(f"Previsões resolvidas: {relatorio.resolvidas}")
+    if relatorio.brier is not None:
+        intervalo = relatorio.intervalo_brier
+        faixa = f" (IC95% {intervalo[0]:.3f}–{intervalo[1]:.3f})" if intervalo else ""
+        print(f"Brier: {relatorio.brier:.3f}{faixa}")
+        if relatorio.skill_score is not None:
+            print(f"Skill score vs. frequência observada: {relatorio.skill_score:+.2f}")
+        for nivel in relatorio.faixas:
+            print(
+                f"  {nivel.nivel}: n={nivel.quantidade} "
+                f"p média={nivel.p_media:.2f} observado={nivel.frequencia_observada:.2f}"
+            )
+    if not relatorio.pode_ajustar_reguas:
+        print("Amostra insuficiente para ajustar réguas por calibração.")
+    for previsao in vencidas_sem_resultado(previsoes, hoje):
+        print(f"Resolver: {previsao.veredito} · {previsao.texto} (prazo {previsao.prazo})")
+    return SAIDA_OK
+
+
 def _json_do_argumento(texto: str | None) -> dict:
     bruto = sys.stdin.read() if texto in (None, "-") else texto
     try:
@@ -170,6 +203,13 @@ def _parser() -> argparse.ArgumentParser:
     novo_cartao.add_argument("json", nargs="?", help="frontmatter em JSON; omita para stdin")
     novo_cartao.add_argument("--corpo", help="arquivo markdown com o corpo do cartão")
     novo_cartao.set_defaults(executar=_cmd_novo_cartao)
+
+    portfolio = sub.add_parser("portfolio", help="painel do portfólio")
+    portfolio.set_defaults(executar=_cmd_portfolio)
+
+    calibracao = sub.add_parser("calibracao", help="calibração das previsões")
+    calibracao.add_argument("--trilha", choices=["G", "M", "S"])
+    calibracao.set_defaults(executar=_cmd_calibracao)
     return parser
 
 
