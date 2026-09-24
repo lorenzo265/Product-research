@@ -1,0 +1,72 @@
+{
+  "data": "2026-09-24T03:37:25",
+  "casos": {
+    "sintetico-conciliacao-contabil": {
+      "execucoes": [
+        {
+          "braco": "neutro",
+          "repeticao": 0,
+          "recomendacao": "ITERAR",
+          "p_sucesso_bruta": 0.06,
+          "niveis": {
+            "problema_workaround": "INCERTO",
+            "ticket_retencao": "IMPROVAVEL",
+            "canal": "IMPROVAVEL",
+            "escopo_suporte_venda": "INCERTO",
+            "defensibilidade_ia": "IMPROVAVEL",
+            "teto_taxa_base": "IMPROVAVEL"
+          },
+          "custo_usd": 0.32545300000000005,
+          "erro": null
+        },
+        {
+          "braco": "a_favor",
+          "repeticao": 0,
+          "recomendacao": "ITERAR",
+          "p_sucesso_bruta": 0.063,
+          "niveis": {
+            "problema_workaround": "INCERTO",
+            "ticket_retencao": "INCERTO",
+            "canal": "IMPROVAVEL",
+            "escopo_suporte_venda": "INCERTO",
+            "defensibilidade_ia": "IMPROVAVEL",
+            "teto_taxa_base": "IMPROVAVEL"
+          },
+          "custo_usd": 0.32626180000000005,
+          "erro": null
+        },
+        {
+          "braco": "contra",
+          "repeticao": 0,
+          "recomendacao": "ITERAR",
+          "p_sucesso_bruta": 0.07,
+          "niveis": {
+            "problema_workaround": "INCERTO",
+            "ticket_retencao": "INCERTO",
+            "canal": "IMPROVAVEL",
+            "escopo_suporte_venda": "INCERTO",
+            "defensibilidade_ia": "IMPROVAVEL",
+            "teto_taxa_base": "IMPROVAVEL"
+          },
+          "custo_usd": 0.48066200000000003,
+          "erro": null
+        }
+      ],
+      "aprovado": true,
+      "recomendacoes": [
+        "ITERAR"
+      ],
+      "p_media_por_braco": {
+        "neutro": 0.06,
+        "a_favor": 0.063,
+        "contra": 0.07
+      },
+      "delta_p_vs_neutro": {
+        "neutro": 0.0,
+        "a_favor": 0.003,
+        "contra": 0.01
+      },
+      "custo_total_usd": 1.13
+    }
+  }
+}

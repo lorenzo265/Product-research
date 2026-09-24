@@ -1,0 +1,20 @@
+[
+  {"pedido": "Quais oportunidades de micro-SaaS existem para clínicas odontológicas?", "esperado": "radar"},
+  {"pedido": "Roda o radar na lente 4 para o setor de transporte rodoviário.", "esperado": "radar"},
+  {"pedido": "Tive uma ideia: um serviço com IA que organiza os documentos que os clientes mandam para o contador.", "esperado": "oportunidade"},
+  {"pedido": "Abre uma oportunidade juntando os sinais s-2026-0003 e s-2026-0007.", "esperado": "oportunidade"},
+  {"pedido": "Testa rápido se a OP-0002 para em pé.", "esperado": "kill"},
+  {"pedido": "Roda o kill barato da OP-0001.", "esperado": "kill"},
+  {"pedido": "Aprofunda a OP-0003 e me dá o veredito.", "esperado": "validar"},
+  {"pedido": "Como eu testo a OP-0001 com clientes de verdade?", "esperado": "teste"},
+  {"pedido": "Fiz o teste t-2026-0001: 3 de 20 sócios pagaram o depósito.", "esperado": "resultado"},
+  {"pedido": "O que eu faço essa semana?", "esperado": "portfolio"},
+  {"pedido": "O harness está acertando as previsões dele?", "esperado": "calibrar"},
+  {"pedido": "Quanto custa o plano básico da Contabilizei hoje?", "esperado": null},
+  {"pedido": "Explica o que é o Fator R do Simples Nacional.", "esperado": null},
+  {"pedido": "Corrige o teste que está falhando em tests/unit.", "esperado": null},
+  {"pedido": "Qual a diferença entre a trilha M e a trilha S?", "esperado": null},
+  {"pedido": "Atualiza o README com a seção de instalação.", "esperado": null},
+  {"pedido": "Me explica o que o juiz faz no /validar.", "esperado": null},
+  {"pedido": "Quantos fatos já temos registrados?", "esperado": null}
+]
