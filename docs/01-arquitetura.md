@@ -94,9 +94,9 @@ flowchart LR
   C --> K{"2 · Kill<br/>barato"}
   K -- "2+ alegações caem" --> X[("Cadáveres")]
   K --> D["3a · Dossiê"]
-  D --> M["3b · Memorandos<br/>a favor ∥ contra"]
-  M --> V["3c · Verificador"]
-  V --> J{"3d · Juiz<br/>isolado"}
+  D --> V["3b · Verificador"]
+  V --> M["3c · Memorandos<br/>a favor ∥ contra"]
+  M --> J{"3d · Juiz<br/>isolado"}
   J -- "trava / KILL" --> X
   J --> OF["4 · Oferta"]
   OF --> T{"5 · Teste com<br/>comprador"}
@@ -114,7 +114,7 @@ flowchart LR
 | 0 · Radar | `/radar` | até 4 `batedor` em paralelo | Sinais em `data/sinais.jsonl` |
 | 1 · Oportunidade | `/oportunidade` | sessão principal | Cartão com pergunta neutralizada |
 | 2 · Kill barato | `/kill` | sessão principal (contrato) + `pesquisador` (verificação) | 3 alegações: sustentada / caiu / não encontrada; regra "2+ caem" |
-| 3 · Validação de mesa | `/validar` | `pesquisador` → `memorando` ×2 → `verificador` → `juiz` | Veredito por dimensão com p, travas e previsões |
+| 3 · Validação de mesa | `/validar` | `pesquisador` → `verificador` → `memorando` ×2 → `juiz` | Veredito por dimensão com p, travas e previsões |
 | 4 · Oferta | Fase 4 | skill na sessão principal + revisor isolado **[v2]** | Opções de solução, cunha, preço |
 | 5 · Teste com comprador | `/teste`, `/resultado` | você executa; o harness prepara | Test Card com regra calculada antes; material |
 | 6 · Construir | Fase 4 | sessão dedicada + revisor isolado **[v2]** | MVP (M/G) ou playbook automatizado (S) |

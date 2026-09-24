@@ -20,16 +20,19 @@ de ninguém. Siga as etapas 2 a 6 do `metodo-julgamento`. Você orquestra; não 
 | Passo | Quem | Orçamento |
 |---|---|---|
 | 1. Dossiê | `pesquisador`, modo `dossie` | até ~40 buscas |
-| 2. Memorandos | `memorando` ×2, na mesma mensagem | sem busca |
-| 3. Verificação | `verificador` | só leitura de fontes |
+| 2. Verificação | `verificador` | só leitura de fontes |
+| 3. Memorandos | `memorando` ×2, na mesma mensagem | sem busca |
 | 4. Juiz | `juiz` | sem busca |
 
 1. **Dossiê.** Lance o `pesquisador` em modo `dossie` com a oportunidade. Ao voltar, rode
    `python3 -m harness validar` e corrija erros.
-2. **Memorandos.** Lance dois subagentes `memorando` na mesma mensagem. A tarefa de cada
+2. **Verificação.** Lance o `verificador` com a oportunidade, antes dos memorandos, para
+   que eles já leiam o status de cada fato. Na OP-0001, 4 de 9 fatos vindos de resumo de
+   busca estavam errados, e os memorandos escritos antes da verificação se apoiaram
+   neles.
+3. **Memorandos.** Lance dois subagentes `memorando` na mesma mensagem. A tarefa de cada
    um é só: "Pasta: oportunidades/<pasta>. Direção: a favor." e "Pasta:
    oportunidades/<pasta>. Direção: contra.". Nada além disso.
-3. **Verificação.** Lance o `verificador` com a oportunidade.
 4. **Juiz.** Rode `python3 -m harness pacote-juiz OP-xxxx`. Passe ao subagente `juiz`
    exatamente a mensagem impressa, sem acrescentar nada.
 5. **Registro.** Salve a resposta do juiz num arquivo

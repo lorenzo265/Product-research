@@ -34,7 +34,9 @@ Siga as etapas 0 e 1 do `metodo-julgamento`.
 5. **Atualize o estágio:**
    `python3 -m harness atualizar cartao OP-xxxx '{"estagio": "kill_barato"}' --motivo "contrato gravado"`.
 6. **Verifique:** lance um subagente `pesquisador` em modo `verificacao` com a
-   oportunidade. Orçamento: ~15 buscas.
+   oportunidade. Orçamento: ~15 buscas. Peça leitura integral (`curl` ou `r.jina.ai`)
+   das fontes que decidem cada alegação: na OP-0001, 4 de 9 fatos tirados só de resumo
+   de busca estavam errados.
 7. **Aplique a regra** sobre os status devolvidos no `dossie-kill-barato.md`:
    - 2 ou mais caíram → `REFORMULAR`, ou `KILL` se não houver reformulação plausível;
    - 0 ou 1 caiu → `GO` (segue para `/validar`).

@@ -26,8 +26,8 @@ tudo abaixo é operação: quem vê o quê, em que ordem, com que campos.
 | Contrato | Você, via CLI | O enquadramento | `contrato.json`, gravado uma vez |
 | 1 · Kill barato | Subagente `pesquisador` (modo verificação) | Só as alegações | Fatos; cada alegação sustentada / caiu / não encontrada |
 | 2 · Dossiê | Subagente `pesquisador` (modo dossiê) | Pergunta neutra | `dossie-*.md` + fatos |
-| 3 · Memorandos | Subagente `memorando`, duas vezes em paralelo | Contrato + dossiê + fatos | `memorandos/a-favor.md` e `memorandos/contra.md` |
-| 4 · Verificação | Subagente `verificador` | Fatos citados | Status de verificação de cada fato decisivo |
+| 3 · Verificação | Subagente `verificador` | Fatos do dossiê | Status de verificação de cada fato |
+| 4 · Memorandos | Subagente `memorando`, duas vezes em paralelo | Contrato + dossiê + fatos já verificados | `memorandos/a-favor.md` e `memorandos/contra.md` |
 | 5 · Juiz | Subagente `juiz`, isolado | Só a entrada gerada por `pacote-juiz` | JSON do veredito |
 | 6 · Registro | Você, via CLI | O JSON do juiz | Veredito em `data/vereditos.jsonl`, cartão atualizado |
 
@@ -88,12 +88,12 @@ preenchido e as dimensões que já der para avaliar.
 
 - **Dossiê** no modo `dossie` do `metodo-pesquisa`, a partir da pergunta neutra (nunca
   da sua conversa com o usuário).
+- **Verificação:** lance o `verificador` com a oportunidade, antes dos memorandos. Ele
+  roda `python3 -m harness conferir-trecho --oportunidade OP-xxxx` e depois lê as fontes
+  dos fatos, marcando o status de cada um.
 - **Memorandos:** lance o subagente `memorando` duas vezes na mesma mensagem, uma com
   direção "a favor" e outra "contra". Cada um recebe só o caminho da pasta da
   oportunidade e a direção. Uma rodada, sem réplica: rodadas extras não melhoram o juiz.
-- **Verificação:** lance o `verificador` com a oportunidade. Ele roda
-  `python3 -m harness conferir-trecho --oportunidade OP-xxxx` e depois lê as fontes dos
-  fatos decisivos, marcando o status de cada um.
 - **Juiz:** rode `python3 -m harness pacote-juiz OP-xxxx`. O comando monta a entrada cega
   (memorandos como A e B em ordem sorteada, mesmo teto de tamanho, lista fechada de
   arquivos) e imprime a mensagem exata. Passe ao subagente `juiz` **somente essa

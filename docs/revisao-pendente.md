@@ -13,8 +13,8 @@
 4. **R-03**, **R-04**, **R-17** e **R-18**: réguas das trilhas M e S. São as que mais
    mudam o que o harness aprova ou mata.
 5. **R-14**: ligar ou não MCPs de busca e de dados do governo.
-6. **R-25**: a primeira oportunidade real (OP-0001, NFS-e) passou no kill barato; a
-   decisão de validar é sua.
+6. **R-25**: a primeira oportunidade real (OP-0001, NFS-e) passou no kill barato e levou
+   KILL do juiz na validação completa; a decisão é sua.
 7. **A-02** e **A-07** em `decisoes.md`: suas horas e caixa para testes, e suas teses
    antigas para servir de casos de eval.
 
@@ -342,8 +342,21 @@ primeira contagem deu "0 de 3 caíram". Registro em `evals/analise-de-erros.md`.
 **Ressalva:** os 9 fatos vieram só de resumos de busca, porque a rede da nuvem bloqueia a
 leitura das páginas (R-02).
 
-**Decisão sua:** rodar `/validar OP-0001`, reformular (ex.: vender a escritórios
-contábeis que atendem muitos prestadores), ou matar.
+**Atualização (24/09, noite): `/validar` rodou por completo, com rede.** Recomendação
+do juiz: **KILL**, com p_sucesso 0,066 (bruta 0,055) contra taxa-base 0,10.
+
+Objeção mais forte: escritórios contábeis já fazem a adequação dentro do pacote ou a
+oferecem como isca para captar clientes, e o Emissor Nacional é gratuito. Hipótese mais
+provável: "dor real mas não paga" (0,42). Custo: US$5,77.
+
+Se você não matar, o juiz deixou dois testes de pré-venda formulados:
+- ≥3 de 20 prestadores ME/EPP pagando R$150 pela adequação, até 15/11;
+- ≥3 de 30 escritórios pagando pela migração da carteira, até 30/11.
+
+O verificador achou 4 dos 9 fatos iniciais errados na fonte, e o juiz os descontou.
+Duas correções de método saíram daí (`evals/analise-de-erros.md`).
+
+**Decisão sua:** KILL (o veredito), ITERAR com um dos dois testes, ou reformular.
 
 ## Médio impacto
 
