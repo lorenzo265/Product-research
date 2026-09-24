@@ -1,0 +1,14 @@
+# Registro de fontes do harness: o que cada coletor acessa, com que licença e risco.
+# Toda fonte nova passa por aqui antes de virar código (robots.txt e termos lidos, data da checagem).
+fontes:
+  - nome: yc-oss (diretório da Y Combinator)
+    url: https://yc-oss.github.io/api/companies/all.json
+    coletor: harness/coletores/yc.py
+    comando: python3 -m harness coletar-yc
+    lentes: [7]
+    acesso: JSON estático público, atualizado diariamente, sem chave
+    dados_pessoais: não (dados de empresas)
+    risco_lgpd: baixo
+    termos_lidos_em: null  # a verificar: licença do repositório yc-oss e termos do diretório da YC
+    testado_em: 2026-09-24
+    observacao: coleta bruta vai para cache/ (fora do git); o batedor da lente 7 transforma candidatos em fatos

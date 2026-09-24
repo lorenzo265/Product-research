@@ -12,6 +12,7 @@ Comandos:
     registrar-veredito  grava o JSON do juiz (encolhe p, liga ao cartão)
     conferir-trecho  baixa a fonte e confere se o trecho literal está nela
     regra-teste   tabela de GO/KILL de um teste com comprador (SPRT ou Beta-Binomial)
+    coletar-yc    lente 7: empresas da YC ativas sem presença no Brasil (candidatos)
     portfolio     painel de todas as oportunidades e pendências
     proteger-estado  hook PreToolUse: bloqueia edição direta de arquivos de estado
     calibracao    Brier, intervalo e calibração por faixa das previsões resolvidas
@@ -27,6 +28,7 @@ from datetime import date
 from pathlib import Path
 
 from harness.calibracao import calibrar, encolher, extrair_previsoes, vencidas_sem_resultado
+from harness.coletores.yc import baixar_empresas, filtrar_candidatos
 from harness.estado import DIR_OPORTUNIDADES, Repositorio
 from harness.exceptions import HarnessError
 from harness.julgamento import montar_pacote_juiz
@@ -35,6 +37,7 @@ from harness.regras_teste import fronteiras_bayes, fronteiras_sprt
 from harness.validacao import ERRO, validar
 from harness.verificacao import conferir_trecho
 
+DIR_COLETAS = "cache/coletas"  # fora do git: coleta bruta não é estado
 PADRAO_ID_FATO = re.compile(r"\bf-\d{4}-\d{4}\b")
 SAIDA_OK = 0
 SAIDA_ERRO = 1
@@ -217,6 +220,29 @@ def _cmd_regra_teste(args: argparse.Namespace, repositorio: Repositorio, hoje: d
     return SAIDA_OK
 
 
+def _cmd_coletar_yc(args: argparse.Namespace, repositorio: Repositorio, hoje: date) -> int:
+    candidatos = filtrar_candidatos(
+        baixar_empresas(),
+        termos=args.termos or (),
+        industria=args.industria,
+        time_maximo=args.time_max,
+        incluir_america_latina=args.incluir_latam,
+    )
+    destino = repositorio.raiz / DIR_COLETAS / f"yc-{hoje.isoformat()}.json"
+    destino.parent.mkdir(parents=True, exist_ok=True)
+    destino.write_text(
+        json.dumps([c.como_dict() for c in candidatos], ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    for candidato in candidatos[: args.limite]:
+        print(f"{candidato.nome}\t{candidato.time}\t{candidato.turma}\t{candidato.descricao}")
+    print(
+        f"{len(candidatos)} candidatos (mostrando {min(args.limite, len(candidatos))}) · "
+        f"lista completa em {destino.relative_to(repositorio.raiz)}"
+    )
+    return SAIDA_OK
+
+
 def _cmd_portfolio(args: argparse.Namespace, repositorio: Repositorio, hoje: date) -> int:
     print(montar_painel(repositorio.snapshot(), hoje))
     return SAIDA_OK
@@ -344,6 +370,14 @@ def _parser() -> argparse.ArgumentParser:
     regra.add_argument("--alvo", type=float, help="bayes: taxa mínima de interesse")
     regra.add_argument("--n-max", type=int, help="bayes: contatos máximos")
     regra.set_defaults(executar=_cmd_regra_teste)
+
+    yc = sub.add_parser("coletar-yc", help="lente 7: candidatos da YC sem presença no Brasil")
+    yc.add_argument("--termos", nargs="*", help="palavras na descrição ou tags (qualquer uma)")
+    yc.add_argument("--industria", help='indústria exata, ex.: "B2B", "Fintech", "Healthcare"')
+    yc.add_argument("--time-max", type=int, help="tamanho máximo do time")
+    yc.add_argument("--incluir-latam", action="store_true", help="manter quem já está na LatAm")
+    yc.add_argument("--limite", type=int, default=30, help="quantos mostrar no terminal")
+    yc.set_defaults(executar=_cmd_coletar_yc)
 
     portfolio = sub.add_parser("portfolio", help="painel do portfólio")
     portfolio.set_defaults(executar=_cmd_portfolio)

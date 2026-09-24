@@ -102,6 +102,9 @@ português).
   com sede no Brasil); TrustMRR (receita verificada via Stripe/Paddle); Show HN e Ask HN;
   Acquire.com, Indie Hackers e Starter Story (leitura manual); ListaMRR para checar se já
   existe equivalente brasileiro.
+- **Coletor:** `python3 -m harness coletar-yc --industria B2B --termos <palavras> --time-max 15`
+  lista empresas da YC ativas sem presença no Brasil (lista completa em `cache/coletas/`).
+  É ponto de partida; cada candidato escolhido vira fato só depois de checado.
 - **Método:** para cada produto candidato, (1) receita e tempo de mercado lá fora, (2)
   busca por equivalente brasileiro, (3) qual barreira de localização existe, (4) se o
   próprio produto estrangeiro já aceita Pix e português (pagamento deixou de ser barreira
