@@ -298,6 +298,19 @@ ser só variação entre execuções.
 **Próximo passo:** 3 repetições e mais 7 casos, de preferência suas teses antigas
 (A-07).
 
+### R-24 · Limite de uso da conta interrompeu a primeira execução real
+**O que aconteceu:** a pesquisa da Fase 2, com 13 pesquisadores e 5 redatores em
+paralelo, mais os evals, levou a conta ao limite de uso da sessão ("resets 4:30am UTC").
+A primeira execução real (`/oportunidade` + `/kill` sobre NFS-e nacional) criou o
+cartão e gravou o contrato, e parou antes da verificação. Retomei depois do reset.
+**O que já mudou:**
+- `/kill` agora retoma quando o contrato já existe;
+- o eval de roteamento separa "falhou por limite" de "nenhuma skill chamada" (antes
+  contava como acerto nos quase-acertos).
+
+**Implicação:** em uso normal (um comando pesado por sessão) isso não deve acontecer.
+Rodadas grandes de eval ou radar amplo devem ser espaçadas ou agendadas.
+
 ## Médio impacto
 
 ### R-14 · Busca: ficar só na nativa ou adicionar MCPs de busca e de dados BR?
