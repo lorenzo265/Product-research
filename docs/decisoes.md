@@ -37,11 +37,15 @@ oportunidade com `cartao.md`. **Mudaria se:** o volume tornar busca e agregaçã
 A Fase 3 entrega uma oportunidade real atravessando radar → cartão → kill barato →
 veredito antes de construir o funil completo.
 
+### D-007 · Pisos de ambição por trilha · 2026-09-24 · ativa
+G: K1 atual (R$16,7M ARR capturável). M: caminho plausível a ~R$30k MRR em 18 meses.
+S: ~R$15k/mês de receita com margem. Pisos são critério de rejeição (K1 de cada
+trilha), nunca filtro de descoberta. Resolve A-01.
+
 ## Em aberto
 
 | # | Pergunta | Quem decide | Quando |
 |---|---|---|---|
-| A-01 | Pisos de ambição de M e S (proposta: M ~R$30k MRR em 18 meses; S ~R$15k/mês com margem) | Você | Antes dos pacotes M e S |
 | A-02 | Capacidade disponível: horas por semana e caixa para testes (anúncios, ferramentas, domínios) | Você | Antes do desenho de cunhas |
 | A-03 | Stack padrão de MVP (M) e de entrega de serviço (S) | Você + Fase 2 | Fase 4 |
 | A-04 | APIs de busca pagas via MCP × busca nativa | Fase 2, fluxo E | Fase 3 |
