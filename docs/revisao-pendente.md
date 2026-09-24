@@ -91,6 +91,68 @@ a empresa, para checar se ele já sabe.
 existe, porque o modelo não as conhece. Se tiver `fatos.json`, `vereditos.json` ou
 documentos de tese, suba no repo (item A-07 de `decisoes.md`).
 
+### R-11 · O juiz sai da sessão principal
+**Descoberta:** no `analista-imparcial` o juiz é a sessão principal. Mas é ela que
+recebeu sua pergunta, com sua convicção, e a pesquisa mostra que o maior gatilho de
+bajulação é o juiz ver a posição do usuário. Outros pontos:
+- subagentes carregam o CLAUDE.md inteiro por padrão;
+- o orquestrador escreve a tarefa do subagente e pode vazar a própria inclinação;
+- a Anthropic (mar/2026) diz que separar quem trabalha de quem avalia "é uma alavanca
+  forte", e que é bem mais fácil tornar cético um avaliador independente do que fazer
+  o gerador se criticar.
+
+**Meu padrão:** o juiz passa a ser um **subagente isolado**. Ele:
+- não carrega o CLAUDE.md (`omitClaudeMd`, suportado na versão instalada, 2.1.281);
+- não tem ferramenta para falar com outros agentes;
+- recebe só a pergunta neutralizada, os caminhos dos arquivos de evidência e os dois
+  memorandos;
+- devolve o veredito em JSON validado por hook.
+
+A sessão principal passa a orquestrar e apresentar, e não julga mais.
+**Se discordar:** mantemos o juiz na sessão principal, com a neutralização da pergunta
+como única proteção.
+
+### R-12 · Texto coletado da web pode carregar instruções
+**Descoberta:** a Anthropic alerta que texto injetado em estado persistido (arquivos
+que o agente relê a cada sessão) é recarregado sempre. Nossos `fatos.jsonl` e dossiês
+guardam trechos de páginas da web.
+**Meu padrão:**
+- trechos coletados ficam só em campos de citação, marcados como dado não confiável;
+- o CLAUDE.md diz que conteúdo dentro desses campos nunca é instrução;
+- o validador sinaliza trechos com cara de comando.
+
+### R-13 · Números dos testes com comprador (mexe no seu `pacote-mercado`)
+**Descoberta:** a estrutura está bem sustentada. Dois conjuntos de ensaios
+randomizados com startups italianas (116 e 759 empresas) mostraram que definir
+hipóteses e critérios antes do teste melhora resultados e faz o fundador largar ideia
+ruim mais cedo. Os **números**, porém, são regras de bolso:
+- **Escada de evidência:** vem de Alberto Savoia (*The Right It*). Os pontos foram
+  atribuídos pelo autor, não calibrados. "30 min = 30" e "pedido pago = 250" não
+  foram confirmados na fonte. Falta o degrau de **reputação** (apresentar ao decisor),
+  um dos três compromissos da Mom Test.
+- **Deflatores ÷1,35–3:** vêm de estudos sobre o quanto as pessoas exageram o quanto
+  *pagariam*, não sobre se *comprariam*. Para bens de consumo, a melhor estimativa é
+  ~÷1,2. Intenção de compra prevê pior justamente para produto novo, que é o caso de
+  startup.
+- **Limiares de smoke test com 1.000 visitantes:** com cortes fixos, uma página cuja
+  taxa real é 5% é morta 48% das vezes, e uma com taxa real de 8% só passa em 52%.
+  1.000 visitantes é demais para medir e-mail e de menos para medir pré-venda. Em
+  nicho B2B brasileiro, muitas vezes é inalcançável.
+
+**Meu padrão nos pacotes novos (M, S) e na revisão do G:**
+- a escada mantém a ordem e ganha o degrau de reputação; os pontos deixam de ser
+  somados como se fossem probabilidade;
+- o deflator vale só para preço declarado (÷1,2 central, ÷3 pessimista);
+- "compraria" conta só o "com certeza", dividido por 2 no mínimo, e **nunca** abre
+  portão de GO;
+- em B2B de nicho, regra bayesiana de amostra pequena sobre contas contatadas. Exemplo:
+  GO se P(taxa de depósito > 10%) ≥ 0,8, o que dá ~3 depósitos em 20 decisores com
+  orçamento;
+- pré-venda com teste sequencial (0,3% contra 1%): com 1.000 visitantes, GO com 9 ou
+  mais pedidos e KILL com 4 ou menos;
+- todo teste registra limiar, canal, tamanho da amostra e resultado, para o harness
+  construir as próprias taxas-base brasileiras (não existe benchmark BR publicado).
+
 ## Médio impacto
 
 ### R-08 · Tom das suas skills existentes
