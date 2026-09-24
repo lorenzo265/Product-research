@@ -16,6 +16,9 @@ from harness.validacao import FAIXAS_NIVEL, Snapshot
 
 MINIMO_PARA_AJUSTAR_REGUAS = 100
 Z_95 = 1.96
+# Fração do desvio (em log-odds) entre juiz e taxa-base que é mantida. Modelos atuais saem
+# superconfiantes; até haver ~100 previsões resolvidas, encolhemos em direção à taxa-base.
+FATOR_ENCOLHIMENTO_PADRAO = 0.7
 
 
 @dataclass(frozen=True)
@@ -61,6 +64,25 @@ class RelatorioCalibracao:
     skill_score: float | None
     faixas: list[FaixaCalibracao]
     pode_ajustar_reguas: bool
+
+
+def encolher(p_bruta: float, taxa_base: float, fator: float = FATOR_ENCOLHIMENTO_PADRAO) -> float:
+    """Puxa uma probabilidade em direção à taxa-base, em log-odds.
+
+    Args:
+        p_bruta: Probabilidade do juiz, entre 0 e 1 exclusivos.
+        taxa_base: Probabilidade da classe de referência, entre 0 e 1 exclusivos.
+        fator: Fração do desvio mantida (1 mantém o juiz; 0 devolve a taxa-base).
+
+    Returns:
+        A probabilidade encolhida, arredondada em 3 casas.
+    """
+    log_odds = _logit(taxa_base) + fator * (_logit(p_bruta) - _logit(taxa_base))
+    return round(1 / (1 + math.exp(-log_odds)), 3)
+
+
+def _logit(p: float) -> float:
+    return math.log(p / (1 - p))
 
 
 def extrair_previsoes(snapshot: Snapshot) -> list[Previsao]:

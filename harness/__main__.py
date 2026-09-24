@@ -9,6 +9,7 @@ Comandos:
     novo-cartao   cria a pasta e o cartão de uma oportunidade
     contrato      grava (uma vez) o contrato de validação de uma oportunidade
     pacote-juiz   monta a entrada cega do juiz e imprime a mensagem a entregar a ele
+    registrar-veredito  grava o JSON do juiz (encolhe p, liga ao cartão)
     conferir-trecho  baixa a fonte e confere se o trecho literal está nela
     portfolio     painel de todas as oportunidades e pendências
     proteger-estado  hook PreToolUse: bloqueia edição direta de arquivos de estado
@@ -24,7 +25,7 @@ import sys
 from datetime import date
 from pathlib import Path
 
-from harness.calibracao import calibrar, extrair_previsoes, vencidas_sem_resultado
+from harness.calibracao import calibrar, encolher, extrair_previsoes, vencidas_sem_resultado
 from harness.estado import DIR_OPORTUNIDADES, Repositorio
 from harness.exceptions import HarnessError
 from harness.julgamento import montar_pacote_juiz
@@ -135,6 +136,29 @@ def _cmd_pacote_juiz(args: argparse.Namespace, repositorio: Repositorio, hoje: d
     pasta = repositorio.pasta_da_oportunidade(args.id)
     pacote = montar_pacote_juiz(repositorio.raiz, pasta, hoje, semente=args.semente)
     print(pacote.mensagem)
+    return SAIDA_OK
+
+
+def _cmd_registrar_veredito(args: argparse.Namespace, repositorio: Repositorio, hoje: date) -> int:
+    veredito = _json_do_argumento(args.json)
+    veredito.update(oportunidade=args.id, data=hoje.isoformat())
+    bruta = veredito.get("p_sucesso_bruta")
+    if bruta is not None and "p_sucesso" not in veredito:
+        veredito["p_sucesso"] = encolher(bruta, veredito["base_rate"]["p"])
+    gravado = repositorio.adicionar("veredito", veredito, hoje)
+    cartao = repositorio.obter("cartao", args.id)
+    repositorio.atualizar_cartao(
+        args.id,
+        {
+            "vereditos": [*cartao.get("vereditos", []), gravado["id"]],
+            "travas": gravado["travas"],
+        },
+        f"veredito {gravado['id']} ({gravado['modo']}): {gravado['recomendacao']}",
+        hoje,
+    )
+    p_final = gravado.get("p_sucesso")
+    sufixo = f" · p_sucesso={p_final} (bruta {bruta})" if p_final is not None else ""
+    print(f"{gravado['id']} · {gravado['recomendacao']}{sufixo}")
     return SAIDA_OK
 
 
@@ -276,6 +300,11 @@ def _parser() -> argparse.ArgumentParser:
     pacote.add_argument("id", help="id da oportunidade (OP-0001)")
     pacote.add_argument("--semente", type=int, help="semente do sorteio A/B")
     pacote.set_defaults(executar=_cmd_pacote_juiz)
+
+    registrar = sub.add_parser("registrar-veredito", help="grava o veredito do juiz")
+    registrar.add_argument("id", help="id da oportunidade (OP-0001)")
+    registrar.add_argument("json", nargs="?", help="JSON do juiz; omita para stdin")
+    registrar.set_defaults(executar=_cmd_registrar_veredito)
 
     conferir = sub.add_parser("conferir-trecho", help="confere trechos literais na fonte")
     conferir.add_argument("ids", nargs="*", help="ids de fatos")

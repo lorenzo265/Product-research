@@ -65,3 +65,17 @@ def test_previsao_vencida_sem_resultado_aparece_para_resolver():
     vencidas = vencidas_sem_resultado(previsoes, date(2026, 9, 24))
 
     assert [p.prazo for p in vencidas] == ["2026-09-01"]
+
+
+def test_encolher_puxa_o_juiz_para_a_taxa_base():
+    from harness.calibracao import encolher
+
+    encolhida = encolher(0.8, 0.1)
+
+    assert 0.1 < encolhida < 0.8
+
+
+def test_encolher_com_fator_um_mantem_o_juiz():
+    from harness.calibracao import encolher
+
+    assert encolher(0.8, 0.1, fator=1.0) == pytest.approx(0.8)

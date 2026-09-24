@@ -150,3 +150,24 @@ def test_proteger_estado_libera_arquivos_de_trabalho(raiz, caminho):
     evento = {"tool_name": "Write", "tool_input": {"file_path": caminho}}
 
     assert _rodar(raiz, "proteger-estado", stdin=json.dumps(evento)) == SAIDA_OK
+
+
+def test_registrar_veredito_encolhe_p_e_liga_ao_cartao(raiz, capsys):
+    from tests.fabricas import CARTAO, FATO, VEREDITO
+
+    cartao = novo(CARTAO)
+    del cartao["id"], cartao["criado_em"], cartao["atualizado_em"]
+    _rodar(raiz, "novo-cartao", json.dumps(cartao))
+    _rodar(raiz, "adicionar", "fato", json.dumps(FATO))
+    capsys.readouterr()
+    veredito = novo(VEREDITO, p_sucesso_bruta=0.6)
+    for campo in ("id", "oportunidade", "data"):
+        del veredito[campo]
+
+    codigo = _rodar(raiz, "registrar-veredito", "OP-0001", json.dumps(veredito))
+
+    saida = capsys.readouterr().out
+    assert codigo == SAIDA_OK
+    assert saida.startswith("v-2026-0001 · ITERAR · p_sucesso=")
+    _rodar(raiz, "obter", "cartao", "OP-0001")
+    assert '"v-2026-0001"' in capsys.readouterr().out
