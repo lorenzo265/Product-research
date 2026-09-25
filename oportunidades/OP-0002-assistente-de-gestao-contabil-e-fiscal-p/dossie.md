@@ -50,13 +50,16 @@ oferecem ou estão lançando a mesma leitura fiscal automática como recurso.
   atualizado 31/08/2026) uma funcionalidade de "Automação Fiscal" gratuita até outubro
   de 2026, vendida a escritórios contábeis/BPOs, que busca automaticamente NF-e, NFS-e,
   NFC-e e CT-e nas bases da SEFAZ/prefeituras usando o certificado A1 da própria
-  empresa-cliente, integra a sistemas contábeis (Domínio, SCI, Alterdata) e auxilia na
-  apuração de DAS/DARF/DARE e no envio de obrigações acessórias (EFD, DCTFWeb)
-  (f-2026-0083, tier 1, leitura integral). Isso cobre o mesmo ciclo (captura de
-  documento fiscal → apuração → obrigação acessória) que o proponente descreve como o
-  fosso central do Arkan — com a diferença de que o mecanismo usa o certificado A1 da
-  própria empresa (não a Autorização de Acesso sem certificado que o Arkan propõe) e é
-  vendido a escritórios contábeis, não diretamente ao dono da PME.
+  empresa-cliente, integra a sistemas contábeis (Domínio, SCI, Alterdata) e gera
+  relatório de crédito de IBS/CBS por fornecedor (f-2026-0083, tier 1, leitura
+  integral). *[Corrigido em 2026-09-25, após re-verificação da f-2026-0083: a versão
+  anterior deste parágrafo atribuía ao produto também a apuração de DAS/DARF/DARE e as
+  obrigações acessórias (EFD, DCTFWeb); na página, isso aparece só na seção genérica
+  sobre sistemas de automação fiscal, não na lista das três funcionalidades do
+  produto.]* O produto cobre a etapa de captura de documento fiscal e a integração ao
+  sistema contábil do escritório; o mecanismo usa o certificado A1 da própria empresa
+  (não a Autorização de Acesso sem certificado que o Arkan propõe) e é vendido a
+  escritórios contábeis, não diretamente ao dono da PME.
 - Omie IA Fiscal (app da própria loja de apps Omie) faz o oposto do que a Conta Azul
   anunciou: só sugere alíquotas/CST/textos legais para emissão de NF-e de produtos, sem
   captura de dado da Receita Federal, apuração consolidada ou execução de obrigação;
@@ -65,7 +68,9 @@ oferecem ou estão lançando a mesma leitura fiscal automática como recurso.
 - Conta Azul (Regras Fiscais, plano Pro) e Bling (Natureza de Operação) já oferecem
   cálculo automático de imposto na emissão de nota, mas dependente de parametrização
   manual prévia — não é captura/apuração automática de dado consolidado direto da
-  Receita Federal (f-2026-0084, leitura resumo_de_busca).
+  Receita Federal (f-2026-0084, leitura resumo_de_busca). *[Nota de 2026-09-25:
+  f-2026-0084 está `contradita`: a parte da Conta Azul confere na fonte citada, mas o
+  trecho sobre o Bling não está nessa página. Sobre o Bling, ver f-2026-0085.]*
 - Não encontrei, especificamente para o Bling, nenhuma menção de captura automática de
   dado fiscal direto do e-CAC/Integra Contador; a página oficial de ajuda do módulo
   fiscal do Bling está bloqueada por Cloudflare e não foi lida (bloqueio não contornado,
