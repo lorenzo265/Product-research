@@ -1,0 +1,46 @@
+{
+  "oportunidade": "OP-0005",
+  "trilha": "S",
+  "pacote": "pacote-servico-ia",
+  "pergunta_neutralizada": "Empresas brasileiras que mantêm auxiliares de cobrança para negociar débitos por telefone pagam para terceirizar ou automatizar essa negociação, o envio do boleto e o registro das interações?",
+  "tese_de_terceiro": "Um terceiro propõe um serviço produtizado, operado por uma pessoa com agente de voz e de mensagens por IA, que faz para credores pequenos e médios no Brasil (clubes, entidades, escolas e outros) a negociação de débitos por telefone, o envio do boleto negociado e o registro das interações, trabalho hoje feito por auxiliares de cobrança contratados, cobrando setup mais mensalidade ou percentual do valor recuperado. Ticket e mecanismo são hipótese do enquadramento, não de um proponente: a oportunidade veio do radar (grupo 3 de 25/09/2026).",
+  "premissas_criticas": [
+    "CRÍTICA: agentes de IA de cobrança (voz ou WhatsApp) ainda não são vendidos a credores pequenos e médios a um preço abaixo do custo de um auxiliar.",
+    "CRÍTICA: ligações de cobrança feitas por agente de voz automatizado são permitidas no Brasil sem exigência regulatória que as inviabilize para um operador pequeno.",
+    "CRÍTICA: credores pequenos e médios já pagam terceiros pela cobrança, ou aceitariam pagar.",
+    "O resultado é mensurável por evento de terceiro (boleto ou Pix pago), o que permite preço por resultado.",
+    "O volume por cliente cabe em ~4 h/mês do operador com a automação.",
+    "Há contas qualificadas suficientes (~100) alcançáveis por uma pessoa num único ICP."
+  ],
+  "condicoes_barreira": [
+    "Não existe, vendido no Brasil a credores pequenos e médios, agente de IA que negocie débitos e envie o boleto sem operador humano por menos que o custo de um auxiliar de cobrança.",
+    "Ligações de cobrança por agente de voz automatizado são permitidas no Brasil sem exigência regulatória (Anatel, CDC, LGPD) que as inviabilize para um operador pequeno.",
+    "Credores pequenos e médios no Brasil já pagam terceiros pela cobrança amigável, com oferta e preço publicados.",
+    "Um cliente cabe em ~4 h/mês do operador, com margem de 60% ou mais a ~R$1.500/mês ou percentual equivalente do recuperado.",
+    "Existem ao menos ~100 credores qualificados alcançáveis num único ICP (vertical × porte)."
+  ],
+  "alegacoes_kill": [
+    {
+      "alegacao": "Não existe, vendido no Brasil a credores pequenos e médios, agente de IA (voz ou WhatsApp) que negocie débitos e envie o boleto sem operador humano por menos que o custo de um auxiliar de cobrança (salário médio de R$1.833,26/mês, f-2026-0118).",
+      "dano_se_falsa": "Alto (KS4): se esse produto já é vendido a esse público por menos, o serviço compete com uma assinatura pronta e o cliente obtém o valor sem terceirizar.",
+      "como_verificar": "Buscar fornecedores brasileiros de cobrança com IA (agente de voz, WhatsApp, régua de cobrança) com público-alvo e preço ou modelo de cobrança publicados; partir da VulcaNet (f-2026-0127) e procurar outros com o mesmo esforço."
+    },
+    {
+      "alegacao": "Ligações de cobrança feitas por agente de voz automatizado são permitidas no Brasil sem exigência regulatória (Anatel, CDC, LGPD) que as inviabilize para um operador pequeno.",
+      "dano_se_falsa": "Alto (KS5): se a regra de chamadas automatizadas da Anatel ou outra norma bloquear ou exigir estrutura que um operador pequeno não tem, o canal de voz sai e a oferta precisa ser refeita.",
+      "como_verificar": "Ler as normas e atos da Anatel sobre chamadas automatizadas e abusivas (incluindo o prefixo 0303 e se ele se aplica à cobrança), o art. 42 do CDC e orientação publicada sobre cobrança automatizada."
+    },
+    {
+      "alegacao": "Credores pequenos e médios no Brasil já pagam terceiros pela cobrança amigável (assessorias com comissão sobre o valor recuperado ou mensalidade), com oferta e preço publicados.",
+      "dano_se_falsa": "Alto (dimensão 1 e trava de comprador com orçamento): sem gasto terceirizado existente, o serviço exige que o credor crie uma categoria de gasto em vez de trocar de fornecedor.",
+      "como_verificar": "Buscar assessorias de cobrança brasileiras que atendem credores pequenos e médios (escolas, clubes, condomínios, associações), com percentual de comissão ou preço publicados."
+    }
+  ],
+  "taxa_base": {
+    "p": 0.1,
+    "classe_referencia": "serviços B2B produtizados com IA no Brasil, operados por uma pessoa, que chegam a R$15k/mês com margem de 60% ou mais depois das horas do operador",
+    "justificativa": "Não há taxa publicada para a trilha S (pacote-servico-ia); prior largo e declarado, o mesmo usado na OP-0001, a refinar com as taxas que o harness registrar."
+  },
+  "teto": "S: com ticket hipotético de R$1.500/mês ou percentual equivalente do recuperado (abaixo do custo de um auxiliar CLT: salário médio de R$1.833,26/mês mais encargos, f-2026-0118), R$15.000/mês exige 10 clientes; a p1 de 10%, ~100 contas qualificadas alcançáveis num único ICP. Margem de 60% cabe em ~4 h/cliente/mês e 40 h/mês no total, dentro das 80 h de referência. A população de credores está a verificar: há 87.729 admissões e desligamentos/ano de auxiliar de cobrança em CLT (f-2026-0118), sem separação por setor.",
+  "criado_em": "2026-09-25"
+}

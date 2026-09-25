@@ -2,7 +2,7 @@
 titulo: Documentos e lançamentos de comércio exterior (fatura, packing list, LPCO,
   DU-E)
 trilha: S
-estagio: oportunidade
+estagio: kill_barato
 status: ativa
 origem: radar 2026-09-25, grupo 1 (radar/2026-09-25-varredura-ampla.md), escolhido
   pelo usuário
@@ -53,3 +53,4 @@ documentação de despacho, classificar produtos e montar fatura, packing list, 
 ## Hipóteses rivais
 
 ## Histórico
+- 2026-09-25: contrato gravado

@@ -1,0 +1,47 @@
+{
+  "oportunidade": "OP-0004",
+  "trilha": "S",
+  "pacote": "pacote-servico-ia",
+  "pergunta_neutralizada": "Empresas de varejo e de saúde no Brasil pagam para terceirizar ou automatizar a conferência de nota fiscal contra pedido e o lançamento de faturamento no sistema, hoje feitos por auxiliares de faturamento?",
+  "tese_de_terceiro": "Um terceiro propõe um serviço produtizado, operado por uma pessoa com extração de documentos por IA, que confere notas fiscais contra pedidos e lança os dados de faturamento no sistema de varejistas e de prestadores de saúde no Brasil, trabalho hoje feito por auxiliares de faturamento contratados, cobrando setup mais mensalidade. Ticket e mecanismo são hipótese do enquadramento, não de um proponente: a oportunidade veio do radar (grupo 2 de 25/09/2026).",
+  "premissas_criticas": [
+    "CRÍTICA: 'auxiliar de faturamento' descreve o mesmo fluxo em varejo e em saúde; se forem fluxos diferentes, a oportunidade mistura dois ICPs.",
+    "CRÍTICA: os ERPs e as ferramentas de gestão de NF-e já difundidos não fazem, como recurso padrão, a conferência automática da nota recebida contra o pedido de compra.",
+    "CRÍTICA: parte relevante da conferência depende de documento não estruturado (pedido em PDF, e-mail, papel) ou de exceções, e não só dos dados do XML da NF-e, que já chegam estruturados.",
+    "Varejistas ou prestadores de saúde já pagam terceiros por esse trabalho, ou aceitariam pagar.",
+    "O volume por cliente cabe em ~4 h/mês do operador com a automação.",
+    "Há contas qualificadas suficientes (~100) alcançáveis por uma pessoa num único ICP."
+  ],
+  "condicoes_barreira": [
+    "As vagas de auxiliar de faturamento em varejo e em saúde descrevem o mesmo fluxo de conferência de nota contra pedido e lançamento no sistema.",
+    "Nem os ERPs mais usados por varejistas e prestadores de saúde pequenos e médios nem ferramentas difundidas de gestão de NF-e fazem, como recurso padrão, a conferência automática da NF-e recebida contra o pedido de compra.",
+    "Empresas de varejo ou de saúde no Brasil já pagam terceiros (BPO) para conferir notas ou lançar faturamento, com oferta publicada.",
+    "A conferência depende de documentos não estruturados ou de exceções em proporção que justifique extração por IA e revisão humana.",
+    "Um cliente cabe em ~4 h/mês do operador, com margem de 60% ou mais a ~R$1.500/mês.",
+    "Existem ao menos ~100 contas qualificadas alcançáveis num único ICP (vertical × porte × função)."
+  ],
+  "alegacoes_kill": [
+    {
+      "alegacao": "Nem os ERPs mais usados por varejistas e prestadores de saúde pequenos e médios no Brasil nem ferramentas difundidas de gestão de NF-e fazem, como recurso padrão, a conferência automática da NF-e recebida contra o pedido de compra.",
+      "dano_se_falsa": "Alto (KS4): se o recurso já vem no ERP ou numa ferramenta barata de captura de XML, o cliente obtém o valor sem terceirizar e a dor é de adoção, não de falta de solução.",
+      "como_verificar": "Buscar em documentação e páginas de produto de ERPs (ex.: TOTVS, Sankhya, Senior, Bling, Omie, Tasy, MV) e de ferramentas de gestão de NF-e recursos de conferência de NF-e com pedido de compra, com preço quando publicado."
+    },
+    {
+      "alegacao": "Empresas de varejo ou de saúde no Brasil já pagam terceiros (BPO de faturamento ou de backoffice fiscal) para conferir notas ou lançar faturamento, com oferta publicada.",
+      "dano_se_falsa": "Alto (dimensão 1 e trava de comprador com orçamento): sem compra terceirizada existente, o serviço exige que o cliente crie uma categoria de gasto em vez de trocar de fornecedor.",
+      "como_verificar": "Buscar empresas brasileiras que vendem terceirização de faturamento ou de conferência de notas para varejo e para saúde, com escopo e preço ou modelo de cobrança publicados."
+    },
+    {
+      "alegacao": "As vagas de auxiliar de faturamento em varejo e em saúde descrevem o mesmo fluxo: conferir a nota fiscal contra o pedido e lançar os dados no sistema.",
+      "dano_se_falsa": "Alto (trava de repetibilidade): se em saúde a função for faturar contas para convênios e SUS, a oportunidade junta dois ICPs com fluxos diferentes e precisa ser dividida antes de qualquer oferta.",
+      "como_verificar": "Ler na íntegra descrições de vagas de auxiliar de faturamento de varejistas e de hospitais ou operadoras (páginas públicas da Gupy e de carreiras) e comparar as tarefas descritas."
+    }
+  ],
+  "taxa_base": {
+    "p": 0.1,
+    "classe_referencia": "serviços B2B produtizados com IA no Brasil, operados por uma pessoa, que chegam a R$15k/mês com margem de 60% ou mais depois das horas do operador",
+    "justificativa": "Não há taxa publicada para a trilha S (pacote-servico-ia); prior largo e declarado, o mesmo usado na OP-0001, a refinar com as taxas que o harness registrar."
+  },
+  "teto": "S: com ticket hipotético de R$1.500/mês (abaixo do custo de um auxiliar CLT: salário médio de R$2.532,55/mês mais encargos, f-2026-0116), R$15.000/mês exige 10 clientes; a p1 de 10%, ~100 contas qualificadas alcançáveis num único ICP. Margem de 60% cabe em ~4 h/cliente/mês e 40 h/mês no total, dentro das 80 h de referência. A população de empregadores está a verificar: há 54.369 admissões e desligamentos/ano de auxiliar de faturamento em CLT (f-2026-0116), sem separação por setor.",
+  "criado_em": "2026-09-25"
+}

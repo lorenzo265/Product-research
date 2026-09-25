@@ -1,0 +1,48 @@
+{
+  "oportunidade": "OP-0003",
+  "trilha": "S",
+  "pacote": "pacote-servico-ia",
+  "pergunta_neutralizada": "Tradings, empresas de logística e despachantes aduaneiros no Brasil pagam para terceirizar ou automatizar o preenchimento de documentos de comércio exterior (fatura, packing list, LPCO, DU-E) e o lançamento em sistemas internos e portais do governo, hoje feitos por assistentes contratados?",
+  "tese_de_terceiro": "Um terceiro propõe um serviço produtizado, operado por uma pessoa com automação por IA, que assume para tradings, empresas de logística e exportadoras ou importadoras no Brasil o preenchimento de fatura, packing list, LPCO e DU-E e o lançamento desses dados em sistemas internos e no Portal Único Siscomex, trabalho hoje feito por assistentes de comércio exterior contratados, cobrando setup mais mensalidade abaixo do custo de um assistente. Ticket e mecanismo são hipótese do enquadramento, não de um proponente: a oportunidade veio do radar (grupo 1 de 25/09/2026).",
+  "premissas_criticas": [
+    "CRÍTICA: o trabalho é mais transcrição entre documentos e sistemas (regra) do que decisão com responsabilidade (classificação fiscal, enquadramento de regime), que ficaria com o cliente ou com o despachante.",
+    "CRÍTICA: o lançamento no Portal Único Siscomex em nome do exportador pode ser feito por um prestador contratado, sem ser ato privativo de despachante aduaneiro credenciado.",
+    "CRÍTICA: existe meio oficial de integração com o Portal Único (API ou sistema autorizado), para que a automação não dependa de operar o portal por navegador fora dos termos.",
+    "CRÍTICA: não há software de comércio exterior já difundido que faça o mesmo por menos, a ponto de o cliente preferir licença a serviço.",
+    "A automação reduz o trabalho por cliente a ~4 h/mês do operador, contra um assistente que hoje dedica a jornada inteira a esse fluxo.",
+    "Empresas pequenas e médias de comércio exterior aceitam terceirizar esse backoffice, ou já terceirizam parte dele.",
+    "Há contas qualificadas suficientes (~100) alcançáveis por uma pessoa."
+  ],
+  "condicoes_barreira": [
+    "Não existe software de comércio exterior já difundido no Brasil que automatize o preenchimento e o registro de DU-E e LPCO a partir da fatura e do packing list a um preço que empresas pequenas pagariam.",
+    "O lançamento de DU-E e LPCO em nome do exportador pode ser executado por prestador contratado sem credenciamento como despachante aduaneiro.",
+    "O Portal Único Siscomex oferece API oficial ou integração autorizada para registrar DU-E e LPCO por sistema de terceiro.",
+    "A automação cobre a maior parte do volume de um assistente, de modo que um cliente caiba em ~4 h/mês do operador, com margem de 60% ou mais a ~R$1.500/mês.",
+    "Empresas pequenas e médias de comércio exterior já compram terceirização de backoffice ou aceitariam comprá-la.",
+    "Existem ao menos ~100 tradings, empresas de logística ou exportadoras pequenas e médias alcançáveis com esse fluxo em volume."
+  ],
+  "alegacoes_kill": [
+    {
+      "alegacao": "Não existe software de comércio exterior já difundido no Brasil que automatize o preenchimento e o registro de DU-E e LPCO a partir da fatura e do packing list, vendido a empresas pequenas e médias.",
+      "dano_se_falsa": "Alto (KS4): com software difundido fazendo o mesmo, o serviço compete com uma licença já disponível e o cliente obtém o valor sem terceirizar.",
+      "como_verificar": "Buscar fornecedores brasileiros de software de comércio exterior e de integração com o Portal Único (DU-E, LPCO, Catálogo de Produtos), com recursos declarados e preço publicado; contar quantos automatizam o registro a partir de documentos."
+    },
+    {
+      "alegacao": "O lançamento de DU-E e LPCO no Portal Único Siscomex em nome do exportador pode ser executado por um prestador contratado sem credenciamento como despachante aduaneiro, sem configurar atividade privativa.",
+      "dano_se_falsa": "Alto (KS6): se for ato privativo, o serviço não pode ser vendido ao exportador e precisa ser reformulado para vender ao despachante credenciado.",
+      "como_verificar": "Ler a norma da Receita Federal sobre representação no despacho aduaneiro e habilitação no Siscomex (quem pode registrar DU-E e em que condição) e a regulamentação da profissão de despachante aduaneiro."
+    },
+    {
+      "alegacao": "O Portal Único Siscomex oferece meio oficial (API pública ou integração autorizada) para registrar DU-E e LPCO por sistema de terceiro.",
+      "dano_se_falsa": "Alto (KS5): sem integração oficial, a automação depende de operar o portal por navegador com certificado digital, o que pode ficar fora dos termos e quebrar a cada mudança do portal.",
+      "como_verificar": "Ler a documentação oficial de APIs do Portal Único Siscomex (DU-E, LPCO) e as condições de acesso de sistemas de terceiros."
+    }
+  ],
+  "taxa_base": {
+    "p": 0.1,
+    "classe_referencia": "serviços B2B produtizados com IA no Brasil, operados por uma pessoa, que chegam a R$15k/mês com margem de 60% ou mais depois das horas do operador",
+    "justificativa": "Não há taxa publicada para a trilha S (pacote-servico-ia); prior largo e declarado, o mesmo usado na OP-0001, a refinar com as taxas que o harness registrar."
+  },
+  "teto": "S: com ticket hipotético de R$1.500/mês (abaixo do custo de um assistente CLT: salário médio de R$2.230,12/mês mais encargos, f-2026-0117), R$15.000/mês exige 10 clientes; a p1 de 10%, ~100 contas qualificadas alcançáveis. Margem de 60% cabe em ~4 h/cliente/mês e 40 h/mês no total, dentro das 80 h de referência, desde que a automação absorva quase todo o volume que hoje ocupa um assistente em jornada integral. O número de empresas compradoras está a verificar: há 3.246 admissões e desligamentos/ano de despachante documentalista em CLT (f-2026-0117) e vagas abertas em pelo menos 5 empresas (f-2026-0111).",
+  "criado_em": "2026-09-25"
+}

@@ -1,7 +1,7 @@
 ---
 titulo: Negociação de débitos por telefone e registro da cobrança
 trilha: S
-estagio: oportunidade
+estagio: kill_barato
 status: ativa
 origem: radar 2026-09-25, grupo 3 (radar/2026-09-25-varredura-ampla.md), escolhido
   pelo usuário
@@ -51,3 +51,4 @@ futebol, entidade sindical e educação (s-2026-0017, f-2026-0115).
 ## Hipóteses rivais
 
 ## Histórico
+- 2026-09-25: contrato gravado

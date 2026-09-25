@@ -2,7 +2,7 @@
 titulo: Conferência de nota fiscal contra pedido e lançamento de faturamento (varejo
   e saúde)
 trilha: S
-estagio: oportunidade
+estagio: kill_barato
 status: ativa
 origem: radar 2026-09-25, grupo 2 (radar/2026-09-25-varredura-ampla.md), escolhido
   pelo usuário
@@ -50,3 +50,4 @@ faturar notas de venda, compra, devolução e troca e lançar os dados no sistem
 ## Hipóteses rivais
 
 ## Histórico
+- 2026-09-25: contrato gravado
