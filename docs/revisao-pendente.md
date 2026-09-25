@@ -440,6 +440,22 @@ As cifras de 1 a 3 são inferências grosseiras de massa salarial.
 - **PNCP fora do ar** (sem resposta em 60 s). A lente 11 não rodou. **Meu padrão:**
   tentar de novo no próximo radar, sem mudar nada.
 
+### R-28 · Kill barato das OP-0003, OP-0004 e OP-0005 · decisão sua
+Rodou em 25/09 a seu pedido. Pela regra (2 ou mais alegações caídas → reformular):
+- **OP-0003** (comércio exterior): **REFORMULAR** (v-2026-0008). Caíram "não existe
+  software difundido" (iData e Sigraweb já automatizam DU-E e LPCO a partir de
+  documentos) e "prestador contratado pode lançar em nome do exportador" (só pessoa com
+  vínculo exclusivo ou despachante credenciado representa; arts. 809–810 do Regulamento
+  Aduaneiro). O pacote S prevê reformular vendendo ao despachante credenciado (KS6).
+- **OP-0004** (faturamento): **GO** (v-2026-0009), com 1 de 3 caída: as vagas de auxiliar de
+  faturamento descrevem outros fluxos (vendas, convênios, SUS), não conferência de nota
+  contra pedido. Se for para `/validar`, o ICP e o fluxo precisam ser redefinidos antes.
+- **OP-0005** (cobrança): **GO** (v-2026-0007), com 0 de 3 caídas. A alegação 1 ficou de pé por
+  margem estreita: agentes de voz para cobrança já custam R$499–3.900/mês, mas as páginas
+  lidas não mostram negociação autônoma nem envio de boleto.
+
+**Decisão sua:** para cada uma, `/validar`, reformular ou KILL.
+
 ## Médio impacto
 
 ### R-14 · Busca: ficar só na nativa ou adicionar MCPs de busca e de dados BR?

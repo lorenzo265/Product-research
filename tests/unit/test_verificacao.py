@@ -191,3 +191,15 @@ def test_link_markdown_do_leitor_alternativo_conta_so_o_texto():
     resultado = conferir_trecho(fato, _baixador(markdown))
 
     assert resultado.trecho_encontrado is True
+
+
+def test_negrito_e_marcador_de_lista_nao_quebram_a_conferencia():
+    pagina = "**Requisitos:** · Ensino Médio Completo · Experiência em _faturamento_ SUS"
+    fato = novo(FATO)
+    fato["fonte"]["citacao_literal"] = (
+        "Requisitos: Ensino Médio Completo Experiência em faturamento SUS"
+    )
+
+    resultado = conferir_trecho(fato, _baixador(pagina))
+
+    assert resultado.trecho_encontrado is True

@@ -28,6 +28,9 @@ PADRAO_ESPACO_ANTES_DE_PONTUACAO = re.compile(r"\s+([,.;:!?])")
 # Elisões e anotações do coletor ("[tabela 3]", "[seção do produto]") separam as partes.
 PADRAO_ELISAO = re.compile(r"\[[^\]]*\]|\(\.\.\.\)|\.\.\.|…")
 ASPAS = "\"'“”‘’«»"
+# Marcação que o leitor alternativo (markdown) ou a página põe em volta do texto: negrito,
+# itálico e marcadores de lista. Sai dos dois lados da comparação.
+MARCACAO = "*_·•"
 ASSINATURA_PDF = b"%PDF"
 # Dados que a página declara sem mostrar como texto: JSON-LD e atributos descritivos.
 # Script comum continua de fora (variável de JS não é o que a página diz).
@@ -179,6 +182,6 @@ def _normalizar(texto: str) -> str:
     """
     texto = unicodedata.normalize("NFKD", texto).casefold()
     texto = "".join(c for c in texto if not unicodedata.combining(c))
-    texto = texto.translate(str.maketrans("", "", ASPAS))
+    texto = texto.translate(str.maketrans("", "", ASPAS + MARCACAO))
     texto = PADRAO_ESPACO_ANTES_DE_PONTUACAO.sub(r"\1", texto)
     return PADRAO_ESPACOS.sub(" ", texto).strip()

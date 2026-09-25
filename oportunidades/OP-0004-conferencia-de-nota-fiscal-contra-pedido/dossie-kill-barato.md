@@ -136,3 +136,9 @@ f-2026-0161 (Senior), f-2026-0162 (Sankhya), f-2026-0163 (TOTVS), f-2026-0164 (6
 f-2026-0165 (Solutionmed), f-2026-0166 (S3 Saúde), f-2026-0167 (SPDM/PAIS),
 f-2026-0168 (Unimed Costa Verde), f-2026-0169 (Grupo NOHDA), f-2026-0170 (Quero Bolsa),
 f-2026-0171 (ausência — vaga Grupo Muffato expirada).
+
+**Atualização (orquestrador, 2026-09-25):** o f-2026-0167 foi corrigido depois da entrega. O
+trecho tirava os marcadores de lista (·) entre os itens da vaga e punha ponto onde a
+página não tem; a separação foi marcada com `[...]`, sem mudar o conteúdo. Agora o trecho
+confere na página pelo `curl` direto, e a lacuna de conferência desse fato deixou de
+existir.

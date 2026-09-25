@@ -11,6 +11,7 @@ o erro virar correção.
 | 2026-09-25 | OP-0002 (Arkan), `/kill` 1ª tentativa, a partir do SDD do proponente | Contrato distorceu a tese: inverteu o preço ("mais caro que o contador" quando o SDD diz "mais barato"), testou uma alegação que o proponente nega (automação do e-CAC) e usou nota de app de concorrente como condição-barreira | `contrato --anular` auditável; subagente `revisor-de-enquadramento` antes de gravar; alegação do kill só de condição-barreira de dano fatal/alto, citando a seção do material. Veredito v-2026-0003 inválido; kill refeito (v-2026-0004 GO) | Sim: fidelidade de enquadramento (SDD sintético → as alegações reproduzem o material?) |
 | 2026-09-25 | OP-0002, `/validar` completo, headless | O pesquisador gravou o dossiê como `dossie.md`, e o `pacote-juiz` só listava `dossie-*.md`: o juiz julgou sem o dossiê completo, só com o do kill barato. Na mesma rodada: `conferir-trecho` quebrou em páginas gzip (a conferência mecânica não rodou), um fato atribuiu ao produto da Conta Azul funções que a página descreve para a categoria (f-2026-0083, base da objeção mais forte) e os dois memorandos passaram de 1.500 palavras e foram truncados numa linha só | `pacote-juiz` e validação leem `dossie*.md`; curl `--compressed` e conferência por partes; verificador confere atribuição e literalidade e corrige o fato; truncamento preserva linhas e avisa. Memorandos e juiz refeitos pela regra de fato corrigido, com `--substitui` | Sim: E1 "o juiz recebeu todo dossiê da pasta" e E2 com páginas gzip, PDF e trecho com elisão |
 | 2026-09-25 | Radar amplo sem setor, 4 batedores (lentes 4, 8×5, 10, 7) | A lente 7 gravou como `cifra` a captação de startups estrangeiras e o número de clientes de concorrentes, e como `recorrencia` o modelo de cobrança; a lente 4 usou `recorrencia` para a periodicidade da obrigação. Com a fila ordenada por cifra e recorrência, esses sinais iam para o topo | Schema do sinal define cifra (dinheiro gasto ou perdido por quem sofre) e recorrência (contagem com período e fonte) e ganha `sentido` (mercado_servido) e `historico`; `atualizar` guarda histórico em todo tipo cujo schema o tenha; `sinais` separa os inversos e marca cifra inferida | Sim: dado um sinal, a cifra é dinheiro de quem sofre? a recorrência é contagem observada? (juiz binário sobre os 27 sinais desta rodada) |
+| 2026-09-25 | Kill barato de OP-0003, OP-0004 e OP-0005 (3 pesquisadores em paralelo) | O pesquisador da OP-0003 leu uma norma no jusbrasil.com.br via r.jina.ai depois de um 403, mas o robots.txt do site proíbe todos os robôs; a D-015 não dizia que robots.txt continua valendo | D-015 e `metodo-pesquisa` explicitam que robots.txt proibitivo fica fora mesmo com o leitor alternativo; o fato foi refeito de fonte que permite acesso (f-2026-0176) | Sim: invariante de coleta (nenhum fato com URL de domínio cujo robots.txt proíbe `*`) |
 
 ## Observações da execução OP-0001
 
@@ -81,3 +82,22 @@ o erro virar correção.
   explicação, e a instrução do método já diz isso.
 - **Custo:** ~550 mil tokens de subagentes (Sonnet) e 43 buscas web, dentro da estimativa
   de R-22.
+
+## Observações do kill barato de 2026-09-25 (OP-0003, OP-0004, OP-0005)
+
+- **Limite de turnos de novo:** 2 dos 3 pesquisadores pararam nos 60 turnos (83 a 118
+  chamadas de ferramenta cada) e foram retomados. `maxTurns` do pesquisador subiu para 90,
+  valendo na próxima sessão.
+- **Marcação do leitor alternativo:** o r.jina.ai devolve markdown (`**`, `_`, `·`), e os
+  pesquisadores gastaram rodadas quebrando trechos em `[...]` para contornar. O conferidor
+  passou a ignorar esses caracteres nos dois lados da comparação.
+- **Codificação:** para o planalto.gov.br (windows-1252), o leitor alternativo às vezes
+  devolve os acentos já trocados por "�", e o f-2026-0142, que conferia antes, passou a
+  falhar. É intermitente; fica como lacuna do leitor, não como erro de citação.
+- **Listagens mudam no dia:** f-2026-0108 e f-2026-0109 (listagens do 99Freelas) deixaram
+  de conferir horas depois da coleta, porque os projetos saíram da primeira página. Para
+  listagem, a conferência só vale no dia da coleta.
+- **O kill barato corrigiu o radar:** a alegação 3 da OP-0004 caiu com a leitura integral
+  de 4 vagas, que descrevem faturamento de vendas, convênios e SUS, e não conferência de
+  nota contra pedido. A premissa do sinal s-2026-0009 vinha de um resumo de busca
+  (f-2026-0114). É o mesmo padrão da OP-0001: resumo de busca sustentando a dor.

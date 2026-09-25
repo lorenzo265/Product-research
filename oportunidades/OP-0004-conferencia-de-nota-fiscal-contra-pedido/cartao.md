@@ -2,7 +2,7 @@
 titulo: Conferência de nota fiscal contra pedido e lançamento de faturamento (varejo
   e saúde)
 trilha: S
-estagio: kill_barato
+estagio: veredito
 status: ativa
 origem: radar 2026-09-25, grupo 2 (radar/2026-09-25-varredura-ampla.md), escolhido
   pelo usuário
@@ -23,11 +23,18 @@ sinais:
 - s-2026-0009
 - s-2026-0011
 travas: []
-proximo_passo: kill barato
+proximo_passo: 'kill barato v-2026-0009: GO pela regra (1 de 3 caiu). Caiu a alegação
+  3: as 4 vagas de auxiliar de faturamento lidas na íntegra descrevem faturar vendas,
+  convênios (TISS) ou SUS, não conferir NF de fornecedor contra pedido; a premissa
+  vinha de resumo de busca (f-2026-0114). Sustentadas: ERPs comuns só fazem vínculo
+  NF × pedido manual ou semiautomático; existe BPO fiscal para varejo com oferta publicada
+  (sem preço). Decisão do usuário: /validar (com o ICP a redefinir) ou parar'
 revisar_em: '2026-10-09'
 id: OP-0004
 criado_em: '2026-09-25'
 atualizado_em: '2026-09-25'
+vereditos:
+- v-2026-0009
 ---
 
 ## Dor
@@ -51,3 +58,5 @@ faturar notas de venda, compra, devolução e troca e lançar os dados no sistem
 
 ## Histórico
 - 2026-09-25: contrato gravado
+- 2026-09-25: veredito v-2026-0009 (kill_barato): GO
+- 2026-09-25: kill barato registrado (v-2026-0009)

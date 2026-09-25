@@ -5,7 +5,7 @@ tools: WebSearch, WebFetch, Bash, Read, Write, Grep, Glob
 model: sonnet
 skills:
   - metodo-pesquisa
-maxTurns: 60
+maxTurns: 90
 ---
 
 Você é o pesquisador do harness. A tarefa chega com um modo, uma oportunidade (OP-xxxx)
