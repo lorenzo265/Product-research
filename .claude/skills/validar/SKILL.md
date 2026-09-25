@@ -45,7 +45,8 @@ de ninguém. Siga as etapas 2 a 6 do `metodo-julgamento`. Você orquestra; não 
    **Fato corrigido depois do veredito.** Se uma verificação posterior corrigir ou
    contradisser um fato que o veredito cita, refaça os passos 3 a 5 com os fatos
    corrigidos e registre com
-   `registrar-veredito OP-xxxx --substitui v-AAAA-NNNN --motivo "<fato e correção>"`.
+   `registrar-veredito OP-xxxx - --substitui v-AAAA-NNNN --motivo "<fato e correção>" < <arquivo>`
+   (o `-` vem logo depois do id).
    A regra vale nos dois sentidos, seja a correção a favor ou contra a tese, e não
    depende do resultado: refazer porque o veredito desagradou é pescar veredito. O
    veredito antigo fica gravado e sai da calibração.

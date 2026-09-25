@@ -34,3 +34,28 @@ o erro virar correção.
 - **Juiz se comportou como desenhado:** descontou os fatos contraditos e deixou
   previsões de horizonte curto com critério de resolução (pré-venda até nov/2026).
 - **Custo:** US$5,77 (12 turnos).
+
+## Observações da execução OP-0002 (Arkan)
+
+- **Dois vereditos, um substituído.** A rodada 1 (v-2026-0005, ITERAR, p 0,04) teve a
+  entrada do juiz defeituosa em três pontos (dossiê fora do pacote, fato com
+  atribuição errada, memorandos truncados). A rodada 2 (v-2026-0006, REFORMULAR, p
+  0,037) usou o dossiê completo, 24 fatos relidos e memorandos dentro do teto. A regra
+  de refazer foi gravada antes do novo resultado (`/validar`, "fato corrigido depois do
+  veredito").
+- **Citação literal que não é literal.** Dos 24 fatos `confirmada` que falharam na
+  conferência mecânica, 12 tinham o trecho traduzido, parafraseado, sem acentos ou
+  misturando duas páginas (f-2026-0064, f-2026-0071). O conteúdo se sustentou em
+  todos; a citação não. A causa provável é o coletor transcrever o resumo da WebFetch
+  em vez da página.
+- **Mudança em definição de agente não vale na sessão corrente.** A regra de atribuição
+  foi escrita no `verificador.md` antes de lançá-lo, e o verificador não a aplicou até
+  receber a pergunta explícita. O mesmo vale para `maxTurns`: 40 não bastou para 24
+  fatos, e o novo limite de 80 só entra na próxima sessão.
+- **Conferência mecânica cobre pouco.** Mesmo depois das correções (gzip, elisão,
+  acentos, PDF, JSON-LD), 9 de 24 passam. O resto falha por layout de tabela, marcação
+  copiada no trecho e dados montados em elementos separados. `FALHOU` serve de triagem
+  para leitura, não de veredito.
+- **Custo:** kill barato (2 tentativas) ~US$6; `/validar` headless US$8,14;
+  re-verificação e rodada 2 nesta sessão, sem busca.
+

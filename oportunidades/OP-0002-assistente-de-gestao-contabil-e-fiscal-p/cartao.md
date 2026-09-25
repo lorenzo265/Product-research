@@ -27,19 +27,18 @@ custo_workaround: 'a verificar - hipótese do proponente: R$600-1.500/mês pelo 
   sistema financeiro, somando ~R$1.100-1.950/mês (SDD §4.3, §16.4, §21 DP-18)'
 lentes: []
 sinais: []
-travas: []
-proximo_passo: 'veredito v-2026-0005 (validacao completa): ITERAR (p_sucesso=0.04,
-  bruta 0.036, contra taxa-base de 0.05). Objecao mais forte: o fosso de captura de
-  dado nao e exclusivo (Calima Pro ja embute o Integra Contador por R$399/mes, e a
-  Conta Azul lancou automacao fiscal equivalente para escritorios em ago/2026, armando
-  o proprio contador que a tese quer desalojar) e o canal que historicamente escala
-  no setor passa por esse mesmo contador. Antes de gastar mais em pesquisa de mesa:
-  testar com compradores reais do recorte A (i) se a soma paga hoje a contador+emissor+sistema
-  financeiro e de fato >=R$900/mes (a ancora SESCON-SP e de SP e nao separa atacado/varejo),
-  e (ii) se o dono troca de contador de fato (deposito ou carta de intencao), alem
-  de medir em piloto quantos atacadistas um contador interno atende por mes (premissa
-  de 60+/contador nao tem fonte independente; estimativas de mercado ficam em 20-40,
-  o que tornaria o tier Essencial negativo). Decisao GO/ITERAR/KILL e do usuario.'
+travas:
+- 'economia_unitaria: não avançar sem medir, em operação piloto ou estudo de tempo,
+  quantos clientes do recorte A um contador atende com a automação proposta; abaixo
+  de ~40 por contador, o tier de R$299-499 não cobre mão de obra com encargos e utilização
+  realistas'
+proximo_passo: 'veredito v-2026-0006 (validacao completa, substitui v-2026-0005):
+  REFORMULAR, p_sucesso=0.037 (bruta 0.032) contra taxa-base 0.05. Trava: economia
+  unitaria (medir quantos clientes do recorte A um contador atende; abaixo de ~40
+  o tier R$299-499 nao cobre mao de obra). Objecao mais forte: a captura via Integra
+  Contador e commodity (Calima Pro R$399/mes, Conta Azul busca notas para escritorios),
+  entao o contador atual pode entregar o mesmo sem o dono trocar. Decisao GO/ITERAR/KILL/reformular
+  e do usuario.'
 revisar_em: '2026-10-09'
 id: OP-0002
 criado_em: '2026-09-25'
@@ -48,6 +47,7 @@ vereditos:
 - v-2026-0003
 - v-2026-0004
 - v-2026-0005
+- v-2026-0006
 ---
 
 ## Dor
@@ -68,3 +68,5 @@ vereditos:
 - 2026-09-25: veredito v-2026-0005 (completo): ITERAR
 - 2026-09-25: validacao completa concluida: veredito v-2026-0005 ITERAR (p_sucesso=0.04); decisao GO/ITERAR/KILL fica com o usuario
 - 2026-09-25: fechamento da rodada de /validar: dossie reaproveitou fatos das duas rodadas de kill barato por id (f-2026-0026 a f-2026-0080) e acrescentou f-2026-0081 a f-2026-0090; verificador fechou todos por status (39 confirmados, 1 contradita/corrigida - f-2026-0084, 25 pendentes por bloqueio de acesso a fonte); lacuna tecnica encontrada e nao corrigida nesta rodada (fora do escopo de /validar): o comando 'conferir-trecho' do harness falha com UnicodeDecodeError em paginas que retornam gzip sem --compressed no curl (ex.: omie.com.br, contabilizei.com.br), impedindo verificar alguns fatos - registrar como pendencia de codigo, nao como ausencia de evidencia. Nenhuma oportunidade marcada como cadaver. Rodando sem acompanhamento do usuario, conforme instrucao explicita; decisao GO/ITERAR/KILL sobre o veredito v-2026-0005 fica com o usuario.
+- 2026-09-25: veredito v-2026-0006 (completo): REFORMULAR (substitui v-2026-0005: entrada do juiz defeituosa na rodada 1: dossie.md fora da lista do pacote-juiz, f-2026-0083 atribuia ao produto da Conta Azul funcoes da categoria (corrigido na re-verificacao) e memorandos truncados; memorandos e juiz refeitos sobre fatos re-verificados)
+- 2026-09-25: veredito da validacao completa refeita

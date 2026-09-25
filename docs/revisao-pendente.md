@@ -15,7 +15,9 @@
 5. **R-14**: ligar ou não MCPs de busca e de dados do governo.
 6. **R-25**: a primeira oportunidade real (OP-0001, NFS-e) passou no kill barato e levou
    KILL do juiz na validação completa; a decisão é sua.
-7. **A-02** e **A-07** em `decisoes.md`: suas horas e caixa para testes, e suas teses
+7. **R-26**: o Arkan (OP-0002), avaliado a partir do seu SDD. Veredito REFORMULAR, com
+   uma trava de economia unitária; a decisão é sua.
+8. **A-02** e **A-07** em `decisoes.md`: suas horas e caixa para testes, e suas teses
    antigas para servir de casos de eval.
 
 O restante confirma ou refina o desenho que você já aprovou.
@@ -359,6 +361,59 @@ O verificador achou 4 dos 9 fatos iniciais errados na fonte, e o juiz os descont
 Duas correções de método saíram daí (`evals/analise-de-erros.md`).
 
 **Decisão sua:** KILL (o veredito), ITERAR com um dos dois testes, ou reformular.
+
+### R-26 · Arkan (OP-0002), avaliado a partir do seu SDD
+**O que rodou:** `/oportunidade` com o SDD v1.3.1 guardado fora do git
+(`cache/entrada/`); nenhum subagente leu o documento, só as alegações verificáveis
+extraídas dele. Trilha G.
+
+**Kill barato, 1ª tentativa: inválido.** O contrato inverteu o preço ("mais caro que o
+contador"), testou uma alegação que você nega (automação do e-CAC) e usou nota de app
+como barreira. Anulado com motivo; o `revisor-de-enquadramento` passou a conferir o
+contrato contra o material do proponente antes da gravação.
+
+**Kill barato, 2ª tentativa: GO**, 0 de 3 alegações caíram (mecanismo do Integra
+Contador, custos de fornecedor, âncora de preço).
+
+**Validação completa: REFORMULAR**, p_sucesso 0,037 (bruta 0,032) contra taxa-base 0,05
+(v-2026-0006). Perfil: problema PROVÁVEL (0,66); comprador e solução INCERTO (0,40 e
+0,42); economia unitária, distribuição e fosso IMPROVÁVEL (0,30, 0,28 e 0,22).
+- **Trava:** economia unitária. Não avançar sem medir quantos clientes do recorte A um
+  contador atende com a automação; abaixo de ~40, o tier de R$299-499 não cobre a mão
+  de obra.
+- **Objeção mais forte:** a captura pelo Integra Contador já é vendida pronta (Calima
+  Pro a R$399/mês para 50 empresas), e a Conta Azul busca notas para 14 mil
+  escritórios. O contador atual pode entregar a mesma captura sem o dono trocar.
+- **Hipótese mais provável (0,35):** a dor é real, mas o dono não troca, por inércia, e
+  porque o contador atual adota a mesma captura.
+
+**A primeira validação (v-2026-0005, ITERAR, p 0,04) foi substituída** porque a entrada
+do juiz estava defeituosa:
+- o dossiê completo ficou fora do pacote (nome `dossie.md`);
+- um fato atribuía ao produto da Conta Azul a apuração de DAS e obrigações que a página
+  só descreve para a categoria;
+- os memorandos foram truncados.
+
+Os 24 fatos que falharam na conferência mecânica foram relidos: todos se sustentam no
+conteúdo, 12 tiveram a citação ou a alegação corrigida, e nenhum virou contradito. A
+regra de refazer foi escrita antes de ver o novo resultado e vale nos dois sentidos.
+Detalhe em `evals/analise-de-erros.md`.
+
+**Correções ao seu SDD que a verificação sustenta:** Conta Azul tem 4,4★ (Android) e
+4,8★ (iOS), não 2,2-2,3★. A mediana Fenacon 2014 é R$600/mês. O DP sai por R$30 por
+funcionário na mediana, não R$50, e 87% dos escritórios não o cobram à parte. A SESCON-SP 2024 dá mediana de R$700 (até 5
+funcionários) e R$1.000 (até 10) para comércio no Simples, só em SP e sem separar
+atacado. A capacidade de 60+ empresas por contador só aparece em conteúdo pago de
+fornecedor; a estimativa independente é de 20-40.
+
+**Testes que o juiz deixou (prazo 24/11):**
+- contagem de empresas do recorte A nos dados abertos de CNPJ (ele prevê menos de 75 mil,
+  p 0,6);
+- 20 entrevistas com donos do recorte A sobre o que pagam hoje, item por item;
+- se a Conta Azul estender a automação à apuração.
+
+**Decisão sua:** reformular (por exemplo, vender a automação ao contador em vez de
+substituí-lo, ou subir o preço de entrada), ITERAR com o piloto de capacidade, ou KILL.
 
 ## Médio impacto
 
