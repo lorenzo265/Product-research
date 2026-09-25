@@ -161,7 +161,8 @@ Sessão principal: orquestra e apresenta, não julga        ← CLAUDE.md (mapa,
  │     teste com comprador) · 8 comandos
  ├── CLI python3 -m harness                         escritor único do estado
  │     validar · adicionar · atualizar · novo-cartao · contrato · pacote-juiz ·
- │     registrar-veredito · conferir-trecho · regra-teste · portfolio · calibracao
+ │     registrar-veredito · conferir-trecho · regra-teste · sinais · portfolio ·
+│     calibracao
  ├── Estado (git)  data/*.jsonl · oportunidades/OP-NNNN-slug/
  └── Guarda-corpos .claude/settings.json
        PreToolUse bloqueia edição direta do estado · PostToolUse e Stop validam ·

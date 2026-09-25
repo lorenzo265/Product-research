@@ -14,6 +14,7 @@ Comandos:
     regra-teste   tabela de GO/KILL de um teste com comprador (SPRT ou Beta-Binomial)
     coletar-yc    lente 7: empresas da YC ativas sem presença no Brasil (candidatos)
     coletar-pncp  lentes 11/4/6: compras públicas cujo objeto menciona os termos
+    sinais        fila do radar: sinais novos com contagens de evidência
     portfolio     painel de todas as oportunidades e pendências
     proteger-estado  hook PreToolUse: bloqueia edição direta de arquivos de estado
     calibracao    Brier, intervalo e calibração por faixa das previsões resolvidas
@@ -35,6 +36,7 @@ from harness.estado import DIR_OPORTUNIDADES, Repositorio
 from harness.exceptions import HarnessError
 from harness.julgamento import TETO_PALAVRAS_MEMORANDO, montar_pacote_juiz
 from harness.portfolio import montar_painel
+from harness.radar import medir_sinais, montar_fila
 from harness.regras_teste import fronteiras_bayes, fronteiras_sprt
 from harness.validacao import ERRO, validar
 from harness.verificacao import conferir_trecho
@@ -303,6 +305,12 @@ def _cmd_coletar_pncp(args: argparse.Namespace, repositorio: Repositorio, hoje: 
     return SAIDA_OK
 
 
+def _cmd_sinais(args: argparse.Namespace, repositorio: Repositorio, hoje: date) -> int:
+    status = None if args.status == "todos" else args.status
+    print(montar_fila(medir_sinais(repositorio.snapshot(), status)))
+    return SAIDA_OK
+
+
 def _cmd_portfolio(args: argparse.Namespace, repositorio: Repositorio, hoje: date) -> int:
     print(montar_painel(repositorio.snapshot(), hoje))
     return SAIDA_OK
@@ -461,6 +469,12 @@ def _parser() -> argparse.ArgumentParser:
     )
     pncp.add_argument("--limite", type=int, default=20, help="quantas mostrar no terminal")
     pncp.set_defaults(executar=_cmd_coletar_pncp)
+
+    sinais = sub.add_parser("sinais", help="fila do radar com contagens de evidência")
+    sinais.add_argument(
+        "--status", default="novo", choices=["novo", "agrupado", "descartado", "todos"]
+    )
+    sinais.set_defaults(executar=_cmd_sinais)
 
     portfolio = sub.add_parser("portfolio", help="painel do portfólio")
     portfolio.set_defaults(executar=_cmd_portfolio)

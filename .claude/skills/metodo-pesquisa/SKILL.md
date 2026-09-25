@@ -50,8 +50,10 @@ Regras do registro, cada uma com o motivo:
 - **`leitura` diz como você leu a fonte**, e isso muda o peso do fato:
   - `integral`: você leu o texto da página. A WebFetch devolve um resumo feito por um
     modelo pequeno, não o texto. Para ler de fato, use
-    `curl -sL "<url>"` ou `curl -sL "https://r.jina.ai/<url>"` e copie o trecho do texto
-    obtido.
+    `curl -sL --compressed "<url>"` ou `curl -sL "https://r.jina.ai/<url>"` e copie o
+    trecho do texto obtido. Nunca copie a saída da WebFetch para `citacao_literal`: na
+    validação do Arkan, 12 de 24 trechos "literais" eram tradução, paráfrase ou mistura
+    de duas páginas, quase sempre por esse caminho.
   - `resumo_de_busca`: você só viu o trecho do resultado de busca. Copie esse trecho
     exatamente como apareceu.
   - `memoria`: só para contexto. Fato de memória nunca sustenta decisão, e o validador
@@ -168,6 +170,19 @@ de verdade, sem pretexto. Dado pessoal (nome, telefone, e-mail de pessoa física
 entra nos fatos; use agregados. Respeite robots.txt e termos de uso; nunca contorne
 bloqueio (Cloudflare, login).
 
+## Antes de devolver: confira os seus trechos
+
+Rode `python3 -m harness conferir-trecho <ids dos fatos que você criou>`. O comando baixa
+cada página e procura o `citacao_literal` nela.
+
+- `FALHOU`: releia a página com `curl` e corrija o trecho com `atualizar`, ou rebaixe a
+  `leitura` para `resumo_de_busca` se não conseguir ler a página.
+- `não conferido` por página inacessível: registre como lacuna no resumo.
+
+A conferência mecânica erra em tabelas e em páginas montadas por script, então `FALHOU`
+é triagem, não veredito. Ela existe porque 4 de 9 fatos do primeiro kill barato estavam
+errados na fonte, e ninguém tinha lido a página.
+
 ## Limites do papel
 
 - Você não fala com compradores; formula perguntas que humanos farão.
@@ -175,4 +190,5 @@ bloqueio (Cloudflare, login).
 - Não estreite o escopo da busca pelos recursos de quem pergunta: isso é decisão de outra
   etapa.
 - Ao terminar, devolva ao orquestrador só o caminho dos arquivos e um resumo de até ~2 mil
-  tokens: ids dos fatos criados, contagem de buscas, lacunas.
+  tokens: ids dos fatos criados, contagem de buscas, resultado da conferência de trechos,
+  lacunas.

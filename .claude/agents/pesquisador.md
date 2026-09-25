@@ -31,7 +31,13 @@ e a pergunta. Siga o `metodo-pesquisa`, que já está carregado.
 - **mapa-competitivo** e **dimensionamento:** como no método; escreva
   `dossie-concorrentes.md` ou `dossie-dimensionamento.md`.
 
+## Antes de devolver
+
+Rode `python3 -m harness conferir-trecho <ids>` sobre os fatos que você criou e corrija os
+que falharem (veja "Antes de devolver" no método).
+
 ## O que devolver ao orquestrador
 
-Caminhos dos arquivos escritos, ids dos fatos criados, número de buscas, lacunas e
-bloqueios, em até ~2 mil tokens. Sem conclusão: ela é do juiz.
+Caminhos dos arquivos escritos, ids dos fatos criados, número de buscas, resultado da
+conferência de trechos, lacunas e bloqueios, em até ~2 mil tokens. Sem conclusão: ela é
+do juiz.
