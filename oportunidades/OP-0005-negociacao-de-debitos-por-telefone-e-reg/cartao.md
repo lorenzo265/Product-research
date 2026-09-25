@@ -1,7 +1,7 @@
 ---
 titulo: Negociação de débitos por telefone e registro da cobrança
 trilha: S
-estagio: kill_barato
+estagio: veredito
 status: ativa
 origem: radar 2026-09-25, grupo 3 (radar/2026-09-25-varredura-ampla.md), escolhido
   pelo usuário
@@ -23,11 +23,16 @@ sinais:
 - s-2026-0017
 - s-2026-0019
 travas: []
-proximo_passo: kill barato
+proximo_passo: 'kill barato v-2026-0007: GO pela regra (0 de 3 alegações caíram);
+  alegação 1 sustentada por margem estreita (agentes de voz para cobrança já vendidos
+  a R$499-3.900/mês, sem negociação autônoma nem boleto nas páginas lidas). Decisão
+  do usuário: /validar ou parar'
 revisar_em: '2026-10-09'
 id: OP-0005
 criado_em: '2026-09-25'
 atualizado_em: '2026-09-25'
+vereditos:
+- v-2026-0007
 ---
 
 ## Dor
@@ -52,3 +57,5 @@ futebol, entidade sindical e educação (s-2026-0017, f-2026-0115).
 
 ## Histórico
 - 2026-09-25: contrato gravado
+- 2026-09-25: veredito v-2026-0007 (kill_barato): GO
+- 2026-09-25: kill barato registrado (v-2026-0007)
