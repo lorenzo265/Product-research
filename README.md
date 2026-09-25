@@ -55,6 +55,7 @@ harness/                   CLI e núcleo em Python
 schemas/                   JSON Schema dos registros
 data/                      fatos, sinais, vereditos, testes (JSONL)
 oportunidades/             uma pasta por oportunidade
+radar/                     relatórios do /radar (fila de grupos, lacunas)
 evals/                     casos congelados e runners
 research/                  relatórios e notas da Fase 2
 tests/                     pytest

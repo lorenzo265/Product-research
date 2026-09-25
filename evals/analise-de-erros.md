@@ -10,6 +10,7 @@ o erro virar correção.
 | 2026-09-24 | OP-0001, `/validar` completo, headless, com rede | Memorandos escritos antes da verificação usaram 4 fatos que o verificador depois achou contraditos pela fonte (preços de eNotas e Focus NFe, atribuição à Conta Azul, anúncio do GetNinjas) | Verificador passa para antes dos memorandos (`/validar`, `metodo-julgamento`, arquitetura); memorando não usa fato contradito e declara quando usa fato não verificado | Sim: invariante de ordem nas transcrições (E1) e taxa de fatos contraditos por tipo de leitura |
 | 2026-09-25 | OP-0002 (Arkan), `/kill` 1ª tentativa, a partir do SDD do proponente | Contrato distorceu a tese: inverteu o preço ("mais caro que o contador" quando o SDD diz "mais barato"), testou uma alegação que o proponente nega (automação do e-CAC) e usou nota de app de concorrente como condição-barreira | `contrato --anular` auditável; subagente `revisor-de-enquadramento` antes de gravar; alegação do kill só de condição-barreira de dano fatal/alto, citando a seção do material. Veredito v-2026-0003 inválido; kill refeito (v-2026-0004 GO) | Sim: fidelidade de enquadramento (SDD sintético → as alegações reproduzem o material?) |
 | 2026-09-25 | OP-0002, `/validar` completo, headless | O pesquisador gravou o dossiê como `dossie.md`, e o `pacote-juiz` só listava `dossie-*.md`: o juiz julgou sem o dossiê completo, só com o do kill barato. Na mesma rodada: `conferir-trecho` quebrou em páginas gzip (a conferência mecânica não rodou), um fato atribuiu ao produto da Conta Azul funções que a página descreve para a categoria (f-2026-0083, base da objeção mais forte) e os dois memorandos passaram de 1.500 palavras e foram truncados numa linha só | `pacote-juiz` e validação leem `dossie*.md`; curl `--compressed` e conferência por partes; verificador confere atribuição e literalidade e corrige o fato; truncamento preserva linhas e avisa. Memorandos e juiz refeitos pela regra de fato corrigido, com `--substitui` | Sim: E1 "o juiz recebeu todo dossiê da pasta" e E2 com páginas gzip, PDF e trecho com elisão |
+| 2026-09-25 | Radar amplo sem setor, 4 batedores (lentes 4, 8×5, 10, 7) | A lente 7 gravou como `cifra` a captação de startups estrangeiras e o número de clientes de concorrentes, e como `recorrencia` o modelo de cobrança; a lente 4 usou `recorrencia` para a periodicidade da obrigação. Com a fila ordenada por cifra e recorrência, esses sinais iam para o topo | Schema do sinal define cifra (dinheiro gasto ou perdido por quem sofre) e recorrência (contagem com período e fonte) e ganha `sentido` (mercado_servido) e `historico`; `atualizar` guarda histórico em todo tipo cujo schema o tenha; `sinais` separa os inversos e marca cifra inferida | Sim: dado um sinal, a cifra é dinheiro de quem sofre? a recorrência é contagem observada? (juiz binário sobre os 27 sinais desta rodada) |
 
 ## Observações da execução OP-0001
 
@@ -59,3 +60,24 @@ o erro virar correção.
 - **Custo:** kill barato (2 tentativas) ~US$6; `/validar` headless US$8,14;
   re-verificação e rodada 2 nesta sessão, sem busca.
 
+
+## Observações do radar 2026-09-25
+
+- **Limite de turnos:** os batedores das lentes 8 e 10 pararam nos 40 turnos sem entregar
+  o relatório (a lente 8 sem gravar nenhum fato) e foram retomados com um pedido de gravar
+  e entregar. O `maxTurns: 60` foi gravado antes do lançamento, mas definição de agente
+  só vale na sessão seguinte, como já observado na OP-0002.
+- **Trecho costurado sem elisão:** 3 de 59 fatos juntavam passagens separadas da página
+  sem `[...]`, e dois batedores relataram tê-los conferido "byte a byte". O conteúdo
+  estava na página; a citação não era literal. Um quarto fato trazia `&#39;` copiado do
+  código-fonte, e o conferidor passou a decodificar entidades no trecho também.
+- **Conclusão dentro do sinal:** alguns campos `dor` e `nota` trazem inferência do
+  batedor ("sugerindo tema já bastante servido", "provavelmente está em nicho"). Os
+  sinais ficaram como estão; a tabela do relatório usa só os fatos.
+- **Autoconferência:** os batedores rodaram `conferir-trecho`, mas atribuíram as 4 falhas
+  ao conferidor em vez de reler a página. Em 3 delas a citação estava costurada; em 1 o
+  conferidor tinha um defeito (entidades HTML). Depois das correções: 40 de 59 trechos
+  encontrados na página e nenhuma falha. `FALHOU` precisa de releitura, não de
+  explicação, e a instrução do método já diz isso.
+- **Custo:** ~550 mil tokens de subagentes (Sonnet) e 43 buscas web, dentro da estimativa
+  de R-22.

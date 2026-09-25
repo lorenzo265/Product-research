@@ -17,7 +17,8 @@
    KILL do juiz na validação completa; a decisão é sua.
 7. **R-26**: o Arkan (OP-0002), avaliado a partir do seu SDD. Veredito REFORMULAR, com
    uma trava de economia unitária; a decisão é sua.
-8. **A-02** e **A-07** em `decisoes.md`: suas horas e caixa para testes, e suas teses
+8. **R-27**: o primeiro radar achou 19 grupos de dor; escolha quais viram oportunidade.
+9. **A-02** e **A-07** em `decisoes.md`: suas horas e caixa para testes, e suas teses
    antigas para servir de casos de eval.
 
 O restante confirma ou refina o desenho que você já aprovou.
@@ -414,6 +415,31 @@ fornecedor; a estimativa independente é de 20-40.
 
 **Decisão sua:** reformular (por exemplo, vender a automação ao contador em vez de
 substituí-lo, ou subir o preço de entrada), ITERAR com o piloto de capacidade, ou KILL.
+
+### R-27 · Primeiro radar: 27 sinais em 19 grupos, sem setor definido
+**O que rodou:** `/radar` amplo em 25/09 com 4 batedores (lentes 4, 8×5, 10 e 7), 43 buscas.
+Relatório com a fila de grupos, o que não foi encontrado e os bloqueios:
+[`radar/2026-09-25-varredura-ampla.md`](../radar/2026-09-25-varredura-ampla.md).
+Os 4 grupos com cifra e recorrência (ordem mecânica, não veredito):
+1. backoffice de comércio exterior (desembaraço);
+2. conferência de faturamento NF × pedido;
+3. cobrança por telefone (com a VulcaNet já vendendo agente de voz para cobrança);
+4. gestão de tráfego pago para pequeno e-commerce.
+
+As cifras de 1 a 3 são inferências grosseiras de massa salarial.
+**Decisão sua:** quais grupos viram `/oportunidade` (e depois `/kill`). Sem escolha, os
+sinais ficam como `novo`.
+
+**Duas decisões de método que saíram da rodada:**
+- **Conferência de sites que bloqueiam o nosso User-Agent** (openai.com, planalto.gov.br
+  nesta rodada). Os batedores leram essas páginas via `r.jina.ai`, que o método recomenda
+  para ler texto. Mas usar um leitor intermediário *porque* o site recusa o `curl` do
+  harness pode contar como contornar bloqueio, o que o método proíbe. **Meu padrão:** o
+  `conferir-trecho` continua sem fallback, e esses fatos ficam "não conferíveis".
+  **Se você aceitar** leitura via `r.jina.ai` como válida nesses casos, o conferidor ganha
+  um segundo caminho declarado.
+- **PNCP fora do ar** (sem resposta em 60 s). A lente 11 não rodou. **Meu padrão:**
+  tentar de novo no próximo radar, sem mudar nada.
 
 ## Médio impacto
 
