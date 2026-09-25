@@ -61,3 +61,19 @@ def test_tabela_marca_setor_com_mais_de_uma_lente_e_escapa_barra_vertical():
 
 def test_fila_vazia_diz_que_nao_ha_sinais():
     assert montar_fila([]) == "Nenhum sinal com esse status."
+
+
+def test_sinal_inverso_sai_da_fila_e_vai_para_lista_a_parte():
+    inverso = novo(
+        SINAL,
+        id="s-2026-0002",
+        sentido="mercado_servido",
+        setor="self-storage",
+        dor="player local com 250 clientes já cobra por boleto",
+    )
+
+    tabela = montar_fila(medir_sinais(_snapshot([SINAL, inverso])))
+    fila, lista = tabela.split("Mercado já servido")
+
+    assert "s-2026-0001" in fila and "s-2026-0002" not in fila
+    assert "s-2026-0002 · lente 5 · self-storage" in lista

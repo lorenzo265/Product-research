@@ -84,6 +84,12 @@ def erros_de_schema(tipo: str, registro: dict, dir_schemas: Path = DIR_SCHEMAS_P
     return [f"{_caminho(erro.absolute_path)}: {erro.message}" for erro in erros]
 
 
+def tem_historico(tipo: str, dir_schemas: Path = DIR_SCHEMAS_PADRAO) -> bool:
+    """Diz se o schema do tipo guarda `historico`, onde `atualizar` anota cada mudança."""
+    schema = _validador(tipo_registro(tipo).schema, dir_schemas).schema
+    return "historico" in schema.get("properties", {})
+
+
 def _caminho(partes) -> str:
     texto = ".".join(str(parte) for parte in partes)
     return texto or "(raiz)"

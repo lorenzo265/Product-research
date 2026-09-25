@@ -22,7 +22,9 @@ escopo (setor, tema ou fonte) e, às vezes, uma trilha de interesse (G, M ou S).
 4. Para cada achado, grave primeiro os fatos (`python3 -m harness adicionar fato ...`) e
    depois o sinal que eles sustentam (`python3 -m harness adicionar sinal ...`), com
    `lente`, `trilhas`, `setor`, `dor`, `quem_sofre`, `quem_paga` se souber, `cifra` se
-   houver, `fatos`, `coletor: "batedor-lente-N"` e `status: "novo"`.
+   houver, `fatos`, `coletor: "batedor-lente-N"` e `status: "novo"`. Cifra é dinheiro
+   gasto ou perdido por quem sofre; contagem vai em `recorrencia`; mercado já servido
+   vai com `"sentido": "mercado_servido"` (veja o início de `lentes.md`).
 5. Devolva todo sinal que a lente capturar com evidência. Filtrar e ranquear é de outra
    etapa: aqui, um sinal fraco registrado vale mais do que um sinal bom descartado.
 6. Fato que sustenta a `cifra` de um sinal precisa de leitura integral da página: a

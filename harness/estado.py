@@ -19,7 +19,13 @@ from pathlib import Path
 
 import yaml
 
-from harness.esquemas import DIR_SCHEMAS_PADRAO, TIPOS_JSONL, erros_de_schema, tipo_registro
+from harness.esquemas import (
+    DIR_SCHEMAS_PADRAO,
+    TIPOS_JSONL,
+    erros_de_schema,
+    tem_historico,
+    tipo_registro,
+)
 from harness.exceptions import (
     ArquivoCorrompido,
     IdDuplicado,
@@ -216,8 +222,9 @@ class Repositorio:
         if indice is None:
             raise RegistroNaoEncontrado(f"{tipo} {id_registro} não encontrado")
         atualizado = deepcopy(registros[indice])
+        guarda_historico = tem_historico(tipo, self.dir_schemas)
         for campo, valor in mudancas.items():
-            if tipo == "fato" and atualizado.get(campo) != valor:
+            if guarda_historico and atualizado.get(campo) != valor:
                 atualizado.setdefault("historico", []).append(
                     {
                         "data": hoje.isoformat(),

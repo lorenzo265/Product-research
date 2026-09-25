@@ -155,3 +155,21 @@ def test_escritas_em_paralelo_nao_repetem_id(repo):
         )
 
     assert len(set(ids)) == 16
+
+
+def test_atualizar_sinal_guarda_valor_anterior_e_motivo(repo):
+    repo.adicionar("fato", FATO, HOJE)
+    repo.adicionar("sinal", novo(SINAL, recorrencia="assinatura mensal"), HOJE)
+
+    atualizado = repo.atualizar(
+        "sinal", "s-2026-0001", {"recorrencia": None}, "modelo de cobrança", HOJE
+    )
+
+    assert atualizado["historico"] == [
+        {
+            "data": "2026-09-24",
+            "campo": "recorrencia",
+            "valor_anterior": "assinatura mensal",
+            "motivo": "modelo de cobrança",
+        }
+    ]

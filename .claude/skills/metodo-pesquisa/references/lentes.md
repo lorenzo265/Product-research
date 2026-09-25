@@ -7,9 +7,18 @@ aqui. Esforço de referência: ~5–10 buscas por lente, mais aprofundamento nos
 que aparecem.
 
 Cada sinal é gravado com `python3 -m harness adicionar sinal '{...}'`, citando os ids
-dos fatos que o sustentam. Sinal com **cifra** (dinheiro já gasto ou perdido) ou
-**recorrência** vale mais que sinal sem: prefira as fontes cuja estrutura já obriga uma
-das duas.
+dos fatos que o sustentam. Sinal com **cifra** ou **recorrência** vale mais que sinal
+sem: prefira as fontes cuja estrutura já obriga uma das duas.
+
+- **Cifra** é dinheiro que quem sofre já gasta ou perde com a dor: salário pago para
+  fazer à mão, orçamento de projeto, multa, glosa, perda. Captação de uma startup
+  estrangeira e número de clientes de um concorrente não são cifra: ficam nos fatos. A
+  cifra ordena a fila do radar, então um número de outra natureza passa na frente de
+  sinais mais sustentados.
+- **Contagem** (projetos, vagas, reclamações) vai em `recorrencia`, com período e fonte.
+- **Sinal inverso** (um player bem avaliado ou dominante já resolve a dor) é gravado com
+  `"sentido": "mercado_servido"` e sem cifra. Ele sai da fila e aparece à parte, como
+  evidência contra.
 
 As fontes vêm do relatório `research/Fontes de dados e ferramentas.md`. Marcações:
 **coletor** (script próprio, quando existir), **MCP** (consulta pontual, se ligado),
@@ -40,8 +49,9 @@ Onde o líder cobra caro e é mal avaliado, há espaço.
   satisfação com o produto. Melhores proxies: % "voltaria a fazer negócio", nota do
   consumidor e teor recorrente. Em B2B, 150–250 reclamações em 6 meses já é volume
   relativamente alto.
-- **Registre também o sinal invertido:** players bem avaliados no vertical. É evidência
-  tão valiosa quanto, porque indica mercado bem servido.
+- **Registre também o sinal invertido:** players bem avaliados no vertical, com
+  `"sentido": "mercado_servido"`. É evidência tão valiosa quanto, porque indica mercado
+  bem servido.
 - **Evitar:** raspagem em massa do Reclame Aqui; mineração de avaliações do Google Places.
 
 ## Lente 3 · Fragmentação sem líder competente

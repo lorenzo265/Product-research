@@ -76,15 +76,21 @@ def medir_sinais(snapshot: Snapshot, status: str | None = "novo") -> list[ForcaD
 
 
 def montar_fila(medidos: list[ForcaDoSinal]) -> str:
-    """Tabela em markdown da fila, com as lentes que dispararam em cada setor."""
+    """Tabela em markdown da fila, com as lentes que dispararam em cada setor.
+
+    Sinais inversos (`sentido: mercado_servido`) saem da fila e vão para uma lista à
+    parte: são evidência contra, não candidatos.
+    """
     if not medidos:
         return "Nenhum sinal com esse status."
+    dores = [m for m in medidos if m.sinal.get("sentido", "dor") == "dor"]
+    inversos = [m for m in medidos if m.sinal.get("sentido", "dor") != "dor"]
     linhas = [
         "| Sinal | Lente | Trilhas | Setor | Dor | Cifra | Recorrência | Fatos | Integral "
         "| Tier 1 |",
         "|---|---|---|---|---|---|---|---|---|---|",
     ]
-    for medido in medidos:
+    for medido in dores:
         sinal = medido.sinal
         linhas.append(
             f"| {sinal['id']} | {sinal['lente']} | {','.join(sinal['trilhas'])} | "
@@ -93,7 +99,7 @@ def montar_fila(medidos: list[ForcaDoSinal]) -> str:
             f"{medido.integrais} | {medido.tier1} |"
         )
     lentes_por_setor: dict[str, set[int]] = {}
-    for medido in medidos:
+    for medido in dores:
         setor = medido.sinal["setor"].strip().casefold()
         lentes_por_setor.setdefault(setor, set()).add(medido.sinal["lente"])
     multiplas = {setor: lentes for setor, lentes in lentes_por_setor.items() if len(lentes) > 1}
@@ -102,6 +108,13 @@ def montar_fila(medidos: list[ForcaDoSinal]) -> str:
         linhas += [
             f"- {setor}: lentes {', '.join(map(str, sorted(lentes)))}"
             for setor, lentes in sorted(multiplas.items())
+        ]
+    if inversos:
+        linhas += ["", "Mercado já servido (sinais inversos, fora da fila):"]
+        linhas += [
+            f"- {m.sinal['id']} · lente {m.sinal['lente']} · {m.sinal['setor']}: "
+            f"{_encurtar(m.sinal['dor'])} ({m.fatos} fatos, {m.integrais} integrais)"
+            for m in inversos
         ]
     return "\n".join(linhas)
 
