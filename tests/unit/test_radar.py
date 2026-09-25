@@ -77,3 +77,12 @@ def test_sinal_inverso_sai_da_fila_e_vai_para_lista_a_parte():
 
     assert "s-2026-0001" in fila and "s-2026-0002" not in fila
     assert "s-2026-0002 · lente 5 · self-storage" in lista
+
+
+def test_cifra_inferida_e_marcada_na_tabela():
+    conta = novo(FATO, id="f-2026-0003", status="inferencia", premissas="vagas × salário")
+    sinal = novo(SINAL, cifra={"valor": 826, "unidade": "BRL_milhoes/ano", "fato": "f-2026-0003"})
+
+    tabela = montar_fila(medir_sinais(_snapshot([sinal], fatos=[FATO, conta])))
+
+    assert "826 BRL_milhoes/ano (integral, inferência)" in tabela

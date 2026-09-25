@@ -17,6 +17,8 @@ class ForcaDoSinal:
         sinal: Registro do sinal.
         cifra: O sinal tem dinheiro associado.
         cifra_integral: O fato da cifra foi lido na página, e não num resumo de busca.
+        cifra_inferida: A cifra é uma conta com premissas (`status: inferencia`), e não
+            um número publicado.
         recorrencia: O sinal descreve recorrência.
         fatos: Quantos fatos sustentam o sinal.
         integrais: Quantos desses fatos têm leitura integral.
@@ -26,6 +28,7 @@ class ForcaDoSinal:
     sinal: dict
     cifra: bool
     cifra_integral: bool
+    cifra_inferida: bool
     recorrencia: bool
     fatos: int
     integrais: int
@@ -60,12 +63,14 @@ def medir_sinais(snapshot: Snapshot, status: str | None = "novo") -> list[ForcaD
             continue
         fontes = [fatos[i].get("fonte", {}) for i in sinal.get("fatos", []) if i in fatos]
         cifra = sinal.get("cifra") or {}
-        fonte_da_cifra = fatos.get(cifra.get("fato", ""), {}).get("fonte", {})
+        fato_da_cifra = fatos.get(cifra.get("fato", ""), {})
+        fonte_da_cifra = fato_da_cifra.get("fonte", {})
         medidos.append(
             ForcaDoSinal(
                 sinal=sinal,
                 cifra=bool(cifra),
                 cifra_integral=fonte_da_cifra.get("leitura") == "integral",
+                cifra_inferida=fato_da_cifra.get("status") == "inferencia",
                 recorrencia=bool(sinal.get("recorrencia")),
                 fatos=len(fontes),
                 integrais=sum(fonte.get("leitura") == "integral" for fonte in fontes),
@@ -124,6 +129,8 @@ def _cifra(medido: ForcaDoSinal) -> str:
         return "não"
     cifra = medido.sinal["cifra"]
     leitura = "integral" if medido.cifra_integral else "sem leitura integral"
+    if medido.cifra_inferida:
+        leitura += ", inferência"
     return f"{cifra['valor']:g} {cifra['unidade']} ({leitura})"
 
 
