@@ -1,4 +1,4 @@
-from harness.verificacao import Pagina, conferir_trecho
+from harness.verificacao import Pagina, conferir_trecho, decodificar
 from tests.fabricas import FATO, novo
 
 
@@ -47,3 +47,54 @@ def test_texto_de_script_nao_conta_como_texto_visivel():
     resultado = conferir_trecho(novo(FATO), _baixador(html))
 
     assert resultado.trecho_encontrado is False
+
+
+def test_pagina_em_latin1_e_decodificada_sem_quebrar():
+    assert decodificar("Contábil".encode("latin-1")) == "Contábil"
+
+
+def test_pagina_em_utf8_e_decodificada_como_utf8():
+    assert decodificar("Contábil".encode()) == "Contábil"
+
+
+def test_trecho_com_elisao_confere_cada_parte():
+    html = "<p>A startup tem mais de 14 mil escritórios parceiros.</p><p>Outro texto.</p>"
+    html += "<p>O run rate indicava R$ 44 milhões nos próximos 12 meses.</p>"
+    fato = novo(FATO)
+    fato["fonte"]["citacao_literal"] = "mais de 14 mil escritórios parceiros ... R$ 44 milhões nos"
+
+    resultado = conferir_trecho(fato, _baixador(html))
+
+    assert resultado.trecho_encontrado is True
+
+
+def test_trecho_com_uma_parte_que_nao_esta_na_pagina_falha():
+    html = "<p>A startup tem mais de 14 mil escritórios parceiros.</p>"
+    fato = novo(FATO)
+    fato["fonte"]["citacao_literal"] = (
+        "mais de 14 mil escritórios parceiros ... 23,000 final clients"
+    )
+
+    resultado = conferir_trecho(fato, _baixador(html))
+
+    assert resultado.trecho_encontrado is False
+
+
+def test_trecho_transcrito_sem_acentos_e_encontrado():
+    html = "<p>O custo dos serviços contábeis no Brasil varia bastante.</p>"
+    fato = novo(FATO)
+    fato["fonte"]["citacao_literal"] = "O custo dos servicos contabeis no Brasil"
+
+    resultado = conferir_trecho(fato, _baixador(html))
+
+    assert resultado.trecho_encontrado is True
+
+
+def test_espaco_antes_de_virgula_vindo_de_link_nao_quebra_a_conferencia():
+    html = '<p>buscam <a href="/nfe">NF-e</a> , NFS-e e CT-e nas bases da SEFAZ</p>'
+    fato = novo(FATO)
+    fato["fonte"]["citacao_literal"] = "buscam NF-e, NFS-e e CT-e nas bases da SEFAZ"
+
+    resultado = conferir_trecho(fato, _baixador(html))
+
+    assert resultado.trecho_encontrado is True

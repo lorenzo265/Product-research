@@ -14,6 +14,7 @@ from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
 
+from harness.estado import PADRAO_DOSSIE
 from harness.exceptions import HarnessError
 
 TETO_PALAVRAS_MEMORANDO = 1500
@@ -34,6 +35,7 @@ class PacoteJuiz:
     pasta: Path
     entrada: Path
     mensagem: str
+    truncados: list[str]
 
 
 def montar_pacote_juiz(
@@ -54,9 +56,9 @@ def montar_pacote_juiz(
         HarnessError: se faltar contrato, dossiê ou algum dos dois memorandos.
     """
     contrato = _ler_contrato(pasta_oportunidade)
-    dossies = sorted(pasta_oportunidade.glob("dossie-*.md"))
+    dossies = sorted(pasta_oportunidade.glob(PADRAO_DOSSIE))
     if not dossies:
-        raise HarnessError(f"{pasta_oportunidade.name}: nenhum dossie-*.md para o juiz ler")
+        raise HarnessError(f"{pasta_oportunidade.name}: nenhum dossiê (dossie*.md) para o juiz ler")
     memorandos = [pasta_oportunidade / PASTA_MEMORANDOS / nome for nome in DIRECOES]
     faltando = [str(m.relative_to(raiz)) for m in memorandos if not m.exists()]
     if faltando:
@@ -66,10 +68,13 @@ def montar_pacote_juiz(
     random.Random(semente).shuffle(ordem)
     rodada = _nova_pasta_rodada(pasta_oportunidade / PASTA_JUIZ, hoje)
     rotulos = {}
+    truncados = []
     for rotulo, origem in zip(("A", "B"), ordem, strict=True):
-        texto = _normalizar(origem.read_text(encoding="utf-8"))
+        texto, truncado = _normalizar(origem.read_text(encoding="utf-8"))
         (rodada / f"memorando-{rotulo}.md").write_text(texto, encoding="utf-8")
         rotulos[rotulo] = origem.name
+        if truncado:
+            truncados.append(origem.name)
     (rodada / "ordem.json").write_text(json.dumps(rotulos, indent=2) + "\n", encoding="utf-8")
 
     entrada = rodada / "entrada.md"
@@ -79,7 +84,7 @@ def montar_pacote_juiz(
         f"Julgue a tese descrita em {caminho_entrada}. Leia somente os arquivos listados "
         "nesse arquivo e responda somente com o JSON do veredito."
     )
-    return PacoteJuiz(pasta=rodada, entrada=entrada, mensagem=mensagem)
+    return PacoteJuiz(pasta=rodada, entrada=entrada, mensagem=mensagem, truncados=truncados)
 
 
 def _ler_contrato(pasta_oportunidade: Path) -> dict:
@@ -98,14 +103,23 @@ def _nova_pasta_rodada(pasta_juiz: Path, hoje: date) -> Path:
     return rodada
 
 
-def _normalizar(texto: str) -> str:
-    """Mesmo teto de tamanho para os dois memorandos."""
-    palavras = texto.split()
-    corpo = texto.strip()
-    if len(palavras) > TETO_PALAVRAS_MEMORANDO:
-        corpo = " ".join(palavras[:TETO_PALAVRAS_MEMORANDO])
-        corpo += f"\n\n[truncado em {TETO_PALAVRAS_MEMORANDO} palavras]"
-    return corpo + "\n"
+def _normalizar(texto: str) -> tuple[str, bool]:
+    """Mesmo teto de tamanho para os dois memorandos, preservando as quebras de linha.
+
+    Returns:
+        O texto dentro do teto e se foi preciso truncar.
+    """
+    linhas_mantidas: list[str] = []
+    restantes = TETO_PALAVRAS_MEMORANDO
+    for linha in texto.strip().splitlines():
+        palavras = linha.split()
+        if len(palavras) > restantes:
+            linhas_mantidas.append(" ".join(palavras[:restantes]))
+            corpo = "\n".join(linhas_mantidas)
+            return f"{corpo}\n\n[truncado em {TETO_PALAVRAS_MEMORANDO} palavras]\n", True
+        restantes -= len(palavras)
+        linhas_mantidas.append(linha)
+    return "\n".join(linhas_mantidas) + "\n", False
 
 
 def _texto_entrada(

@@ -19,6 +19,9 @@ USER_AGENT = "harness-oportunidades/0.1 (pesquisa de mercado; contato via reposi
 TAMANHO_MINIMO_TRECHO = 12
 PADRAO_TAGS = re.compile(r"<(script|style)[^>]*>.*?</\1>|<[^>]+>", re.IGNORECASE | re.DOTALL)
 PADRAO_ESPACOS = re.compile(r"\s+")
+PADRAO_ESPACO_ANTES_DE_PONTUACAO = re.compile(r"\s+([,.;:!?])")
+PADRAO_ELISAO = re.compile(r"\[\.\.\.\]|\(\.\.\.\)|\.\.\.|…")
+ASPAS_NAS_BORDAS = " \"'“”‘’"
 
 
 @dataclass(frozen=True)
@@ -49,16 +52,25 @@ def baixar_com_curl(url: str) -> Pagina:
         "curl",
         "-sL",
         "--fail",
+        "--compressed",
         "--max-time",
         str(TEMPO_LIMITE_SEGUNDOS),
         "-A",
         USER_AGENT,
         url,
     ]
-    resultado = subprocess.run(comando, capture_output=True, text=True, check=False)  # noqa: S603
+    resultado = subprocess.run(comando, capture_output=True, check=False)  # noqa: S603
     if resultado.returncode != 0:
         return Pagina(ok=False, texto="", erro=f"curl saiu com {resultado.returncode}")
-    return Pagina(ok=True, texto=resultado.stdout)
+    return Pagina(ok=True, texto=decodificar(resultado.stdout))
+
+
+def decodificar(conteudo: bytes) -> str:
+    """Decodifica a página sem quebrar: UTF-8 quando válido, senão Latin-1 (sites antigos)."""
+    try:
+        return conteudo.decode("utf-8")
+    except UnicodeDecodeError:
+        return conteudo.decode("latin-1")
 
 
 def conferir_trecho(fato: dict, baixar: Baixador = baixar_com_curl) -> ConferenciaTrecho:
@@ -82,9 +94,18 @@ def conferir_trecho(fato: dict, baixar: Baixador = baixar_com_curl) -> Conferenc
     pagina = baixar(url)
     if not pagina.ok:
         return ConferenciaTrecho(fato["id"], url, None, f"página inacessível: {pagina.erro}")
-    encontrado = _normalizar(trecho) in _normalizar(_texto_visivel(pagina.texto))
-    detalhe = "trecho encontrado na página" if encontrado else "trecho não está na página"
-    return ConferenciaTrecho(fato["id"], url, encontrado, detalhe)
+    texto_pagina = _normalizar(_texto_visivel(pagina.texto))
+    ausentes = [parte for parte in _partes_do_trecho(trecho) if parte not in texto_pagina]
+    if not ausentes:
+        return ConferenciaTrecho(fato["id"], url, True, "trecho encontrado na página")
+    detalhe = f"trecho não está na página (primeira parte ausente: {ausentes[0][:60]!r})"
+    return ConferenciaTrecho(fato["id"], url, False, detalhe)
+
+
+def _partes_do_trecho(trecho: str) -> list[str]:
+    """Separa o trecho nas elisões ("...", "[...]"): cada parte tem de estar na página."""
+    partes = (_normalizar(parte.strip(ASPAS_NAS_BORDAS)) for parte in PADRAO_ELISAO.split(trecho))
+    return [parte for parte in partes if len(parte) >= TAMANHO_MINIMO_TRECHO]
 
 
 def _texto_visivel(conteudo: str) -> str:
@@ -92,7 +113,13 @@ def _texto_visivel(conteudo: str) -> str:
 
 
 def _normalizar(texto: str) -> str:
-    """Compara sem depender de caixa, acentos compostos, aspas tipográficas ou espaços."""
-    texto = unicodedata.normalize("NFKC", texto).casefold()
+    """Compara sem depender de caixa, acentos, aspas tipográficas ou espaçamento.
+
+    Acentos saem porque coletores às vezes transcrevem sem eles ("servicos contabeis"),
+    e isso não muda o que a fonte diz.
+    """
+    texto = unicodedata.normalize("NFKD", texto).casefold()
+    texto = "".join(c for c in texto if not unicodedata.combining(c))
     texto = texto.replace("“", '"').replace("”", '"').replace("’", "'").replace("‘", "'")
+    texto = PADRAO_ESPACO_ANTES_DE_PONTUACAO.sub(r"\1", texto)
     return PADRAO_ESPACOS.sub(" ", texto).strip()

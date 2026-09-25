@@ -6,8 +6,11 @@ from harness.calibracao import (
     MINIMO_PARA_AJUSTAR_REGUAS,
     Previsao,
     calibrar,
+    extrair_previsoes,
     vencidas_sem_resultado,
 )
+from harness.validacao import Snapshot
+from tests.fabricas import VEREDITO, novo
 
 
 def _previsao(p, resultado, prazo="2026-12-31"):
@@ -79,3 +82,20 @@ def test_encolher_com_fator_um_mantem_o_juiz():
     from harness.calibracao import encolher
 
     assert encolher(0.8, 0.1, fator=1.0) == pytest.approx(0.8)
+
+
+def test_veredito_substituido_fica_fora_da_calibracao():
+    previsao = {
+        "previsao": "x",
+        "criterio_resolucao": "y",
+        "prazo": "2026-11-30",
+        "p": 0.2,
+        "resultado": None,
+    }
+    antigo = novo(VEREDITO, previsoes=[previsao], substituido_por="v-2026-0002")
+    atual = novo(VEREDITO, id="v-2026-0002", previsoes=[previsao])
+    snapshot = Snapshot(registros={"veredito": [antigo, atual]}, cartoes=[], dossies={})
+
+    previsoes = extrair_previsoes(snapshot)
+
+    assert [p.veredito for p in previsoes] == ["v-2026-0002"]

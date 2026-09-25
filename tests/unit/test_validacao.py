@@ -62,6 +62,32 @@ def test_veredito_de_oportunidade_inexistente_e_erro():
     assert "referência a cartao inexistente: OP-0042" in erros
 
 
+def test_veredito_substituido_sem_motivo_e_erro():
+    antigo = novo(VEREDITO, substituido_por="v-2026-0002")
+    atual = novo(VEREDITO, id="v-2026-0002")
+
+    erros = _mensagens(validar(_snapshot(fatos=[FATO], vereditos=[antigo, atual]), HOJE), ERRO)
+
+    assert "veredito substituído sem motivo_substituicao" in erros
+
+
+def test_veredito_substituido_por_veredito_inexistente_e_erro():
+    antigo = novo(VEREDITO, substituido_por="v-2026-0099", motivo_substituicao="entrada ruim")
+
+    erros = _mensagens(validar(_snapshot(fatos=[FATO], vereditos=[antigo]), HOJE), ERRO)
+
+    assert any("veredito inexistente: v-2026-0099" in erro for erro in erros)
+
+
+def test_substituicao_valida_nao_gera_erro():
+    antigo = novo(VEREDITO, substituido_por="v-2026-0002", motivo_substituicao="entrada ruim")
+    atual = novo(VEREDITO, id="v-2026-0002")
+
+    erros = _mensagens(validar(_snapshot(fatos=[FATO], vereditos=[antigo, atual]), HOJE), ERRO)
+
+    assert erros == []
+
+
 def test_id_repetido_e_erro():
     erros = _mensagens(validar(_snapshot(fatos=[FATO, FATO]), HOJE), ERRO)
 

@@ -106,6 +106,28 @@ def test_memorando_longo_e_cortado_no_teto(repo):
 
     textos = [p.read_text() for p in pacote.pasta.glob("memorando-*.md")]
     assert any(f"[truncado em {TETO_PALAVRAS_MEMORANDO} palavras]" in t for t in textos)
+    assert pacote.truncados == ["a-favor.md"]
+
+
+def test_truncar_preserva_as_quebras_de_linha(repo):
+    ponto = "## Ponto\n\n" + "palavra " * 100 + "\n\n"
+    pasta = _preparar_oportunidade(repo, memorando_favor=ponto * 20)
+
+    pacote = montar_pacote_juiz(repo.raiz, pasta, HOJE, semente=1)
+
+    rotulo = json.loads((pacote.pasta / "ordem.json").read_text())
+    arquivo = "A" if rotulo["A"] == "a-favor.md" else "B"
+    texto = (pacote.pasta / f"memorando-{arquivo}.md").read_text()
+    assert texto.count("## Ponto") > 1
+    assert len(texto.split()) <= TETO_PALAVRAS_MEMORANDO + 5
+
+
+def test_memorando_dentro_do_teto_nao_e_marcado(repo):
+    pasta = _preparar_oportunidade(repo)
+
+    pacote = montar_pacote_juiz(repo.raiz, pasta, HOJE, semente=1)
+
+    assert pacote.truncados == []
 
 
 def test_sem_memorandos_nao_monta(repo):
@@ -135,3 +157,14 @@ def test_anular_contrato_exige_motivo(repo):
 
     with pytest.raises(Exception, match="motivo"):
         repo.anular_contrato("OP-0001", "erro", HOJE)
+
+
+def test_dossie_sem_tema_no_nome_tambem_vai_para_o_juiz(repo):
+    pasta = _preparar_oportunidade(repo)
+    (pasta / "dossie.md").write_text("# Dossiê completo\n")
+
+    pacote = montar_pacote_juiz(repo.raiz, pasta, HOJE, semente=1)
+
+    entrada = pacote.entrada.read_text()
+    assert "dossie.md`" in entrada
+    assert "dossie-mercado.md`" in entrada

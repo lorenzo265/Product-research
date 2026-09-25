@@ -86,7 +86,7 @@ def _logit(p: float) -> float:
 
 
 def extrair_previsoes(snapshot: Snapshot) -> list[Previsao]:
-    """Achata as previsões de todos os vereditos."""
+    """Achata as previsões dos vereditos em vigor (substituídos ficam de fora)."""
     return [
         Previsao(
             veredito=veredito["id"],
@@ -97,6 +97,7 @@ def extrair_previsoes(snapshot: Snapshot) -> list[Previsao]:
             resultado=previsao["resultado"],
         )
         for veredito in snapshot.de("veredito")
+        if not veredito.get("substituido_por")
         for previsao in veredito.get("previsoes", [])
     ]
 

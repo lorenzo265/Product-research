@@ -219,8 +219,10 @@ def _validar_contratos(snapshot: Snapshot, dir_schemas: Path) -> Iterator[Proble
 
 
 def _regras_de_veredito(snapshot: Snapshot) -> Iterator[Problema]:
+    oportunidade_do_veredito = {v.get("id"): v.get("oportunidade") for v in snapshot.de("veredito")}
     for veredito in snapshot.de("veredito"):
         onde = veredito.get("id", "veredito sem id")
+        yield from _regras_de_substituicao(onde, veredito, oportunidade_do_veredito)
         for nome, dimensao in veredito.get("dimensoes", {}).items():
             yield from _regras_de_dimensao(onde, nome, dimensao)
         for previsao in veredito.get("previsoes", []):
@@ -236,6 +238,24 @@ def _regras_de_veredito(snapshot: Snapshot) -> Iterator[Problema]:
                     f"p_sucesso + p_fracasso = {p_sucesso + p_fracasso:.2f}; "
                     "incoerente (possível viés otimista)",
                 )
+
+
+def _regras_de_substituicao(
+    onde: str, veredito: dict, oportunidade_do_veredito: dict[str, str]
+) -> Iterator[Problema]:
+    substituto = veredito.get("substituido_por")
+    if not substituto:
+        return
+    if substituto == onde:
+        yield Problema(ERRO, onde, "veredito não pode substituir a si mesmo")
+    elif substituto not in oportunidade_do_veredito:
+        yield Problema(
+            ERRO, onde, f"substituido_por aponta para veredito inexistente: {substituto}"
+        )
+    elif oportunidade_do_veredito[substituto] != veredito.get("oportunidade"):
+        yield Problema(ERRO, onde, f"substituido_por aponta para outra oportunidade: {substituto}")
+    if not (veredito.get("motivo_substituicao") or "").strip():
+        yield Problema(ERRO, onde, "veredito substituído sem motivo_substituicao")
 
 
 def _regras_de_dimensao(onde: str, nome: str, dimensao: dict) -> Iterator[Problema]:

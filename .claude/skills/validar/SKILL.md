@@ -34,11 +34,21 @@ de ninguém. Siga as etapas 2 a 6 do `metodo-julgamento`. Você orquestra; não 
    um é só: "Pasta: oportunidades/<pasta>. Direção: a favor." e "Pasta:
    oportunidades/<pasta>. Direção: contra.". Nada além disso.
 4. **Juiz.** Rode `python3 -m harness pacote-juiz OP-xxxx`. Passe ao subagente `juiz`
-   exatamente a mensagem impressa, sem acrescentar nada.
+   exatamente a mensagem impressa, sem acrescentar nada. Se o comando avisar que um
+   memorando passou de 1.500 palavras, peça a esse `memorando` que reescreva dentro do
+   teto e gere o pacote de novo: o corte automático tira o fim do texto só de um lado.
 5. **Registro.** Salve a resposta do juiz num arquivo
    (`oportunidades/<pasta>/juiz/<rodada>/resposta.json`) e rode
    `python3 -m harness registrar-veredito OP-xxxx - < <arquivo>`. Se o schema recusar,
    devolva o erro ao juiz na mesma conversa e peça o JSON corrigido.
+
+   **Fato corrigido depois do veredito.** Se uma verificação posterior corrigir ou
+   contradisser um fato que o veredito cita, refaça os passos 3 a 5 com os fatos
+   corrigidos e registre com
+   `registrar-veredito OP-xxxx --substitui v-AAAA-NNNN --motivo "<fato e correção>"`.
+   A regra vale nos dois sentidos, seja a correção a favor ou contra a tese, e não
+   depende do resultado: refazer porque o veredito desagradou é pescar veredito. O
+   veredito antigo fica gravado e sai da calibração.
 6. **Cartão.** Atualize `estagio` para `veredito` e `proximo_passo`: se a recomendação for
    GO, o próximo passo é `/teste`; se ITERAR, o que precisa ser resolvido; se KILL, a
    decisão do usuário.

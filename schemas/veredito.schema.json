@@ -363,6 +363,21 @@
           "type": "boolean"
         }
       }
+    },
+    "substituido_por": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^v-\\d{4}-\\d{4}$",
+      "description": "Id do veredito que substitui este (entrada defeituosa, contrato anulado). Veredito substituído sai da calibração."
+    },
+    "motivo_substituicao": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Por que este veredito foi substituído; obrigatório junto com substituido_por."
     }
   }
 }

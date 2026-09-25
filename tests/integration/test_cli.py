@@ -171,3 +171,49 @@ def test_registrar_veredito_encolhe_p_e_liga_ao_cartao(raiz, capsys):
     assert saida.startswith("v-2026-0001 · ITERAR · p_sucesso=")
     _rodar(raiz, "obter", "cartao", "OP-0001")
     assert '"v-2026-0001"' in capsys.readouterr().out
+
+
+def test_registrar_veredito_que_substitui_marca_o_anterior(raiz, capsys):
+    from tests.fabricas import CARTAO, FATO, VEREDITO
+
+    cartao = novo(CARTAO)
+    del cartao["id"], cartao["criado_em"], cartao["atualizado_em"]
+    _rodar(raiz, "novo-cartao", json.dumps(cartao))
+    _rodar(raiz, "adicionar", "fato", json.dumps(FATO))
+    veredito = novo(VEREDITO)
+    for campo in ("id", "oportunidade", "data"):
+        del veredito[campo]
+    _rodar(raiz, "registrar-veredito", "OP-0001", json.dumps(veredito))
+    capsys.readouterr()
+
+    codigo = _rodar(
+        raiz,
+        "registrar-veredito",
+        "OP-0001",
+        json.dumps(veredito),
+        "--substitui",
+        "v-2026-0001",
+        "--motivo",
+        "fato citado corrigido depois do veredito",
+    )
+
+    assert codigo == SAIDA_OK
+    capsys.readouterr()
+    _rodar(raiz, "obter", "veredito", "v-2026-0001")
+    anterior = json.loads(capsys.readouterr().out)
+    assert anterior["substituido_por"] == "v-2026-0002"
+    assert _rodar(raiz, "validar") == SAIDA_OK
+
+
+def test_substituir_sem_motivo_e_recusado(raiz):
+    from tests.fabricas import VEREDITO
+
+    veredito = novo(VEREDITO)
+    for campo in ("id", "oportunidade", "data"):
+        del veredito[campo]
+
+    codigo = _rodar(
+        raiz, "registrar-veredito", "OP-0001", json.dumps(veredito), "--substitui", "v-2026-0001"
+    )
+
+    assert codigo != SAIDA_OK

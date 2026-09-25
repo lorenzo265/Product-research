@@ -31,7 +31,7 @@ from harness.validacao import Cartao, Snapshot, referencias_quebradas
 RAIZ_PADRAO = Path(__file__).resolve().parent.parent
 DIR_OPORTUNIDADES = "oportunidades"
 ARQUIVO_CARTAO = "cartao.md"
-PADRAO_DOSSIE = "dossie-*.md"
+PADRAO_DOSSIE = "dossie*.md"  # dossie.md e dossie-<tema>.md: nenhum dossiê fica de fora
 ARQUIVO_CONTRATO = "contrato.json"
 TAMANHO_MINIMO_MOTIVO_ANULACAO = 20
 DELIMITADOR_FRONTMATTER = "---"

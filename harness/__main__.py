@@ -33,7 +33,7 @@ from harness.coletores.pncp import ConsultaPncp, coletar_compras, resumir
 from harness.coletores.yc import baixar_empresas, filtrar_candidatos
 from harness.estado import DIR_OPORTUNIDADES, Repositorio
 from harness.exceptions import HarnessError
-from harness.julgamento import montar_pacote_juiz
+from harness.julgamento import TETO_PALAVRAS_MEMORANDO, montar_pacote_juiz
 from harness.portfolio import montar_painel
 from harness.regras_teste import fronteiras_bayes, fronteiras_sprt
 from harness.validacao import ERRO, validar
@@ -148,6 +148,12 @@ def _cmd_contrato(args: argparse.Namespace, repositorio: Repositorio, hoje: date
 def _cmd_pacote_juiz(args: argparse.Namespace, repositorio: Repositorio, hoje: date) -> int:
     pasta = repositorio.pasta_da_oportunidade(args.id)
     pacote = montar_pacote_juiz(repositorio.raiz, pasta, hoje, semente=args.semente)
+    for nome in pacote.truncados:
+        print(
+            f"[aviso] memorandos/{nome} passou de {TETO_PALAVRAS_MEMORANDO} palavras e foi "
+            "truncado; peça ao memorando que reescreva dentro do teto e gere o pacote de novo",
+            file=sys.stderr,
+        )
     print(pacote.mensagem)
     return SAIDA_OK
 
@@ -158,7 +164,21 @@ def _cmd_registrar_veredito(args: argparse.Namespace, repositorio: Repositorio, 
     bruta = veredito.get("p_sucesso_bruta")
     if bruta is not None and "p_sucesso" not in veredito:
         veredito["p_sucesso"] = encolher(bruta, veredito["base_rate"]["p"])
+    if args.substitui and not args.motivo:
+        raise HarnessError("--substitui exige --motivo")
+    if args.substitui:
+        anterior = repositorio.obter("veredito", args.substitui)
+        if anterior.get("oportunidade") != args.id:
+            raise HarnessError(f"{args.substitui} não é veredito de {args.id}")
     gravado = repositorio.adicionar("veredito", veredito, hoje)
+    if args.substitui:
+        repositorio.atualizar(
+            "veredito",
+            args.substitui,
+            {"substituido_por": gravado["id"], "motivo_substituicao": args.motivo},
+            args.motivo,
+            hoje,
+        )
     cartao = repositorio.obter("cartao", args.id)
     repositorio.atualizar_cartao(
         args.id,
@@ -166,7 +186,8 @@ def _cmd_registrar_veredito(args: argparse.Namespace, repositorio: Repositorio, 
             "vereditos": [*cartao.get("vereditos", []), gravado["id"]],
             "travas": gravado["travas"],
         },
-        f"veredito {gravado['id']} ({gravado['modo']}): {gravado['recomendacao']}",
+        f"veredito {gravado['id']} ({gravado['modo']}): {gravado['recomendacao']}"
+        + (f" (substitui {args.substitui}: {args.motivo})" if args.substitui else ""),
         hoje,
     )
     p_final = gravado.get("p_sucesso")
@@ -395,6 +416,8 @@ def _parser() -> argparse.ArgumentParser:
     registrar = sub.add_parser("registrar-veredito", help="grava o veredito do juiz")
     registrar.add_argument("id", help="id da oportunidade (OP-0001)")
     registrar.add_argument("json", nargs="?", help="JSON do juiz; omita para stdin")
+    registrar.add_argument("--substitui", help="id do veredito que este substitui")
+    registrar.add_argument("--motivo", help="por que o veredito anterior foi substituído")
     registrar.set_defaults(executar=_cmd_registrar_veredito)
 
     conferir = sub.add_parser("conferir-trecho", help="confere trechos literais na fonte")
