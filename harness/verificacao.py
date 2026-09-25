@@ -20,8 +20,18 @@ TAMANHO_MINIMO_TRECHO = 12
 PADRAO_TAGS = re.compile(r"<(script|style)[^>]*>.*?</\1>|<[^>]+>", re.IGNORECASE | re.DOTALL)
 PADRAO_ESPACOS = re.compile(r"\s+")
 PADRAO_ESPACO_ANTES_DE_PONTUACAO = re.compile(r"\s+([,.;:!?])")
-PADRAO_ELISAO = re.compile(r"\[\.\.\.\]|\(\.\.\.\)|\.\.\.|…")
-ASPAS_NAS_BORDAS = " \"'“”‘’"
+# Elisões e anotações do coletor ("[tabela 3]", "[seção do produto]") separam as partes.
+PADRAO_ELISAO = re.compile(r"\[[^\]]*\]|\(\.\.\.\)|\.\.\.|…")
+ASPAS = "\"'“”‘’«»"
+ASSINATURA_PDF = b"%PDF"
+# Dados que a página declara sem mostrar como texto: JSON-LD e atributos descritivos.
+# Script comum continua de fora (variável de JS não é o que a página diz).
+PADRAO_JSON_LD = re.compile(
+    r"<script[^>]*application/ld\+json[^>]*>(.*?)</script>", re.IGNORECASE | re.DOTALL
+)
+PADRAO_ATRIBUTO_DESCRITIVO = re.compile(
+    r"\b(?:aria-label|alt|title|content)\s*=\s*(\"[^\"]*\"|'[^']*')", re.IGNORECASE
+)
 
 
 @dataclass(frozen=True)
@@ -62,6 +72,23 @@ def baixar_com_curl(url: str) -> Pagina:
     resultado = subprocess.run(comando, capture_output=True, check=False)  # noqa: S603
     if resultado.returncode != 0:
         return Pagina(ok=False, texto="", erro=f"curl saiu com {resultado.returncode}")
+    if resultado.stdout.startswith(ASSINATURA_PDF):
+        return _texto_de_pdf(resultado.stdout)
+    return Pagina(ok=True, texto=decodificar(resultado.stdout))
+
+
+def _texto_de_pdf(conteudo: bytes) -> Pagina:
+    try:
+        resultado = subprocess.run(  # noqa: S603
+            ["pdftotext", "-layout", "-", "-"],  # noqa: S607
+            input=conteudo,
+            capture_output=True,
+            check=False,
+        )
+    except FileNotFoundError:
+        return Pagina(ok=False, texto="", erro="PDF: instale pdftotext (poppler-utils)")
+    if resultado.returncode != 0:
+        return Pagina(ok=False, texto="", erro=f"pdftotext saiu com {resultado.returncode}")
     return Pagina(ok=True, texto=decodificar(resultado.stdout))
 
 
@@ -94,8 +121,13 @@ def conferir_trecho(fato: dict, baixar: Baixador = baixar_com_curl) -> Conferenc
     pagina = baixar(url)
     if not pagina.ok:
         return ConferenciaTrecho(fato["id"], url, None, f"página inacessível: {pagina.erro}")
-    texto_pagina = _normalizar(_texto_visivel(pagina.texto))
-    ausentes = [parte for parte in _partes_do_trecho(trecho) if parte not in texto_pagina]
+    textos = (
+        _normalizar(_texto_visivel(pagina.texto)),
+        _normalizar(_texto_declarado(pagina.texto)),
+    )
+    ausentes = [
+        parte for parte in _partes_do_trecho(trecho) if not any(parte in texto for texto in textos)
+    ]
     if not ausentes:
         return ConferenciaTrecho(fato["id"], url, True, "trecho encontrado na página")
     detalhe = f"trecho não está na página (primeira parte ausente: {ausentes[0][:60]!r})"
@@ -104,7 +136,7 @@ def conferir_trecho(fato: dict, baixar: Baixador = baixar_com_curl) -> Conferenc
 
 def _partes_do_trecho(trecho: str) -> list[str]:
     """Separa o trecho nas elisões ("...", "[...]"): cada parte tem de estar na página."""
-    partes = (_normalizar(parte.strip(ASPAS_NAS_BORDAS)) for parte in PADRAO_ELISAO.split(trecho))
+    partes = (_normalizar(parte) for parte in PADRAO_ELISAO.split(trecho))
     return [parte for parte in partes if len(parte) >= TAMANHO_MINIMO_TRECHO]
 
 
@@ -112,14 +144,20 @@ def _texto_visivel(conteudo: str) -> str:
     return html.unescape(PADRAO_TAGS.sub(" ", conteudo))
 
 
+def _texto_declarado(conteudo: str) -> str:
+    blocos = PADRAO_JSON_LD.findall(conteudo)
+    blocos += [valor[1:-1] for valor in PADRAO_ATRIBUTO_DESCRITIVO.findall(conteudo)]
+    return html.unescape(" ".join(blocos))
+
+
 def _normalizar(texto: str) -> str:
-    """Compara sem depender de caixa, acentos, aspas tipográficas ou espaçamento.
+    """Compara sem depender de caixa, acentos, aspas ou espaçamento.
 
     Acentos saem porque coletores às vezes transcrevem sem eles ("servicos contabeis"),
     e isso não muda o que a fonte diz.
     """
     texto = unicodedata.normalize("NFKD", texto).casefold()
     texto = "".join(c for c in texto if not unicodedata.combining(c))
-    texto = texto.replace("“", '"').replace("”", '"').replace("’", "'").replace("‘", "'")
+    texto = texto.translate(str.maketrans("", "", ASPAS))
     texto = PADRAO_ESPACO_ANTES_DE_PONTUACAO.sub(r"\1", texto)
     return PADRAO_ESPACOS.sub(" ", texto).strip()

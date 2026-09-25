@@ -104,14 +104,16 @@ oferecem ou estão lançando a mesma leitura fiscal automática como recurso.
   confirmada em fonte terciária), que segundo reportagens (não texto oficial lido
   integralmente) exige validação da autorização em até 30 dias (f-2026-0037) e **veda
   explicitamente mecanismos de automação/intermediação não oficializados** para
-  outorgar/alterar/revogar autorizações (f-2026-0038, corroborado por duas fontes
-  independentes em f-2026-0039). A documentação oficial do SERPRO confirma que a
+  outorgar/alterar/revogar autorizações (f-2026-0038; também em f-2026-0039, SICAP-SP).
+  *[Corrigido em 2026-09-25: a versão anterior dizia "duas fontes independentes"; a
+  f-2026-0039 re-verificada sustenta só a SICAP-SP.]* A documentação oficial do SERPRO confirma que a
   autenticação do Contratante na API usa o e-CNPJ do próprio Contratante via mTLS, sem
   exigir certificado do contribuinte-cliente para essa etapa (f-2026-0042); e que existe
   um mecanismo de Autorização/Procuração pelo qual o Autor do Pedido de Dados nem sempre
   é o Contratante (f-2026-0043). Um blog de fornecedor (e-Auditoria) descreve a
   Autorização de Acesso no e-CAC sem exigência de certificado do cliente PJ, usando
-  login Gov.br + confirmação por app (f-2026-0041, tier 3, verificação pendente). Não
+  login Gov.br + confirmação por app (f-2026-0041, tier 3, confirmada na re-verificação
+  de 2026-09-25). Não
   foi possível ler o texto oficial primário da IN 2.320/2026 nesta linha de tempo do
   projeto (bloqueios de acesso, f-2026-0040).
 
@@ -150,9 +152,10 @@ oferecem ou estão lançando a mesma leitura fiscal automática como recurso.
   leitura por resumo de busca, página oficial de planos retornou 404).
 - Não existe pesquisa formal (CFC, Sebrae, FENACON) sobre quantas empresas um
   contador/escritório consegue atender por profissional; os únicos números encontrados
-  são estimativa informal de blog (20-40 empresas por contador sozinho; ~100
-  CNPJs/escritório em média, sem pesquisa por trás, f-2026-0064) e a ausência formal
-  registrada (f-2026-0065). **Achado novo**: a única evidência adicional de
+  são estimativa informal de blog (20-40 empresas por contador sozinho, f-2026-0064;
+  ~100 CNPJs/escritório em média, em outro post do mesmo blog, f-2026-0065), sem
+  pesquisa por trás, e a ausência formal registrada (f-2026-0065). *[Corrigido em
+  2026-09-25: a f-2026-0064 misturava as duas páginas; separada na re-verificação.]* **Achado novo**: a única evidência adicional de
   "produtividade com automação" encontrada é conteúdo de marca/publieditorial no portal
   Contábeis, patrocinado pelos próprios fornecedores de software de automação contábil
   "Escritório Inteligente" e "Integra Fácil", alegando 100-300 clientes por colaborador

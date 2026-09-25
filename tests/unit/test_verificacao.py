@@ -98,3 +98,45 @@ def test_espaco_antes_de_virgula_vindo_de_link_nao_quebra_a_conferencia():
     resultado = conferir_trecho(fato, _baixador(html))
 
     assert resultado.trecho_encontrado is True
+
+
+def test_anotacao_do_coletor_entre_colchetes_separa_as_partes():
+    html = "<h2>Produto</h2><p>busca automática de notas</p><p>relatório de crédito</p>"
+    fato = novo(FATO)
+    fato["fonte"]["citacao_literal"] = (
+        "[seção do produto] busca automática de notas [lista] relatório de crédito"
+    )
+
+    resultado = conferir_trecho(fato, _baixador(html))
+
+    assert resultado.trecho_encontrado is True
+
+
+def test_trecho_tirado_de_json_ld_e_encontrado_no_texto_cru():
+    html = '<script type="application/ld+json">{"name": "Calima Pro", "price": "399"}</script>'
+    fato = novo(FATO)
+    fato["fonte"]["citacao_literal"] = '"name": "Calima Pro", "price": "399"'
+
+    resultado = conferir_trecho(fato, _baixador(html))
+
+    assert resultado.trecho_encontrado is True
+
+
+def test_aspas_que_o_coletor_omitiu_nao_quebram_a_conferencia():
+    html = "<p>o ‘run rate’ da Omie indicava R$ 44 milhões</p>"
+    fato = novo(FATO)
+    fato["fonte"]["citacao_literal"] = "o run rate da Omie indicava R$ 44 milhões"
+
+    resultado = conferir_trecho(fato, _baixador(html))
+
+    assert resultado.trecho_encontrado is True
+
+
+def test_trecho_de_aria_label_e_encontrado():
+    html = '<div aria-label="Avaliado com 4,4 de 5 estrelas"><span>4,4</span></div>'
+    fato = novo(FATO)
+    fato["fonte"]["citacao_literal"] = "Avaliado com 4,4 de 5 estrelas"
+
+    resultado = conferir_trecho(fato, _baixador(html))
+
+    assert resultado.trecho_encontrado is True
