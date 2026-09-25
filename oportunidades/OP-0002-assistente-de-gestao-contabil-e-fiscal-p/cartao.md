@@ -27,17 +27,19 @@ custo_workaround: 'a verificar - hipótese do proponente: R$600-1.500/mês pelo 
   sistema financeiro, somando ~R$1.100-1.950/mês (SDD §4.3, §16.4, §21 DP-18)'
 lentes: []
 sinais: []
-travas:
-- 'economia unitária: não avançar sem custo Brasil bottom-up (gente + variável por
-  cliente) e preço que fechem com margem positiva a uma escala de contador plausível
-  - o próprio documento do proponente registra que a grade de entrada mais vendável
-  fica no limite ou negativa antes de atingir essa escala'
-- 'comprador e orçamento: não avançar sem confirmar que quem paga (o dono) sofre a
-  dor diretamente e tem orçamento de troca, e sem checar se um incumbente moderno
-  poderia lançar a mesma leitura automática como recurso e reter o cliente'
-proximo_passo: 'kill barato (2a tentativa) deu GO (0 de 3 alegações caíram) - seguir
-  para /validar completo: dossiê, verificador antes dos memorandos, memorandos, pacote-juiz
-  e juiz'
+travas: []
+proximo_passo: 'veredito v-2026-0005 (validacao completa): ITERAR (p_sucesso=0.04,
+  bruta 0.036, contra taxa-base de 0.05). Objecao mais forte: o fosso de captura de
+  dado nao e exclusivo (Calima Pro ja embute o Integra Contador por R$399/mes, e a
+  Conta Azul lancou automacao fiscal equivalente para escritorios em ago/2026, armando
+  o proprio contador que a tese quer desalojar) e o canal que historicamente escala
+  no setor passa por esse mesmo contador. Antes de gastar mais em pesquisa de mesa:
+  testar com compradores reais do recorte A (i) se a soma paga hoje a contador+emissor+sistema
+  financeiro e de fato >=R$900/mes (a ancora SESCON-SP e de SP e nao separa atacado/varejo),
+  e (ii) se o dono troca de contador de fato (deposito ou carta de intencao), alem
+  de medir em piloto quantos atacadistas um contador interno atende por mes (premissa
+  de 60+/contador nao tem fonte independente; estimativas de mercado ficam em 20-40,
+  o que tornaria o tier Essencial negativo). Decisao GO/ITERAR/KILL e do usuario.'
 revisar_em: '2026-10-09'
 id: OP-0002
 criado_em: '2026-09-25'
@@ -45,6 +47,7 @@ atualizado_em: '2026-09-25'
 vereditos:
 - v-2026-0003
 - v-2026-0004
+- v-2026-0005
 ---
 
 ## Dor
@@ -62,3 +65,6 @@ vereditos:
 - 2026-09-25: sincronizar cartão com o novo contrato: pergunta_neutralizada, quem_paga e custo_workaround estavam com o preço invertido da 1a tentativa (anulada)
 - 2026-09-25: veredito v-2026-0004 (kill_barato): GO
 - 2026-09-25: kill barato (2a tentativa, contrato corrigido) concluído: 0 de 3 alegações caíram (mecanismo Integra Contador, custos de fornecedores, âncora de preço) -> GO, segue para /validar
+- 2026-09-25: veredito v-2026-0005 (completo): ITERAR
+- 2026-09-25: validacao completa concluida: veredito v-2026-0005 ITERAR (p_sucesso=0.04); decisao GO/ITERAR/KILL fica com o usuario
+- 2026-09-25: fechamento da rodada de /validar: dossie reaproveitou fatos das duas rodadas de kill barato por id (f-2026-0026 a f-2026-0080) e acrescentou f-2026-0081 a f-2026-0090; verificador fechou todos por status (39 confirmados, 1 contradita/corrigida - f-2026-0084, 25 pendentes por bloqueio de acesso a fonte); lacuna tecnica encontrada e nao corrigida nesta rodada (fora do escopo de /validar): o comando 'conferir-trecho' do harness falha com UnicodeDecodeError em paginas que retornam gzip sem --compressed no curl (ex.: omie.com.br, contabilizei.com.br), impedindo verificar alguns fatos - registrar como pendencia de codigo, nao como ausencia de evidencia. Nenhuma oportunidade marcada como cadaver. Rodando sem acompanhamento do usuario, conforme instrucao explicita; decisao GO/ITERAR/KILL sobre o veredito v-2026-0005 fica com o usuario.
