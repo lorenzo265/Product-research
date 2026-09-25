@@ -34,5 +34,12 @@ memorandos, juiz) herde a empolgação de quem a trouxe.
 4. **Ligue os sinais**, se vieram do radar: inclua os ids em `sinais` e marque cada
    sinal como agrupado
    (`python3 -m harness atualizar sinal <id> '{"status": "agrupado", "oportunidade": "OP-xxxx"}' --motivo "agrupado em OP-xxxx"`).
-5. **Próximo passo:** ofereça `/kill OP-xxxx`. O kill barato é o estágio mais barato e
+5. **Material do proponente.** Se a ideia chegar com documento próprio (SDD, pitch,
+   planilha), guarde o arquivo fora do git (`cache/entrada/`) e escreva em
+   `oportunidades/<pasta>/alegacoes-do-proponente.md` só as **alegações verificáveis**
+   que ele faz (números, preços, normas, tamanho de mercado, concorrentes), cada uma
+   com a fonte que o documento cita, como pista. Nenhum subagente lê o documento: ele
+   carrega a convicção de quem o escreveu. O pesquisador verifica as alegações na fonte
+   original; o que ele não confirmar não vira fato.
+6. **Próximo passo:** ofereça `/kill OP-xxxx`. O kill barato é o estágio mais barato e
    mata a maioria das ideias ruins.

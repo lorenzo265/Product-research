@@ -322,9 +322,11 @@ cartão e gravou o contrato, e parou antes da verificação. Retomei depois do r
 Rodadas grandes de eval ou radar amplo devem ser espaçadas ou agendadas.
 
 ### R-25 · Primeira oportunidade real: OP-0001, NFS-e nacional
-**O que rodou:** `/oportunidade` + `/kill` sobre a sua frase "tenho quase certeza que dá
-dinheiro ajudar prestadores do Simples a emitir NFS-e no padrão nacional". Rodou sem você
-(headless), com as suposições anotadas no cartão.
+**O que rodou:** `/oportunidade` + `/kill` sobre uma ideia de teste que **eu criei** a partir
+de um sinal da pesquisa (NFS-e nacional instável). A frase "tenho quase certeza que dá
+dinheiro…" foi escrita por mim como enquadramento com convicção, para testar a
+neutralização, e no primeiro resumo eu a atribuí a você por engano. **Não é o Arkan**
+(o Arkan é a OP-0002). Rodou sem você (headless), com as suposições anotadas no cartão.
 
 **Resultado do kill barato:**
 - sustentada: a obrigatoriedade para o Simples (Resolução CGSN 191/2026, adiada para

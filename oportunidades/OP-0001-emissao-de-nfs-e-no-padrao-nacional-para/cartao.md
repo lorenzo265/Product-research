@@ -3,7 +3,8 @@ titulo: Emissão de NFS-e no padrão nacional para prestadores do Simples Nacion
 trilha: S
 estagio: veredito
 status: ativa
-origem: ideia do usuário
+origem: ideia de teste criada pelo Claude a partir de um sinal da pesquisa (NFS-e
+  nacional instável); não foi trazida pelo usuário
 pergunta_neutralizada: Prestadores de serviço optantes pelo Simples Nacional pagam
   por um serviço que emite a NFS-e no padrão nacional em seu nome ou os ajuda a se
   adequar a ele, dada a obrigatoriedade a partir de 2026 e relatos de instabilidade
@@ -34,7 +35,7 @@ proximo_passo: 'decisão do usuário (GO / ITERAR / KILL) sobre o veredito v-202
 revisar_em: '2026-10-08'
 id: OP-0001
 criado_em: '2026-09-24'
-atualizado_em: '2026-09-24'
+atualizado_em: '2026-09-25'
 vereditos:
 - v-2026-0001
 - v-2026-0002
@@ -55,3 +56,4 @@ vereditos:
 - 2026-09-24: veredito v-2026-0002 (completo): KILL
 - 2026-09-24: registrar próximo passo após veredito de validação de mesa v-2026-0002
 - 2026-09-24: Rodado /validar sem acompanhamento do usuário (ausente), conforme aprovação prévia ('pode seguir'). Sequência completa: pesquisador (dossiê, 24 buscas + leitura integral de 9 páginas), memorando a favor e contra em paralelo, verificador, pacote-juiz, juiz isolado. Suposição/ressalva registrada: o verificador encontrou 4 fatos contraditos pela fonte real ao tentar leitura integral (f-2026-0004 preço eNotas, f-2026-0005 preço Focus NFe, f-2026-0008 atribuição a Conta Azul, f-2026-0023 anúncio genérico no GetNinjas) e 2 não verificáveis por bloqueio Cloudflare (f-2026-0007, f-2026-0020); esses 4 contraditos alimentaram os dois memorandos, escritos antes da verificação (ordem prevista pela skill). O juiz recebeu o status de verificação de cada fato no pacote e descontou os contraditos explicitamente na sensibilidade do veredito. Nenhuma oportunidade marcada como cadáver; decisão GO/ITERAR/KILL fica com o usuário.
+- 2026-09-25: Correção (25/09): a frase 'tenho quase certeza que dá dinheiro' foi escrita pelo Claude como enquadramento de teste e atribuída ao usuário por engano. Esta oportunidade não é o Arkan (ver OP-0002).
