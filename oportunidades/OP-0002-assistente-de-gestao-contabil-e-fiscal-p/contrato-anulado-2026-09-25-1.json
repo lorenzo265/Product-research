@@ -42,5 +42,9 @@
     "justificativa": "não há taxa-base publicada para 'SaaS B2B vertical fiscal/contábil no Brasil chega a R$16,7M ARR'; ancorando de forma ampla em taxas-base conhecidas de startups B2B SaaS que atingem porte de Series-A (dezenas de milhões de reais de ARR), tipicamente citadas como bem abaixo de 10% das que tentam, e descontando mais por dois fatores que o próprio documento do proponente reconhece como risco: depender de comportamento de um sistema de terceiro fora de controle (R-01, R-02, R-05) e exigir estrutura legal regulada (CRC, RT, seguro) antes de vender (R-28, R-31); prior deliberadamente mais baixo que o de trilha M/S por causa do piso de ambição maior (R$16,7M ARR) e da barreira dupla regulatória+operacional"
   },
   "teto": "Bottom-up, só recorte A (a hipótese não verificada do proponente, A14: 75-200 mil empresas de distribuição/atacado B2B, Simples 4a-6a faixa, nas UFs SP/MG/PR/SC/RS/GO): ao preço médio anual do tier Essencial na grade do proponente (~R$4.788/ano, ponto médio de R$299-499/mês x 12), atingir o piso de R$16,7M ARR da trilha G exige entre ~2.900 clientes recorrentes (se o universo real estiver perto do teto de 200 mil, ~1,7% de penetração) e ~7% de penetração (se o universo real estiver perto do piso de 75 mil). O recorte B (Lucro Presumido) e os Anexos II/III (fase 2 do proponente) somariam mais, mas não entram nesta conta por ainda não terem ICP nem preço fechados no documento; e o próprio tamanho do universo (75-200 mil) é uma estimativa do proponente, não uma fonte externa verificada.",
-  "criado_em": "2026-09-25"
+  "criado_em": "2026-09-25",
+  "anulacao": {
+    "data": "2026-09-25",
+    "motivo": "erro de enquadramento: pergunta e tese inverteram o preço proposto; alegação do e-CAC testou o oposto do que o SDD afirma; alegação de nota de app não é condição-barreira. Novo contrato escrito já conhecendo o resultado da tentativa anterior."
+  }
 }
