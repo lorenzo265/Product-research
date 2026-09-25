@@ -86,3 +86,11 @@ def test_cifra_inferida_e_marcada_na_tabela():
     tabela = montar_fila(medir_sinais(_snapshot([sinal], fatos=[FATO, conta])))
 
     assert "826 BRL_milhoes/ano (integral, inferência)" in tabela
+
+
+def test_cifra_grande_sai_com_separador_de_milhar_e_sem_notacao_cientifica():
+    sinal = novo(SINAL, cifra={"valor": 826153000.5, "unidade": "BRL/ano", "fato": "f-2026-0001"})
+
+    tabela = montar_fila(medir_sinais(_snapshot([sinal])))
+
+    assert "826.153.000,50 BRL/ano" in tabela

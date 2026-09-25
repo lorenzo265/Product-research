@@ -131,7 +131,14 @@ def _cifra(medido: ForcaDoSinal) -> str:
     leitura = "integral" if medido.cifra_integral else "sem leitura integral"
     if medido.cifra_inferida:
         leitura += ", inferência"
-    return f"{cifra['valor']:g} {cifra['unidade']} ({leitura})"
+    return f"{_numero(cifra['valor'])} {cifra['unidade']} ({leitura})"
+
+
+def _numero(valor: float) -> str:
+    """Número legível em pt-BR: 826153000 → 826.153.000; 8,7 fica com a vírgula."""
+    if valor == int(valor):
+        return f"{int(valor):,}".replace(",", ".")
+    return f"{valor:,.2f}".replace(",", "_").replace(".", ",").replace("_", ".")
 
 
 def _encurtar(texto: str) -> str:
