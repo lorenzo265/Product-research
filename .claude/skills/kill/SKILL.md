@@ -40,7 +40,9 @@ Siga as etapas 0 e 1 do `metodo-julgamento`.
    uma alegação que o proponente negava, e o kill barato saiu inválido.
 
    **Grave o contrato** (`python3 -m harness contrato '{...}'`). Mostre ao usuário as 3
-   alegações e a taxa-base. O contrato não muda depois.
+   alegações e a taxa-base. O contrato não muda depois; só um erro de enquadramento
+   permite anulá-lo, com motivo e registro no cartão
+   (`python3 -m harness contrato --anular OP-xxxx --motivo "..."`).
 5. **Atualize o estágio:**
    `python3 -m harness atualizar cartao OP-xxxx '{"estagio": "kill_barato"}' --motivo "contrato gravado"`.
 6. **Verifique:** lance um subagente `pesquisador` em modo `verificacao` com a
