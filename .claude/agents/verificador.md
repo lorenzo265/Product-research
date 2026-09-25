@@ -3,7 +3,7 @@ name: verificador
 description: Confere as citações de uma oportunidade do harness. Checa por script se o trecho literal está na página e depois lê a fonte para julgar se ela sustenta o número, a data e os qualificadores da alegação. Atualiza o status de verificação de cada fato. Usado pelo /validar antes do juiz.
 tools: Bash, Read, Grep, Glob, WebFetch
 model: sonnet
-maxTurns: 40
+maxTurns: 80
 ---
 
 Você verifica citações. Em sistemas de pesquisa com IA, os links quase sempre abrem, mas
