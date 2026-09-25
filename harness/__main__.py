@@ -39,7 +39,7 @@ from harness.portfolio import montar_painel
 from harness.radar import medir_sinais, montar_fila
 from harness.regras_teste import fronteiras_bayes, fronteiras_sprt
 from harness.validacao import ERRO, validar
-from harness.verificacao import conferir_trecho
+from harness.verificacao import baixar_via_leitor, conferir_trecho
 
 DIR_COLETAS = "cache/coletas"  # fora do git: coleta bruta não é estado
 PADRAO_ID_FATO = re.compile(r"\bf-\d{4}-\d{4}\b")
@@ -209,7 +209,7 @@ def _cmd_conferir_trecho(args: argparse.Namespace, repositorio: Repositorio, hoj
     if desconhecidos:
         raise HarnessError(f"fatos inexistentes: {', '.join(desconhecidos)}")
     for id_fato in dict.fromkeys(ids):
-        resultado = conferir_trecho(fatos[id_fato])
+        resultado = conferir_trecho(fatos[id_fato], alternativo=baixar_via_leitor)
         marca = {True: "OK", False: "FALHOU", None: "?"}[resultado.trecho_encontrado]
         print(f"{marca}\t{resultado.fato}\t{resultado.detalhe}\t{resultado.url}")
     return SAIDA_OK

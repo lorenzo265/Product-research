@@ -17,7 +17,7 @@
    KILL do juiz na validação completa; a decisão é sua.
 7. **R-26**: o Arkan (OP-0002), avaliado a partir do seu SDD. Veredito REFORMULAR, com
    uma trava de economia unitária; a decisão é sua.
-8. **R-27**: o primeiro radar achou 19 grupos de dor; escolha quais viram oportunidade.
+8. **R-27**: o primeiro radar achou 19 grupos de dor; os grupos 1 a 3 viraram OP-0003 a OP-0005.
 9. **A-02** e **A-07** em `decisoes.md`: suas horas e caixa para testes, e suas teses
    antigas para servir de casos de eval.
 
@@ -427,17 +427,16 @@ Os 4 grupos com cifra e recorrência (ordem mecânica, não veredito):
 4. gestão de tráfego pago para pequeno e-commerce.
 
 As cifras de 1 a 3 são inferências grosseiras de massa salarial.
-**Decisão sua:** quais grupos viram `/oportunidade` (e depois `/kill`). Sem escolha, os
-sinais ficam como `novo`.
+**✅ Decidido em 25/09:** os grupos 1, 2 e 3 viraram OP-0003, OP-0004 e OP-0005
+(trilha S, estágio oportunidade). Próximo passo: `/kill` de cada uma.
 
 **Duas decisões de método que saíram da rodada:**
 - **Conferência de sites que bloqueiam o nosso User-Agent** (openai.com, planalto.gov.br
   nesta rodada). Os batedores leram essas páginas via `r.jina.ai`, que o método recomenda
   para ler texto. Mas usar um leitor intermediário *porque* o site recusa o `curl` do
-  harness pode contar como contornar bloqueio, o que o método proíbe. **Meu padrão:** o
-  `conferir-trecho` continua sem fallback, e esses fatos ficam "não conferíveis".
-  **Se você aceitar** leitura via `r.jina.ai` como válida nesses casos, o conferidor ganha
-  um segundo caminho declarado.
+  harness pode contar como contornar bloqueio, o que o método proíbe. **✅ Resolvido em
+  25/09:** você aceitou (D-015). O `conferir-trecho` tenta o `r.jina.ai` só depois que o
+  `curl` direto falha e declara isso no resultado; login e paywall continuam fora.
 - **PNCP fora do ar** (sem resposta em 60 s). A lente 11 não rodou. **Meu padrão:**
   tentar de novo no próximo radar, sem mudar nada.
 

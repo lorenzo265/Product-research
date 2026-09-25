@@ -106,11 +106,22 @@ seguem as definições de `schemas/sinal.schema.json`.
   (crunchbase.com, sienge.com.br/blog), sinir.gov.br com erro 500, confaz.fazenda.gov.br
   sem conexão, gov.br/aneel com login.
 - **Conferência mecânica:** openai.com e planalto.gov.br não abrem para o `curl` do
-  conferidor (f-0126, f-0142); os batedores os leram via r.jina.ai (ver R-27 em
-  `docs/revisao-pendente.md`).
+  conferidor (f-0126, f-0142); os batedores os leram via r.jina.ai. Com a D-015 o
+  conferidor tenta esse leitor depois do `curl` direto, e os dois fatos passaram a
+  conferir (f-0126 depois de marcar com `[...]` o texto oculto de um link).
 - **As cifras dos grupos 1 a 3 são inferências** com a mesma premissa grosseira (metade do
   fluxo anual de admissões e desligamentos como estoque de pessoas na ocupação). Servem
   para ordenar a fila, não para dimensionar.
+
+## Depois da rodada
+
+Em 25/09 o usuário escolheu os grupos 1, 2 e 3, que viraram **OP-0003** (comércio
+exterior), **OP-0004** (faturamento NF × pedido) e **OP-0005** (cobrança por telefone),
+todas na trilha S. Os sinais s-0009, 0011, 0013, 0015, 0017 e 0019 ficaram `agrupado`.
+
+Com a D-015 (leitor alternativo), a conferência dos 59 fatos ficou em 43 trechos
+encontrados na página e nenhuma falha. Os 16 restantes vieram de resumo de busca (13) ou
+são ausências sem trecho (3).
 
 ## Correções feitas durante a rodada
 

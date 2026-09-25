@@ -168,7 +168,9 @@ validador marca trechos com cara de instrução.
 Só informação pública ou fornecida voluntariamente. Em contato humano, identifique-se
 de verdade, sem pretexto. Dado pessoal (nome, telefone, e-mail de pessoa física) não
 entra nos fatos; use agregados. Respeite robots.txt e termos de uso; nunca contorne
-bloqueio (Cloudflare, login).
+bloqueio (Cloudflare, login, paywall). Exceção decidida pelo usuário (D-015): página
+pública, sem login, que só recusa o `curl` do harness pode ser lida via `r.jina.ai`, e o
+fato diz isso no `escopo_busca` ou nas `premissas`.
 
 ## Antes de devolver: confira os seus trechos
 

@@ -82,6 +82,15 @@ formas fica como teste.
 `metodo-pesquisa` e `metodo-julgamento` (não visíveis como comando). O CLAUDE.md
 manda usar os comandos do repo, e não as versões sincronizadas do claude.ai.
 
+### D-015 · Leitor alternativo (r.jina.ai) para página pública que recusa o curl · ativa (resolve R-27) · 2026-09-25
+Quando uma página pública, sem login nem paywall, recusa o `curl` do harness (openai.com e
+planalto.gov.br no radar de 25/09), o coletor pode lê-la via `r.jina.ai`, e o
+`conferir-trecho` tenta esse caminho só depois que o `curl` direto falha, declarando no
+resultado que a leitura veio dele. Login, paywall e desafio anti-bot continuam fora.
+**Decidido por:** usuário, em 25/09 ("se der certo, pode ser").
+**Mudaria se:** o leitor alterar o texto da página (então a conferência por ele deixa de
+valer) ou se o site proibir o acesso nos termos de uso.
+
 ## Em aberto
 
 | # | Pergunta | Quem decide | Quando |

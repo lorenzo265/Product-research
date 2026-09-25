@@ -152,3 +152,42 @@ def test_trecho_copiado_do_codigo_fonte_com_entidade_html_e_encontrado():
     resultado = conferir_trecho(fato, _baixador(html + "<p>description: We're piloting Claude</p>"))
 
     assert resultado.trecho_encontrado is True
+
+
+def test_pagina_que_recusa_o_curl_e_lida_pelo_leitor_alternativo_e_declarada():
+    fato = novo(FATO)
+    leitor = _baixador("Plano Básico R$ 139/mês")
+
+    resultado = conferir_trecho(fato, _baixador("", ok=False), alternativo=leitor)
+
+    assert resultado.trecho_encontrado is True
+    assert "via leitor alternativo" in resultado.detalhe
+
+
+def test_leitor_alternativo_nao_e_usado_quando_o_curl_direto_funciona():
+    def leitor(url):
+        raise AssertionError("não devia ser chamado")
+
+    resultado = conferir_trecho(novo(FATO), _baixador("<p>Plano Básico R$ 139/mês</p>"), leitor)
+
+    assert resultado.trecho_encontrado is True
+    assert "via" not in resultado.detalhe
+
+
+def test_leitor_alternativo_que_tambem_falha_deixa_a_pagina_inacessivel():
+    resultado = conferir_trecho(
+        novo(FATO), _baixador("", ok=False), alternativo=_baixador("", ok=False)
+    )
+
+    assert resultado.trecho_encontrado is None
+    assert "inacessível" in resultado.detalhe and "curl direto" in resultado.detalhe
+
+
+def test_link_markdown_do_leitor_alternativo_conta_so_o_texto():
+    markdown = "the API supports [six preset voices](https://x.io/voices) already supported"
+    fato = novo(FATO)
+    fato["fonte"]["citacao_literal"] = "supports six preset voices already supported"
+
+    resultado = conferir_trecho(fato, _baixador(markdown))
+
+    assert resultado.trecho_encontrado is True
