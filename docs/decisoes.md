@@ -86,7 +86,9 @@ manda usar os comandos do repo, e não as versões sincronizadas do claude.ai.
 Quando uma página pública, sem login nem paywall, recusa o `curl` do harness (openai.com e
 planalto.gov.br no radar de 25/09), o coletor pode lê-la via `r.jina.ai`, e o
 `conferir-trecho` tenta esse caminho só depois que o `curl` direto falha, declarando no
-resultado que a leitura veio dele. Login, paywall e desafio anti-bot continuam fora.
+resultado que a leitura veio dele. Login, paywall, desafio anti-bot e `robots.txt` que
+proíbe o acesso continuam fora (este último explicitado em 25/09, depois de um fato da
+OP-0003 lido do jusbrasil, que proíbe todos os robôs).
 **Decidido por:** usuário, em 25/09 ("se der certo, pode ser").
 **Mudaria se:** o leitor alterar o texto da página (então a conferência por ele deixa de
 valer) ou se o site proibir o acesso nos termos de uso.

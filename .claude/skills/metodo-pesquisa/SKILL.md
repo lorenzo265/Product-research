@@ -170,7 +170,9 @@ de verdade, sem pretexto. Dado pessoal (nome, telefone, e-mail de pessoa física
 entra nos fatos; use agregados. Respeite robots.txt e termos de uso; nunca contorne
 bloqueio (Cloudflare, login, paywall). Exceção decidida pelo usuário (D-015): página
 pública, sem login, que só recusa o `curl` do harness pode ser lida via `r.jina.ai`, e o
-fato diz isso no `escopo_busca` ou nas `premissas`.
+fato diz isso no `escopo_busca` ou nas `premissas`. Antes, leia o `robots.txt` do site:
+se ele proíbe o acesso (`Disallow: /` para `*`), o leitor alternativo também fica fora,
+porque contornaria a proibição (caso real: jusbrasil.com.br na OP-0003).
 
 ## Antes de devolver: confira os seus trechos
 
