@@ -2,7 +2,7 @@
 titulo: Documentos e lançamentos de comércio exterior (fatura, packing list, LPCO,
   DU-E)
 trilha: S
-estagio: kill_barato
+estagio: veredito
 status: ativa
 origem: radar 2026-09-25, grupo 1 (radar/2026-09-25-varredura-ampla.md), escolhido
   pelo usuário
@@ -25,11 +25,18 @@ sinais:
 - s-2026-0013
 - s-2026-0015
 travas: []
-proximo_passo: kill barato
+proximo_passo: 'kill barato v-2026-0008: REFORMULAR pela regra (2 de 3 caíram): software
+  de comex já automatiza DU-E/LPCO a partir de documentos (iData, Sigraweb) e só pessoa
+  com vínculo exclusivo ou despachante credenciado pode representar o exportador (Regulamento
+  Aduaneiro arts. 809-810; IN RFB 1.984/2020 art. 15 com a IN 2.292/2025). Decisão
+  do usuário: reformular (ex.: vender ao despachante credenciado, KS6 do pacote S)
+  ou KILL'
 revisar_em: '2026-10-09'
 id: OP-0003
 criado_em: '2026-09-25'
 atualizado_em: '2026-09-25'
+vereditos:
+- v-2026-0008
 ---
 
 ## Dor
@@ -54,3 +61,5 @@ documentação de despacho, classificar produtos e montar fatura, packing list, 
 
 ## Histórico
 - 2026-09-25: contrato gravado
+- 2026-09-25: veredito v-2026-0008 (kill_barato): REFORMULAR
+- 2026-09-25: kill barato registrado (v-2026-0008)
