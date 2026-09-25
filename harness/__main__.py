@@ -132,6 +132,12 @@ def _cmd_novo_cartao(args: argparse.Namespace, repositorio: Repositorio, hoje: d
 
 
 def _cmd_contrato(args: argparse.Namespace, repositorio: Repositorio, hoje: date) -> int:
+    if args.anular:
+        if not args.motivo:
+            raise HarnessError("--anular exige --motivo")
+        arquivado = repositorio.anular_contrato(args.anular, args.motivo, hoje)
+        print(arquivado.relative_to(repositorio.raiz))
+        return SAIDA_OK
     contrato = _json_do_argumento(args.json)
     contrato.setdefault("criado_em", hoje.isoformat())
     caminho = repositorio.gravar_contrato(contrato)
@@ -375,6 +381,10 @@ def _parser() -> argparse.ArgumentParser:
 
     contrato = sub.add_parser("contrato", help="grava o contrato de validação (uma vez)")
     contrato.add_argument("json", nargs="?", help="contrato em JSON; omita para stdin")
+    contrato.add_argument(
+        "--anular", metavar="OP", help="arquiva o contrato da OP (erro de enquadramento)"
+    )
+    contrato.add_argument("--motivo", help="por que o contrato não representava a tese")
     contrato.set_defaults(executar=_cmd_contrato)
 
     pacote = sub.add_parser("pacote-juiz", help="monta a entrada cega do juiz")

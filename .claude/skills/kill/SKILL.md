@@ -17,10 +17,14 @@ Siga as etapas 0 e 1 do `metodo-julgamento`.
    do passo 5.
 2. **Enquadre** (etapa 0): tese de terceiro, premissas críticas, condições-barreira da
    menos para a mais crível, taxa-base com classe de referência, conta do teto da
-   trilha.
-3. **Escolha as 3 alegações** mais baratas de falsificar com maior dano se falsas. Cada
+   trilha. Neutralize a convicção, não o conteúdo: preço, mecanismo, comprador e canal
+   ficam como o proponente os propõe.
+3. **Escolha as 3 alegações** entre as condições-barreira, as mais baratas de
+   falsificar entre as de dano **fatal ou alto** se falsas. Argumento de apoio (nota de
+   app do concorrente, dado de contexto) não entra: derrubá-lo não derruba a tese. Cada
    alegação é uma **condição que a tese precisa que seja verdadeira**, para que "caiu"
-   sempre signifique "ruim para a tese". Boas alegações são factuais e checáveis por
+   sempre signifique "ruim para a tese". Quando houver material do proponente, cada
+   alegação reproduz o que ele afirma e cita a seção de onde veio. Boas alegações são factuais e checáveis por
    busca: "não existe ferramenta que já faça Y por menos de R$Z", "o comprador W tem
    orçamento para isso", "a norma N obriga até a data D".
 
@@ -29,7 +33,13 @@ Siga as etapas 0 e 1 do `metodo-julgamento`.
    Exemplo real de erro (OP-0001): "já existem ferramentas gratuitas que emitem NFS-e"
    foi confirmada e contada como "se sustentou", quando na verdade derrubava a
    premissa de que falta solução barata.
-4. **Grave o contrato** (`python3 -m harness contrato '{...}'`). Mostre ao usuário as 3
+4. **Revise o enquadramento** quando houver material do proponente: escreva o rascunho
+   em `oportunidades/<pasta>/contrato-rascunho.json`, lance o subagente
+   `revisor-de-enquadramento` com os caminhos do rascunho e do material, e corrija o que
+   ele apontar. Na primeira avaliação do Arkan, o contrato inverteu o preço e testou
+   uma alegação que o proponente negava, e o kill barato saiu inválido.
+
+   **Grave o contrato** (`python3 -m harness contrato '{...}'`). Mostre ao usuário as 3
    alegações e a taxa-base. O contrato não muda depois.
 5. **Atualize o estágio:**
    `python3 -m harness atualizar cartao OP-xxxx '{"estagio": "kill_barato"}' --motivo "contrato gravado"`.

@@ -1,0 +1,46 @@
+{
+  "oportunidade": "OP-0002",
+  "trilha": "G",
+  "pacote": "pacote-mercado",
+  "pergunta_neutralizada": "Donos de PME brasileira que vendem majoritariamente B2B (distribuição/atacado e afins, optantes do Simples Nacional nas faixas 4-6 de faturamento ou do Lucro Presumido até R$20mi/ano) pagam por uma plataforma que substitui a contabilidade externa tradicional - captura automática de documentos fiscais e financeiros das fontes oficiais, apuração e conferência de impostos com execução das obrigações do regime, e visão consolidada de caixa, contas a pagar/receber e retirada de lucro - a um preço maior do que pagam hoje pela soma de contador externo e sistemas separados?",
+  "tese_de_terceiro": "Um terceiro propõe construir uma plataforma de contabilidade e gestão fiscal alavancada por IA, vendida ao dono de PME B2B brasileira e operada por um contador interno próprio (organização contábil registrada no CRC). A plataforma capturaria dados fiscais e financeiros direto das fontes oficiais (e-CAC, autXML, ERP do cliente, banco), calcularia e conferiria os impostos, executaria as obrigações do regime, e devolveria ao dono uma leitura consolidada de caixa e retirada de lucro, cobrando uma assinatura maior do que o dono paga hoje ao contador externo e a sistemas separados, mais success fee sobre imposto recuperado. O terceiro estima capturar uma fatia de um universo de 75-200 mil empresas (recorte A) suficiente para ultrapassar o piso de ARR da trilha G, apoiado numa janela regulatória (reforma tributária IBS/CBS 2026-2027) e num fosso de captura de dado difícil de replicar.",
+  "premissas_criticas": [
+    "o dono da PME, não o contador externo, decide e paga a troca de fornecedor de contabilidade/fiscal",
+    "a captura automática via e-CAC, autXML e ERP do cliente é operacionalmente viável e permitida pela norma vigente, apesar da vedação declarada pelo próprio proponente a automatizar o e-CAC (IN 2.320)",
+    "a cunha tributária (diferença de crédito IBS/CBS vs. regime regular) e a conferência recorrente de impostos continuam grandes e visíveis o bastante para justificar a assinatura depois que a tese de recuperação do monofásico federal (a mais lucrativa hoje, segundo o proponente) se extinguir em 01/01/2027",
+    "a operação consegue escalar a 60+ empresas por contador interno em tempo hábil para não operar no vermelho por um período longo (o próprio documento do proponente mostra contribuição negativa ou no limite no tier de entrada antes dessa escala)",
+    "incumbentes com base instalada (Omie, Conta Azul, Bling) e concorrentes de nicho de preço baixo (citados pelo proponente: JIM+, ROIT START, Contabilizei) não replicam a leitura fiscal automática como um recurso a mais dentro do prazo em que o desafiante precisa para capturar clientes",
+    "a estruturação legal exigida (organização contábil registrada no CRC, responsável técnico, seguro de responsabilidade civil profissional) pode ser feita antes da primeira venda sem atraso que perca a janela regulatória de 2027"
+  ],
+  "condicoes_barreira": [
+    "existe mercado endereçável de pelo menos R$16,7M de ARR capturável no recorte A (distribuição/atacado B2B, Simples faixas 4-6, nas UFs citadas pelo proponente), com o tamanho do universo (75-200 mil empresas) verificado em fonte independente do próprio documento do proponente",
+    "a automação de captura de dados via e-CAC é permitida e operacionalmente estável sob a norma vigente (o próprio proponente cita uma vedação a automatizar o e-CAC e um prazo de até 30 dias para aceitar a autorização, com 40-60% de desistência no processo)",
+    "nenhum incumbente moderno e bem avaliado (Omie, Conta Azul, Bling) já oferece, ou consegue lançar rapidamente como recurso, uma leitura fiscal automática comparável que retenha o cliente",
+    "o dono da PME tem orçamento e disposição de pagar mais do que paga hoje ao contador externo (a âncora de preço citada pelo proponente, R$600-1.500/mês ou mediana R$700+R$50/funcionário) por uma assinatura de R$299-1.249/mês, mesmo com concorrentes de preço muito mais baixo no mercado (o próprio proponente cita JIM+ a R$39,90/mês)",
+    "existe demanda geral por gestão financeira e fiscal mais automatizada entre PME brasileira"
+  ],
+  "alegacoes_kill": [
+    {
+      "alegacao": "Os principais ERPs financeiros/contábeis incumbentes usados pela persona-alvo (Omie, Conta Azul, Bling) têm avaliação baixa nas lojas de aplicativo (nota aproximada de 2,2-2,3 estrelas), evidenciando insatisfação que abre espaço para um desafiante focado em fiscal automático.",
+      "dano_se_falsa": "se a nota real for boa (incumbente moderno e bem avaliado no segmento exato), ativa o critério de kill K2 do pacote-mercado (trilha G) e derruba o argumento central de que existe espaço aberto por insatisfação com o incumbente",
+      "como_verificar": "checar a nota atual e o número de avaliações de Omie, Conta Azul e Bling na App Store e no Google Play (não usar cache antigo nem resumo de busca de terceiros; ler a página da loja diretamente)"
+    },
+    {
+      "alegacao": "O contador externo médio pago pela persona-alvo (PME do Simples Nacional, comércio/atacado) custa hoje entre R$600 e R$1.500/mês, ou uma mediana de cerca de R$700/mês mais R$50 por funcionário, estabelecendo uma âncora de preço compatível com uma assinatura de R$299 a R$1.249/mês pela plataforma.",
+      "dano_se_falsa": "se o honorário contábil real da persona for muito menor do que essa faixa, ou se a fonte citada (Fenacon 2014 corrigido pelo IPCA; SESCON-SP 2024) não sustentar esses números, a âncora de preço cai e a trava 'comprador e orçamento' fica em risco, exigindo repensar o preço ou o ICP",
+      "como_verificar": "ler a pesquisa SESCON-SP 2024 e a pesquisa Fenacon original (ou a atualizada mais recente) na fonte primária, conferir o valor mediano/faixa reportado para empresas comerciais optantes do Simples Nacional e a correção pelo IPCA declarada"
+    },
+    {
+      "alegacao": "A norma vigente sobre a Autorização de Acesso ao e-CAC (citada pelo proponente como IN 2.320) permite que um terceiro autorizado colete e processe repetidamente, de forma automatizada, os dados fiscais do contribuinte em nome dele, sem violar vedação a automação do próprio portal e-CAC.",
+      "dano_se_falsa": "se a automação da captura via e-CAC for de fato vedada ou tecnicamente inviável de forma sustentada (não só uma barreira de processo, mas um bloqueio ativo), o fosso central da tese - 'a empresa continua operando onde já opera e nós puxamos o dado sozinhos' - desmorona, e o produto vira dependente de captura manual, muito mais cara",
+      "como_verificar": "ler o texto integral da Instrução Normativa RFB vigente sobre a Autorização de Acesso ao e-CAC (buscar o número correto e a versão em vigor, não assumir 'IN 2.320' sem checar), localizando a cláusula sobre vedação a automação e sobre concessão a terceiros"
+    }
+  ],
+  "taxa_base": {
+    "p": 0.05,
+    "classe_referencia": "SaaS B2B vertical brasileiro, tentando desalojar incumbentes de mercado (ERPs financeiros/contábeis) instalados há anos, num setor de serviço regulado (contabilidade, exige registro no CRC e responsável técnico) e dependente de acesso a sistemas de terceiro fora do seu controle (Receita Federal, prefeituras) para o próprio fosso funcionar - sem taxa-base publicada específica para este recorte",
+    "justificativa": "não há taxa-base publicada para 'SaaS B2B vertical fiscal/contábil no Brasil chega a R$16,7M ARR'; ancorando de forma ampla em taxas-base conhecidas de startups B2B SaaS que atingem porte de Series-A (dezenas de milhões de reais de ARR), tipicamente citadas como bem abaixo de 10% das que tentam, e descontando mais por dois fatores que o próprio documento do proponente reconhece como risco: depender de comportamento de um sistema de terceiro fora de controle (R-01, R-02, R-05) e exigir estrutura legal regulada (CRC, RT, seguro) antes de vender (R-28, R-31); prior deliberadamente mais baixo que o de trilha M/S por causa do piso de ambição maior (R$16,7M ARR) e da barreira dupla regulatória+operacional"
+  },
+  "teto": "Bottom-up, só recorte A (a hipótese não verificada do proponente, A14: 75-200 mil empresas de distribuição/atacado B2B, Simples 4a-6a faixa, nas UFs SP/MG/PR/SC/RS/GO): ao preço médio anual do tier Essencial na grade do proponente (~R$4.788/ano, ponto médio de R$299-499/mês x 12), atingir o piso de R$16,7M ARR da trilha G exige entre ~2.900 clientes recorrentes (se o universo real estiver perto do teto de 200 mil, ~1,7% de penetração) e ~7% de penetração (se o universo real estiver perto do piso de 75 mil). O recorte B (Lucro Presumido) e os Anexos II/III (fase 2 do proponente) somariam mais, mas não entram nesta conta por ainda não terem ICP nem preço fechados no documento; e o próprio tamanho do universo (75-200 mil) é uma estimativa do proponente, não uma fonte externa verificada.",
+  "criado_em": "2026-09-25"
+}

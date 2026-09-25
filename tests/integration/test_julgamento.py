@@ -115,3 +115,23 @@ def test_sem_memorandos_nao_monta(repo):
 
     with pytest.raises(HarnessError, match="memorandos faltando"):
         montar_pacote_juiz(repo.raiz, pasta, HOJE)
+
+
+def test_anular_contrato_arquiva_com_motivo_e_libera_novo(repo):
+    repo.gravar_contrato(CONTRATO)
+
+    arquivado = repo.anular_contrato(
+        "OP-0001", "a pergunta inverteu o preço proposto pelo proponente", HOJE
+    )
+
+    assert json.loads(arquivado.read_text())["anulacao"]["motivo"].startswith("a pergunta")
+    assert "contrato anulado" in repo.ler_cartoes()[0].corpo
+    repo.gravar_contrato(novo(CONTRATO, trilha="S"))
+    assert repo.ler_contratos()[repo.ler_cartoes()[0].pasta]["trilha"] == "S"
+
+
+def test_anular_contrato_exige_motivo(repo):
+    repo.gravar_contrato(CONTRATO)
+
+    with pytest.raises(Exception, match="motivo"):
+        repo.anular_contrato("OP-0001", "erro", HOJE)

@@ -33,6 +33,7 @@ DIR_OPORTUNIDADES = "oportunidades"
 ARQUIVO_CARTAO = "cartao.md"
 PADRAO_DOSSIE = "dossie-*.md"
 ARQUIVO_CONTRATO = "contrato.json"
+TAMANHO_MINIMO_MOTIVO_ANULACAO = 20
 DELIMITADOR_FRONTMATTER = "---"
 PARTES_DO_CARTAO = 3  # texto antes do frontmatter (vazio), frontmatter, corpo
 TAMANHO_MAXIMO_SLUG = 40
@@ -283,6 +284,38 @@ class Repositorio:
                 json.dumps(contrato, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
             )
             return caminho
+
+    def anular_contrato(self, id_cartao: str, motivo: str, hoje: date) -> Path:
+        """Arquiva o contrato atual com o motivo, liberando a gravação de um novo.
+
+        Existe para erro de enquadramento (o contrato não representa a tese), não para
+        ajustar a régua ao resultado. Por isso a anulação nunca apaga: o contrato antigo
+        fica na pasta com o motivo e a data, e o cartão registra a anulação.
+
+        Returns:
+            Caminho do contrato arquivado.
+
+        Raises:
+            RegistroNaoEncontrado: se a oportunidade não existir ou não tiver contrato.
+            RegistroInvalido: se o motivo estiver vazio.
+        """
+        if len(motivo.strip()) < TAMANHO_MINIMO_MOTIVO_ANULACAO:
+            raise RegistroInvalido("contrato", ["anular exige um motivo explicado"])
+        with self._trava():
+            pasta = self.pasta_da_oportunidade(id_cartao)
+            caminho = pasta / ARQUIVO_CONTRATO
+            if not caminho.exists():
+                raise RegistroNaoEncontrado(f"{id_cartao} não tem contrato para anular")
+            anterior = json.loads(caminho.read_text(encoding="utf-8"))
+            anterior["anulacao"] = {"data": hoje.isoformat(), "motivo": motivo}
+            numero = 1 + len(list(pasta.glob(f"contrato-anulado-{hoje.isoformat()}-*.json")))
+            arquivado = pasta / f"contrato-anulado-{hoje.isoformat()}-{numero}.json"
+            arquivado.write_text(
+                json.dumps(anterior, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+            )
+            caminho.unlink()
+        self.atualizar_cartao(id_cartao, {}, f"contrato anulado ({arquivado.name}): {motivo}", hoje)
+        return arquivado
 
     def atualizar_cartao(self, id_cartao: str, mudancas: dict, nota: str, hoje: date) -> dict:
         """Altera o frontmatter de um cartão e registra a mudança na seção Histórico.

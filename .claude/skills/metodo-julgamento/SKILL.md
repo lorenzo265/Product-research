@@ -36,7 +36,8 @@ Você orquestra e apresenta, mas não julga: você viu a convicção de quem per
 ## Etapa 0 · Enquadramento
 
 1. **Neutralize a pergunta.** Reescreva a hipótese como pergunta aberta, em terceira
-   pessoa, sem marcadores de convicção. "Tenho certeza que meu SaaS X vai funcionar"
+   pessoa, sem marcadores de convicção. Neutralizar tira a convicção, não o conteúdo:
+   preço, mecanismo, comprador e canal ficam como o proponente os propõe. "Tenho certeza que meu SaaS X vai funcionar"
    vira "Existe demanda paga sustentável por X no segmento Y?". Mostre a reformulação.
 2. **Tese de terceiro.** Escreva a tese como "um terceiro propõe…". Enquadrar como
    tese alheia reduziu bajulação em até 64% em teste com 17 modelos.
