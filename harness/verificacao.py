@@ -136,7 +136,9 @@ def conferir_trecho(fato: dict, baixar: Baixador = baixar_com_curl) -> Conferenc
 
 def _partes_do_trecho(trecho: str) -> list[str]:
     """Separa o trecho nas elisões ("...", "[...]"): cada parte tem de estar na página."""
-    partes = (_normalizar(parte) for parte in PADRAO_ELISAO.split(trecho))
+    # Coletor que copia do código-fonte traz entidades ("we&#39;re"); a página é comparada já
+    # decodificada, então o trecho também é.
+    partes = (_normalizar(parte) for parte in PADRAO_ELISAO.split(html.unescape(trecho)))
     return [parte for parte in partes if len(parte) >= TAMANHO_MINIMO_TRECHO]
 
 

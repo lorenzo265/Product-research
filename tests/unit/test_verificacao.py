@@ -140,3 +140,15 @@ def test_trecho_de_aria_label_e_encontrado():
     resultado = conferir_trecho(fato, _baixador(html))
 
     assert resultado.trecho_encontrado is True
+
+
+def test_trecho_copiado_do_codigo_fonte_com_entidade_html_e_encontrado():
+    html = (
+        '<script type="application/ld+json">{"description": "We&#39;re piloting Claude"}</script>'
+    )
+    fato = novo(FATO)
+    fato["fonte"]["citacao_literal"] = "description: We&#39;re piloting Claude"
+
+    resultado = conferir_trecho(fato, _baixador(html + "<p>description: We're piloting Claude</p>"))
+
+    assert resultado.trecho_encontrado is True
