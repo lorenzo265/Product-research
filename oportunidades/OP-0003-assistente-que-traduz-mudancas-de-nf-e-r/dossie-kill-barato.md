@@ -35,6 +35,13 @@ Nenhum fato novo ficou `contradita`. Correções feitas pelo verificador:
 - **f-2026-0106 (Conta Azul).** Acrescentado o qualificador "NFS-e (Padrão Nacional)".
 - **f-2026-0205 (LWSA).** O PDF tem 56 páginas, com cerca de 28 em português.
 
+- **f-2026-0158 (Bling Titânio).** R$120/mês é o preço "a partir de", da faixa de até 500 pedidos. Há faixas maiores. O "até 35%" é o selo da oferta.
+- **f-2026-0163 (TribuMap).** "Não substitui a interpretação de um contador" era uma paráfrase: o FAQ faz a pergunta e responde "Não". A página também cita "analistas e empresários" como usuários.
+- **f-2026-0169 (Olist Lis).** Os créditos mensais são 10 (Avance), 20 (Construa), 30 (Impulsione) e 40 (Domine). A descrição "automações e análises essenciais" é a do plano Avance.
+- **f-2026-0195 (Olist, Exame 28/07/2025).** A matéria diz que a Olist "terá agentes de IA em breve", com liberação escalonada para clientes selecionados.
+- **f-2026-0219 (Nibo).** A página cita "Recálculo automático de impostos" e "Nibo Radar e-CAC", nos produtos para contadores.
+- **f-2026-0117 e f-2026-0118 (Sebrae, via networksonline).** Ficaram `nao_verificavel` por falha de TLS na leitura.
+
 Ficaram `nao_verificavel`:
 - páginas de ajuda do Bling (403 do Cloudflare, não contornado): f-2026-0091 a 0096, 0138 a 0140, 0143 e 0149;
 - aplicações montadas por JavaScript: f-2026-0113 e 0114;
