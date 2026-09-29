@@ -8,6 +8,40 @@ Parâmetros da proposta registrados no cartão depois do contrato: tipo de nota 
 
 Convenções: `Tier` e `leitura` entre parênteses vêm do registro do fato. Cálculos de mensalidade equivalente feitos pelo harness estão marcados como tal. Fatos criados nesta rodada estão com `verificacao: pendente`. Fatos `contradita` (f-2026-0004, 0005, 0008, 0084) não foram usados.
 
+
+## Correções da verificação (2026-09-29)
+
+Nota do orquestrador, acrescentada depois da verificação e antes dos memorandos. O texto deste dossiê foi escrito antes dela. Onde ele diverge do fato gravado em `data/fatos.jsonl`, vale o fato. O status de cada fato está no campo `verificacao`.
+
+Nenhum fato novo ficou `contradita`. Correções feitas pelo verificador:
+
+- **f-2026-0131 e f-2026-0226 a 0230 (NTs da NF-e por ano).**
+  - Entradas totais na lista do Portal: 2022 = 36 e 2024 = 27; os demais anos conferem (315 entradas no total).
+  - NTs fora da reforma que tratam de campos, regras ou leiaute: 2022 = 8, 2023 = 7, 2024 = 6, 2025 = 6, 2026 = 7 (antes: 9, 8, 8, 7 e 6).
+- **f-2026-0142 (opção do Simples Nacional pelo regime regular de IBS/CBS).** A página atual diz que o prazo foi estendido pelo CGSN até 30/10/2026, e não 1 a 30/09/2026. O f-2026-0176 (07/09/2026) é anterior à prorrogação.
+- **f-2026-0141 x f-2026-0172.** As duas estão confirmadas e divergem entre si:
+  - a Conta Azul (página atualizada em 29/09/2026) descreve rejeição da NF-e sem IBS/CBS desde 03/08/2026;
+  - o comunicado da Receita e do CGIBS (01/08/2026, atualizado em 03/08/2026) diz que um Ato Técnico Conjunto a aprovar suspenderá a obrigatoriedade e que os documentos não serão rejeitados sem esses campos.
+- **f-2026-0177 e f-2026-0178.** O autor do artigo no Portal Contábeis (06/05/2026) é o fundador do nomos-ia.app, um assistente de IA para a reforma tributária em beta. Não é "contador" sem vínculo comercial.
+- **f-2026-0168 (Olist/Tiny).** R$159,30 (Construa) e R$312 (Impulsione) são ofertas de Black Friday nos 3 primeiros meses. Os preços cheios são R$177 e R$390.
+- **f-2026-0162 (NFE.io).** Os preços conferem. A página também cobra taxa de adesão (R$199 a R$499, conforme o plano).
+- **f-2026-0166 (Omie.IA Fiscal).** Os trechos sobre "empresas que vendem em diferentes estados" e "gestores" estão na loja de apps (store.omie.com.br), não na página citada. A alegação foi reduzida ao que a página citada sustenta.
+- **f-2026-0181 e f-2026-0184.** A websérie da Omie está na URL do f-2026-0180, e o chatbot "Cami" da Conta Azul está em /planos. Os dois foram retirados desses fatos.
+- **f-2026-0183 (Conta Azul).** "Gratuitamente" vale só para o diagnóstico, os materiais e o simulador de impacto.
+- **f-2026-0174 e f-2026-0191.** "Gratuitos" / "gratuitas" não consta nas páginas e foi retirado.
+- **f-2026-0185 (Taxcel).** Os preços são de 1 usuário; o descritor "(cloud)" não está na página.
+- **f-2026-0206 (Tax Prático).** São 7 planos, de R$2.119,89 a R$9.202,14 (antes: maior plano R$4.388,63).
+- **f-2026-0214 (Invent/SEGS).** A página diz "mais de 152 empresas" e "mais de 1500 interações, segundo a companhia". A menção ao Grupo Studio e a "200 empresários" vinha do resumo de busca e foi retirada.
+- **f-2026-0200 (TOTVS).** O acesso ao chatbot pelo Portal de Clientes não é descrito como restrito.
+- **f-2026-0221 (RT PRO)** e **f-2026-0220 (Omie IA.Fiscal).** As alegações foram reduzidas ao que a página citada mostra.
+- **f-2026-0106 (Conta Azul).** Acrescentado o qualificador "NFS-e (Padrão Nacional)".
+- **f-2026-0205 (LWSA).** O PDF tem 56 páginas, com cerca de 28 em português.
+
+Ficaram `nao_verificavel`:
+- páginas de ajuda do Bling (403 do Cloudflare, não contornado): f-2026-0091 a 0096, 0138 a 0140, 0143 e 0149;
+- aplicações montadas por JavaScript: f-2026-0113 e 0114;
+- fatos vindos de resumo de busca: f-2026-0213 (GPT "Consultor Tributário", URL 404) e f-2026-0216 (emissores gratuitos das SEFAZ).
+
 ## 1. Emissores e ERPs com NF-e e/ou NFS-e
 
 ### 1.1 Preços públicos lidos na página (plano de entrada e vizinhos)
