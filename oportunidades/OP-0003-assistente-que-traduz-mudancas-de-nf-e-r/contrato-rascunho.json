@@ -1,0 +1,53 @@
+{
+  "oportunidade": "OP-0003",
+  "trilha": "M",
+  "pacote": "pacote-micro-saas",
+  "pergunta_neutralizada": "Donos de empresas brasileiras que emitem notas fiscais eletrônicas pagam uma assinatura por um software que emite as notas e que, a partir da descrição da empresa e da área de atuação, traduz em linguagem simples o que mudou nas regras, nos leiautes e nas alíquotas, interpreta essas mudanças contra a nota atual da empresa e aponta o que precisa ser ajustado, em vez de recorrer ao contador, ao emissor/ERP que já usam ou a fontes gratuitas?",
+  "tese_de_terceiro": "Um terceiro propõe um micro-SaaS vendido por assinatura ao dono de empresas brasileiras que emitem notas fiscais eletrônicas. O dono descreve a empresa e a área de atuação, e o software faz duas coisas juntas: (1) emite as notas fiscais de forma simples e (2) traduz em linguagem simples as mudanças de regras, de leiaute da nota e de alíquotas que se aplicam àquela empresa, interpretando-as contra a nota atual da empresa e dizendo o que mudou e o que ela precisa fazer para seguir o modelo mais atualizado da nota. Quem paga é o dono da empresa. O terceiro não declarou preço, periodicidade da assinatura, canal de aquisição, porte, regime ou setor-alvo, nem o tipo de nota (NF-e de mercadoria, NFS-e de serviço ou ambas); 'micro-SaaS' sugere operação por uma pessoa (inferência do harness).",
+  "premissas_criticas": [
+    "[crítica] o dono da empresa, e não o contador nem o fornecedor do emissor/ERP, é quem sente como sua a tarefa de entender e aplicar mudanças de regras na nota e está disposto a pagar por ela, em vez de delegá-la ao contador dentro do honorário",
+    "[crítica] os emissores e ERPs que as empresas já usam deixam trabalho residual ao usuário quando regras e leiautes mudam (decidir campos e classificações novas sem orientação pelo perfil da empresa), em vez de resolver isso dentro da mensalidade",
+    "[crítica] as mudanças de regras, leiaute e alíquotas que exigem ação da própria empresa emitente são recorrentes (mais de uma relevante por ano, também fora do pico de transição da reforma tributária), e não um evento único de adequação, o que sustenta assinatura e retenção",
+    "[crítica] não existe alternativa gratuita (oficial ou versão gratuita de grande player) que já diga, pela descrição da empresa e da área, o que muda e o que ajustar na nota",
+    "[crítica] um emissor novo consegue tirar clientes de emissores e ERPs já instalados, apesar do custo de troca (cadastros, integrações, certificado digital)",
+    "um chatbot geral ou a IA nativa do emissor/ERP não entrega 80% do valor da tradução personalizada em 12 meses (critério KM6 da trilha M)",
+    "a base de regras no escopo declarado pelo proponente (qualquer empresa e área: regras federais, ICMS das 27 UFs e, se incluir NFS-e, regras municipais) pode ser mantida correta por uma pessoa, sem exposição a responsabilidade por orientação errada que inviabilize a operação",
+    "[critério do harness, não declarado pelo proponente] existe ticket de pelo menos ~R$150/mês aceitável ao dono para emissor + orientação, ou retenção/lock-in que compense ticket menor (critério KM5 da trilha M)",
+    "[critério do harness, não declarado pelo proponente] existe um canal alcançável com contagem de compradores e custo por contato (critério KM2 da trilha M)"
+  ],
+  "condicoes_barreira": [
+    "o dono da empresa, e não o contador, decide e paga por entender e aplicar mudanças de regras na nota, fora do honorário contábil",
+    "os emissores e ERPs mais usados no Brasil não resolvem, dentro da mensalidade atual, o que muda na nota de cada empresa: deixam ao usuário ou ao contador decidir campos e classificações novas sem orientação pelo perfil da empresa",
+    "não existe ferramenta gratuita (oficial ou versão gratuita de grande player) que diga, pela descrição da empresa e da área, quais mudanças se aplicam e o que ajustar na nota",
+    "as mudanças que exigem ação da própria empresa emitente no preenchimento da nota são recorrentes (mais de uma relevante por ano, também fora do pico da reforma tributária)",
+    "um emissor novo consegue tirar clientes de emissores/ERPs já instalados, apesar do custo de troca",
+    "chatbot geral ou IA nativa do emissor/ERP não replica 80% do valor em 12 meses",
+    "a base de regras para qualquer empresa e área (escopo declarado) pode ser mantida correta por uma pessoa",
+    "[critério do harness] existe canal nomeado e alcançável com volume de ofertas compatível com o teto (não declarado pelo proponente)",
+    "[critério do harness] o ticket aceito pelo dono fica em ~R$150/mês ou mais, ou há retenção/lock-in que compense ticket menor",
+    "existem empresas emissoras em número muito maior que o necessário para o teto"
+  ],
+  "alegacoes_kill": [
+    {
+      "alegacao": "Os emissores de nota fiscal e ERPs mais usados no Brasil (ex.: Bling, Omie, Conta Azul, Tiny/Olist, eNotas, NFE.io) não resolvem para o usuário, dentro da mensalidade atual, o que muda na nota da empresa dele quando regras e leiautes mudam: além de atualizar o leiaute, deixam ao usuário ou ao contador decidir os campos e classificações novas (ex.: os campos de IBS/CBS da reforma tributária) sem orientação pelo perfil da empresa.",
+      "dano_se_falsa": "alto a fatal: se os emissores já instalados preenchem ou sugerem os campos novos e orientam o usuário dentro da mensalidade, a camada de tradução vira recurso incluso sem ticket próprio, e o produto passa a competir só como mais um emissor contra incumbentes com custo de troca a seu favor",
+      "como_verificar": "ler integralmente as centrais de ajuda, notas de versão e páginas sobre reforma tributária / notas técnicas de 4 a 6 emissores e ERPs, verificando se preenchem automaticamente ou sugerem os campos novos (por produto, NCM ou perfil) e se oferecem orientação ao usuário sobre o que ajustar; registrar o que cada um faz, o que deixa ao usuário e para qual porte/regime de cliente"
+    },
+    {
+      "alegacao": "Não existe ferramenta gratuita - oficial (Receita Federal, SEFAZ, Portal Nacional da NF-e, Comitê Gestor do IBS, Sebrae) ou versão gratuita de grande player - que diga à empresa, a partir da descrição da empresa e da área de atuação, quais mudanças de regras, leiaute e alíquotas se aplicam a ela e o que ajustar na nota.",
+      "dano_se_falsa": "alto: se já existe tradução personalizada gratuita, o núcleo que diferencia o produto de um emissor comum vira commodity e o dono não tem motivo para pagar por ele",
+      "como_verificar": "buscar e ler integralmente simuladores, calculadoras, tabelas de classificação tributária e guias interativos da Receita Federal, do Portal da NF-e, do Sebrae e versões gratuitas de grandes players (contabilidades online, ERPs), verificando se personalizam pela atividade/área da empresa e se dizem o que ajustar na nota; distinguir conteúdo genérico (artigo, cartilha) de ferramenta personalizada. Ferramentas pagas ficam fora desta alegação e vão para o mapa competitivo da validação (registrar as que aparecerem)"
+    },
+    {
+      "alegacao": "Mudanças de regras, leiaute e alíquotas que exigem ajuste no preenchimento da nota pela própria empresa emitente (e não só uma atualização automática feita pelo software emissor) acontecem de forma recorrente, mais de uma relevante por ano, e não apenas no pico de transição da reforma tributária.",
+      "dano_se_falsa": "alto: se as mudanças que exigem ação da empresa são raras, concentradas num único pico de adequação ou absorvidas automaticamente pelo emissor, a dor é pontual, não sustenta assinatura e a retenção cai depois da primeira adequação",
+      "como_verificar": "ler as notas técnicas publicadas no Portal Nacional da NF-e (e da NFS-e nacional) de 2022 a 2026 e os cronogramas oficiais da reforma tributária (LC 214/2025 e atos da Receita e do Comitê Gestor), contando por ano quantas mudanças alteram o que o emitente preenche, separando as da transição da reforma das demais, e reportando a quem se aplicam (regime normal x Simples Nacional) e a partir de quando"
+    }
+  ],
+  "taxa_base": {
+    "p": 0.05,
+    "classe_referencia": "micro-SaaS B2B brasileiro de uma pessoa, ainda sem receita, entrando numa categoria com incumbentes instalados (emissores de nota e ERPs de PME) - chance de chegar a R$30k de MRR em 18 meses",
+    "justificativa": "o pacote da trilha M dá 15-25% dos produtos independentes que já faturam chegando a ~R$30k de MRR algum dia e menos de 10% em 18 meses, com cauda brasileira mais fina; esta ideia ainda não fatura, então precisa primeiro chegar à primeira receita, o que puxa o prior para baixo de 10%; 0,05 é o meio de uma faixa larga (0,03-0,08), sem desconto adicional por concorrência, que entra depois como ajuste nomeado"
+  },
+  "teto": "Preço e canal não declarados pelo proponente, então o teto fica em aberto e é calculado por cenário (pacote-micro-saas): a R$99/mês com churn de 6%, R$30k de MRR exige ~303 pagantes e ~18 novos/mês, ~180 ofertas qualificadas/mês a p1=10%; a R$199/mês com churn de 4%, ~151 pagantes e ~6-13 novos/mês, ~60-130 ofertas/mês; a R$399/mês com churn de 3%, ~75 pagantes e ~2-6 novos/mês, ~20-60 ofertas/mês. Sem canal nomeado com contagem, o critério KM2 fica aberto até a validação."
+}
