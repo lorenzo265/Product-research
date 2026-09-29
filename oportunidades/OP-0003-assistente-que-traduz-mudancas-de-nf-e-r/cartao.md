@@ -22,20 +22,28 @@ workaround: 'a verificar - hipóteses: perguntar ao contador; atualização feit
 custo_workaround: null
 lentes: []
 sinais: []
-travas: []
-proximo_passo: 'kill barato v-2026-0007: GO (0 de 3 alegações caíram; alegação 3 -
-  recorrência fora da reforma - não encontrada, vira pauta da validação). Próximo:
-  /validar em sessão própria (comando pesado); pautas: recorrência das mudanças fora
-  da reforma, sobreposições parciais (Conta Azul sugere cClassTrib por NCM, Omie.IA
-  Fiscal pago, TribuMap, simuladores por CNAE), ticket ~R$99 x critério KM5, canais
-  declarados (cold calling, anúncios, conteúdo fiscal) sem contagem nem custo por
-  contato'
+travas:
+- 'ticket_retencao: não avançar sem demonstrar, com dinheiro, um ticket de ~R$150/mês
+  ou mais aceito pelo dono fora do honorário do contador, ou um mecanismo de retenção
+  que sobreviva ao fim da adequação da reforma'
+- 'canal: não avançar sem nomear um canal com contagem de compradores alcançáveis
+  e custo por contato medido que entregue ~180 ofertas qualificadas/mês a R$99 (ou
+  ~60-130 a R$199)'
+proximo_passo: 'veredito v-2026-0008 (validação completa): REFORMULAR, p_sucesso=0.031
+  (bruta 0.025) contra taxa-base 0.05. Travas: ticket/retenção e canal. Objeção mais
+  forte: o mercado põe no contador a decisão sobre o que muda na nota e a adequação
+  vem no honorário; onde há sugestão pelo perfil ela é vendida dentro do ERP (Omie.IA
+  Fiscal). Recortes que o juiz aponta: um regime e um tipo de nota (ex.: prestadores
+  de NFS-e do regime regular ou novos emitentes de dez/2026), camada de diagnóstico
+  sobre o emissor existente em vez de novo emissor, ou venda ao contador. Decisão
+  GO/ITERAR/KILL/reformular é do usuário.'
 revisar_em: '2026-10-13'
 id: OP-0003
 criado_em: '2026-09-29'
 atualizado_em: '2026-09-29'
 vereditos:
 - v-2026-0007
+- v-2026-0008
 ---
 
 ## Dor
@@ -51,3 +59,5 @@ vereditos:
 - 2026-09-29: Complemento do usuário depois do contrato gravado (não altera o contrato; entra na validação): tipo de nota = NF-e e NFS-e; preço ~R9/mês, aproximado; canais candidatos = cold calling, anúncios pagos e criação de conteúdo fiscal. O cenário de R9 já está na conta do teto do contrato (churn 6%: ~303 pagantes, ~18 novos/mês, ~180 ofertas qualificadas/mês a p1=10%). Canais ainda sem contagem de compradores nem custo por contato.
 - 2026-09-29: veredito v-2026-0007 (kill_barato): GO
 - 2026-09-29: kill barato: 0 de 3 alegações caíram (1 e 2 sustentadas com ressalvas; 3 dividida, registrada como não encontrada) -> GO, segue para /validar. Pesquisador bateu no limite de 60 turnos sem gravar e foi retomado para gravar fatos e dossiê; 65 fatos novos (f-2026-0091 a 0155), todos com verificação pendente; várias fontes gov.br bloqueadas ou em JavaScript, registradas como lacuna.
+- 2026-09-29: veredito v-2026-0008 (completo): REFORMULAR
+- 2026-09-29: validação completa: dois pesquisadores em paralelo (dossie-mercado.md, dossie-concorrentes.md; ~28 buscas), 4 verificadores (119 confirmadas, 17 não verificáveis, 0 contraditas; correções anotadas no topo dos dossiês), memorandos a favor e contra (a favor reescrito dentro de 1500 palavras antes do pacote; pacote gerado com o memorando truncado foi apagado sem ir ao juiz), juiz isolado rodada 2026-09-29-1 -> v-2026-0008 REFORMULAR. Falha de harness encontrada: conferir-trecho não expande ids citados em intervalo ('f-2026-0113 a 0129'); 18 fatos foram conferidos à parte. Decisão fica com o usuário.
