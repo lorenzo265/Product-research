@@ -2,7 +2,7 @@
 titulo: Emissor de notas com tradução de mudanças de regras e alíquotas aplicada à
   nota atual da empresa
 trilha: M
-estagio: kill_barato
+estagio: veredito
 status: ativa
 origem: ideia do usuário (mensagem livre, sem documento próprio)
 pergunta_neutralizada: Donos de empresas brasileiras que emitem notas fiscais eletrônicas
@@ -23,11 +23,19 @@ custo_workaround: null
 lentes: []
 sinais: []
 travas: []
-proximo_passo: kill barato
+proximo_passo: 'kill barato v-2026-0007: GO (0 de 3 alegações caíram; alegação 3 -
+  recorrência fora da reforma - não encontrada, vira pauta da validação). Próximo:
+  /validar em sessão própria (comando pesado); pautas: recorrência das mudanças fora
+  da reforma, sobreposições parciais (Conta Azul sugere cClassTrib por NCM, Omie.IA
+  Fiscal pago, TribuMap, simuladores por CNAE), ticket ~R$99 x critério KM5, canais
+  declarados (cold calling, anúncios, conteúdo fiscal) sem contagem nem custo por
+  contato'
 revisar_em: '2026-10-13'
 id: OP-0003
 criado_em: '2026-09-29'
 atualizado_em: '2026-09-29'
+vereditos:
+- v-2026-0007
 ---
 
 ## Dor
@@ -41,3 +49,5 @@ atualizado_em: '2026-09-29'
 - 2026-09-29: Usuário confirmou: (1) núcleo = as duas coisas, emissão da nota + orientação; (2) 'ler as NF-es' = traduzir as regras e interpretá-las contra a nota que a empresa emite hoje; (3) quem paga = o dono da empresa. Pergunta neutralizada reescrita; a emissão volta para dentro da tese, com sobreposição à categoria de emissores já coberta em fatos da OP-0001/OP-0002.
 - 2026-09-29: contrato gravado; revisor-de-enquadramento apontou recortes não declarados pelo proponente (porte, regime, UF, janela 2026-27, escopo restrito) e 'nota atual' lida como notas emitidas em outro emissor; tudo corrigido antes da gravação e pergunta do cartão sincronizada com a do contrato
 - 2026-09-29: Complemento do usuário depois do contrato gravado (não altera o contrato; entra na validação): tipo de nota = NF-e e NFS-e; preço ~R9/mês, aproximado; canais candidatos = cold calling, anúncios pagos e criação de conteúdo fiscal. O cenário de R9 já está na conta do teto do contrato (churn 6%: ~303 pagantes, ~18 novos/mês, ~180 ofertas qualificadas/mês a p1=10%). Canais ainda sem contagem de compradores nem custo por contato.
+- 2026-09-29: veredito v-2026-0007 (kill_barato): GO
+- 2026-09-29: kill barato: 0 de 3 alegações caíram (1 e 2 sustentadas com ressalvas; 3 dividida, registrada como não encontrada) -> GO, segue para /validar. Pesquisador bateu no limite de 60 turnos sem gravar e foi retomado para gravar fatos e dossiê; 65 fatos novos (f-2026-0091 a 0155), todos com verificação pendente; várias fontes gov.br bloqueadas ou em JavaScript, registradas como lacuna.
